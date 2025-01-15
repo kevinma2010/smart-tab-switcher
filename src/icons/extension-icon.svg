@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Background -->
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="#4F46E5" />
+  
+  <!-- Tab shapes -->
+  <g fill="#FFFFFF">
+    <!-- Top tab -->
+    <path d="M32 36h64c4 0 8 4 8 8v8H24v-8c0-4 4-8 8-8z" opacity="0.9"/>
+    <!-- Middle tab -->
+    <path d="M32 56h64c4 0 8 4 8 8v8H24v-8c0-4 4-8 8-8z" opacity="0.7"/>
+    <!-- Bottom tab -->
+    <path d="M32 76h64c4 0 8 4 8 8v8H24v-8c0-4 4-8 8-8z" opacity="0.5"/>
+  </g>
+  
+  <!-- Search icon -->
+  <circle cx="52" cy="64" r="6" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+  <line x1="56" y1="68" x2="64" y2="76" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+</svg>
