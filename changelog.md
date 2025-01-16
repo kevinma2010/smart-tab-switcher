@@ -6,44 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2024-01-15
 ### Added
-- Initial release
-- Quick tab switching functionality
-- Real-time search capabilities
-- Bookmark integration
-- Keyboard navigation support
-- URL recognition
-- Google search integration
-- Custom keyboard shortcuts (Command+Shift+K for Mac, Alt+T for Windows/Linux)
+- Quick tab switching with intuitive search interface
+- Real-time fuzzy search for tabs and bookmarks
+- Smart URL detection and direct opening capability
+- Comprehensive keyboard navigation with arrow keys and Enter/Esc controls
+- Bookmark integration with search results
+- Fallback Google search when no matches are found
+- Custom keyboard shortcuts:
+  - Mac: Command+Shift+K
+  - Windows/Linux: Alt+T
+- Smart result categorization:
+  - Tabs with direct switching
+  - Bookmarks opening in new tabs
+  - Direct URL opening
+  - Google search fallback
+- Toolbar icon for mouse-based activation
 
 ### Security
-- Implemented minimum required permissions
-- Secure handling of browser APIs
-
-## [0.9.0] - 2024-01-10
-### Added
-- Beta release for testing
-- Core search functionality
-- Basic UI implementation
-- Initial keyboard shortcuts
-
-### Changed
-- Optimized search performance
-- Improved UI responsiveness
-
-### Fixed
-- Tab switching delay issues
-- Search result sorting problems
-
-## [0.8.0] - 2024-01-05
-### Added
-- Alpha release for internal testing
-- Basic tab management features
-- Simple search implementation
-
-### Known Issues
-- Performance issues with large number of tabs
-- Keyboard shortcut conflicts
-- Limited bookmark support
+- Implemented minimum required permissions model
+- Secure handling of browser APIs and user data
+- Safe bookmark access implementation
 
 ## Types of Changes
 - `Added` for new features
