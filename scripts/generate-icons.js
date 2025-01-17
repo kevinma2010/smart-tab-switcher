@@ -3,7 +3,7 @@ const path = require('path');
 const sharp = require('sharp');
 
 const SIZES = [16, 32, 48, 128];
-const UI_ICON_SIZE = 20;
+const UI_ICON_SIZE = 48;
 
 async function generateExtensionIcons() {
   const extensionIconSvg = fs.readFileSync(
