@@ -79,28 +79,41 @@ export const useSearch = () => {
       url: `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`
     });
 
+    // Create a Map to store results by URL for deduplication
+    const urlMap = new Map<string, SearchResult>();
+
     // Search tabs
     if (includeTabs) {
       const tabsFuse = new Fuse(tabs, SEARCH_OPTIONS);
       const tabResults = tabsFuse.search(searchQuery);
-      results.push(...tabResults.map(({ item, score = 1 }) => ({
-        ...item,
-        id: String(item.id),
-        type: 'tab' as const,
-        score
-      })));
+      tabResults.forEach(({ item, score = 1 }) => {
+        urlMap.set(item.url, {
+          ...item,
+          id: String(item.id),
+          type: 'tab' as const,
+          score
+        });
+      });
     }
 
-    // Search bookmarks
+    // Search bookmarks and merge with existing results
     if (includeBookmarks) {
       const bookmarksFuse = new Fuse(bookmarks, SEARCH_OPTIONS);
       const bookmarkResults = bookmarksFuse.search(searchQuery);
-      results.push(...bookmarkResults.map(({ item, score = 1 }) => ({
-        ...item,
-        type: 'bookmark' as const,
-        score
-      })));
+      bookmarkResults.forEach(({ item, score = 1 }) => {
+        const existingResult = urlMap.get(item.url);
+        if (!existingResult || score < (existingResult.score || 1)) {
+          urlMap.set(item.url, {
+            ...item,
+            type: 'bookmark' as const,
+            score
+          });
+        }
+      });
     }
+
+    // Add deduplicated results to the results array
+    results.push(...urlMap.values());
 
     // Sort results by score and limit
     return results
