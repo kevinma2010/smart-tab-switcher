@@ -3,6 +3,7 @@ import Fuse from 'fuse.js';
 import { SearchResult, TabInfo, BookmarkInfo, SearchOptions } from '../types';
 import { isValidUrl } from '../utils/url';
 import browser from 'webextension-polyfill';
+import psl from 'psl';
 
 const SEARCH_OPTIONS = {
   keys: ['title', 'url'],
@@ -61,13 +62,54 @@ export const useSearch = () => {
 
     const results: SearchResult[] = [];
     
-    // Add URL result if query looks like a URL
-    if (isValidUrl(searchQuery)) {
+    // Normalize URL by removing trailing slash
+    const normalizeUrl = (url: string) => url.replace(/\/$/, '');
+    
+    // Check if query could be a domain
+    const cleanQuery = searchQuery.toLowerCase().trim();
+    const isPotentialDomain = cleanQuery.includes('.') && psl.isValid(cleanQuery);
+    const potentialUrl = searchQuery.startsWith('http') ? searchQuery : `https://${searchQuery}`;
+    
+    // Search tabs and bookmarks first
+    const urlMap = new Map<string, SearchResult>();
+
+    // Search tabs
+    if (includeTabs) {
+      const tabsFuse = new Fuse(tabs, SEARCH_OPTIONS);
+      const tabResults = tabsFuse.search(searchQuery);
+      tabResults.forEach(({ item, score = 1 }) => {
+        urlMap.set(normalizeUrl(item.url), {
+          ...item,
+          id: String(item.id),
+          type: 'tab' as const,
+          score
+        });
+      });
+    }
+
+    // Search bookmarks
+    if (includeBookmarks) {
+      const bookmarksFuse = new Fuse(bookmarks, SEARCH_OPTIONS);
+      const bookmarkResults = bookmarksFuse.search(searchQuery);
+      bookmarkResults.forEach(({ item, score = 1 }) => {
+        const existingResult = urlMap.get(normalizeUrl(item.url));
+        if (!existingResult || score < (existingResult.score || 1)) {
+          urlMap.set(normalizeUrl(item.url), {
+            ...item,
+            type: 'bookmark' as const,
+            score
+          });
+        }
+      });
+    }
+
+    // Only add URL result if it's a potential domain, valid URL, and URL doesn't exist in results
+    if (isPotentialDomain && isValidUrl(searchQuery) && !urlMap.has(normalizeUrl(potentialUrl))) {
       results.push({
         id: 'url-' + searchQuery,
         type: 'url',
         title: 'Open URL',
-        url: searchQuery.startsWith('http') ? searchQuery : `https://${searchQuery}`
+        url: potentialUrl
       });
     }
 
@@ -79,40 +121,7 @@ export const useSearch = () => {
       url: `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`
     });
 
-    // Create a Map to store results by URL for deduplication
-    const urlMap = new Map<string, SearchResult>();
-
-    // Search tabs
-    if (includeTabs) {
-      const tabsFuse = new Fuse(tabs, SEARCH_OPTIONS);
-      const tabResults = tabsFuse.search(searchQuery);
-      tabResults.forEach(({ item, score = 1 }) => {
-        urlMap.set(item.url, {
-          ...item,
-          id: String(item.id),
-          type: 'tab' as const,
-          score
-        });
-      });
-    }
-
-    // Search bookmarks and merge with existing results
-    if (includeBookmarks) {
-      const bookmarksFuse = new Fuse(bookmarks, SEARCH_OPTIONS);
-      const bookmarkResults = bookmarksFuse.search(searchQuery);
-      bookmarkResults.forEach(({ item, score = 1 }) => {
-        const existingResult = urlMap.get(item.url);
-        if (!existingResult || score < (existingResult.score || 1)) {
-          urlMap.set(item.url, {
-            ...item,
-            type: 'bookmark' as const,
-            score
-          });
-        }
-      });
-    }
-
-    // Add deduplicated results to the results array
+    // Add deduplicated results
     results.push(...urlMap.values());
 
     // Sort results by score and limit
