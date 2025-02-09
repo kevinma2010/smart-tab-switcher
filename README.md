@@ -106,3 +106,17 @@ pnpm build
 ```
 
 Built files will be located in the `dist`
+
+## 📄 License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](./LICENSE) file for details.
+
+The GPLv3 License means:
+- ✅ You can view and modify the source code
+- ✅ You can redistribute the code
+- ✅ You must keep the same license for derivative works
+- ✅ You must disclose the source code of derivative works
+- ❌ You cannot use the code in proprietary/closed source projects
+- ❌ You cannot modify the license terms
+
+For more details, please see the full [license text](./LICENSE).
