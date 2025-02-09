@@ -1,6 +1,6 @@
-# Quick Tab Switcher for Firefox
+# Smart Tab Switcher
 
-Quick Tab Switcher 是一个强大的 Firefox 扩展，通过直观的界面和快捷的搜索功能，帮助用户高效管理和切换浏览器标签页。
+Smart Tab Switcher 是一个强大的浏览器扩展，通过直观的界面和快捷的搜索功能，帮助用户高效管理和切换浏览器标签页。
 
 ![Quick Tab Switcher Screenshot](./screenshots/demo.png)
 
@@ -18,9 +18,29 @@ Quick Tab Switcher 是一个强大的 Firefox 扩展，通过直观的界面和�
 
 ### 安装
 
-1. 访问 Firefox Add-ons 商店
-2. 搜索 "Quick Tab Switcher"
-3. 点击 "添加到 Firefox"
+你可以从浏览器的应用商店安装 Smart Tab Switcher：
+
+<div align="center">
+
+[![Chrome 应用商店](https://img.shields.io/chrome-web-store/v/smart-tab-switcher?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chrome.google.com/webstore/detail/smart-tab-switcher)
+[![Firefox 附加组件](https://img.shields.io/amo/v/smart-tab-switcher?label=Firefox&style=for-the-badge&logo=firefox&logoColor=white)](https://addons.mozilla.org/firefox/addon/smart-tab-switcher)
+[![Edge 外接程序](https://img.shields.io/badge/Edge-v1.0.0-blue?style=for-the-badge&logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/smart-tab-switcher)
+
+</div>
+
+或手动安装：
+1. 从 [GitHub Releases](https://github.com/kevinma2010/smart-tab-switcher/releases) 下载最新版本
+2. 根据不同浏览器按以下步骤安装：
+   - Chrome/Edge:
+     * 打开扩展程序页面
+     * 开启开发者模式
+     * 点击"加载已解压的扩展程序"
+     * 选择解压后的文件夹
+   - Firefox:
+     * 访问 `about:debugging`
+     * 点击"此 Firefox"
+     * 点击"临时载入附加组件"
+     * 选择解压后文件夹中的 `manifest.json`
 
 ### 使用方法
 
@@ -46,37 +66,43 @@ Quick Tab Switcher 是一个强大的 Firefox 扩展，通过直观的界面和�
 ### 环境要求
 
 - Node.js (v14+)
-- npm (v6+)
-- Firefox 浏览器 (v109.0+)
+- pnpm (v8+)
+- 浏览器 (Chrome v88+ / Firefox v109.0+ / Edge v88+)
 
 ### 本地开发
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/yourusername/quick-tab-switcher.git
-   cd quick-tab-switcher
+   git clone https://github.com/kevinma2010/smart-tab-switcher.git
+   cd smart-tab-switcher
    ```
 
 2. **安装依赖**
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **开发模式**
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
-4. **在 Firefox 中加载**
-   - 访问 `about:debugging`
-   - 点击 "This Firefox"
-   - 点击 "Load Temporary Add-on"
-   - 选择 `dist` 目录中的 `manifest.json`
+4. **在浏览器中加载**
+   - Chrome/Edge:
+     * 访问 `chrome://extensions` 或 `edge://extensions`
+     * 开启"开发者模式"
+     * 点击"加载已解压的扩展程序"
+     * 选择 `dist` 目录
+   - Firefox:
+     * 访问 `about:debugging`
+     * 点击 "This Firefox"
+     * 点击 "Load Temporary Add-on"
+     * 选择 `dist` 目录中的 `manifest.json`
 
 ### 构建发布版本
 
 ```bash
-npm run build
+pnpm build
 ```
 
 构建后的文件将位于 `dist` 目录。
@@ -123,7 +149,7 @@ src/
 
 ## 📞 支持与反馈
 
-- 提交 Issue: [GitHub Issues](https://github.com/yourusername/quick-tab-switcher/issues)
+- 提交 Issue: [GitHub Issues](https://github.com/yourusername/smart-tab-switcher/issues)
 - 联系邮箱: support@example.com
 
 ## 🔄 更新日志

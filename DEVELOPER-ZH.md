@@ -2,7 +2,7 @@
 
 ## 1. 项目概述
 
-Quick Tab Switcher 是一个 Firefox 浏览器扩展，提供快速的标签页切换和管理功能。用户可以通过快捷键（Command+Shift+K）快速调出搜索界面，实时搜索并切换已打开的标签页或打开收藏的书签。
+Quick Tab Switcher 是一个浏览器扩展，提供快速的标签页切换和管理功能。用户可以通过快捷键（Command+Shift+K）快速调出搜索界面，实时搜索并切换已打开的标签页或打开收藏的书签。
 
 ## 2. 核心功能
 
@@ -154,9 +154,9 @@ interface BookmarkInfo {
 
 ### 9.1 本地开发
 ```bash
-npm install        # 安装依赖
-npm run dev       # 开发模式
-npm run build     # 生产构建
+pnpm install        # 安装依赖
+pnpm dev           # 开发模式
+pnpm build         # 生产构建
 ```
 
 ### 9.2 调试方法

@@ -1,6 +1,6 @@
-# Quick Tab Switcher for Firefox
+# Smart Tab Switcher
 
-Quick Tab Switcher is a powerful Firefox extension that helps users efficiently manage and switch browser tabs through an intuitive interface and quick search functionality.
+Smart Tab Switcher is a powerful browser extension that helps users efficiently manage and switch browser tabs through an intuitive interface and quick search functionality.
 
 ![Quick Tab Switcher Screenshot](./screenshots/demo.png)
 
@@ -18,9 +18,29 @@ Quick Tab Switcher is a powerful Firefox extension that helps users efficiently 
 
 ### Installation
 
-1. Visit Firefox Add-ons Store
-2. Search for "Quick Tab Switcher"
-3. Click "Add to Firefox"
+You can install Smart Tab Switcher from your browser's extension store:
+
+<div align="center">
+
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/smart-tab-switcher?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chrome.google.com/webstore/detail/smart-tab-switcher)
+[![Firefox Add-ons](https://img.shields.io/amo/v/smart-tab-switcher?label=Firefox&style=for-the-badge&logo=firefox&logoColor=white)](https://addons.mozilla.org/firefox/addon/smart-tab-switcher)
+[![Edge Add-ons](https://img.shields.io/badge/Edge-v1.0.0-blue?style=for-the-badge&logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/smart-tab-switcher)
+
+</div>
+
+Or install manually:
+1. Download the latest release from [GitHub Releases](https://github.com/kevinma2010/smart-tab-switcher/releases)
+2. Follow the browser-specific installation steps below:
+   - Chrome/Edge:
+     * Go to Extensions page
+     * Enable Developer mode
+     * Click "Load unpacked"
+     * Select the extracted release folder
+   - Firefox:
+     * Go to `about:debugging`
+     * Click "This Firefox"
+     * Click "Load Temporary Add-on"
+     * Select `manifest.json` from the extracted folder
 
 ### How to Use
 
@@ -46,86 +66,43 @@ Quick Tab Switcher is a powerful Firefox extension that helps users efficiently 
 ### Prerequisites
 
 - Node.js (v14+)
-- npm (v6+)
-- Firefox Browser (v109.0+)
+- pnpm (v8+)
+- Browser (Chrome v88+ / Firefox v109.0+ / Edge v88+)
 
 ### Local Development
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/yourusername/quick-tab-switcher.git
-   cd quick-tab-switcher
+   git clone https://github.com/kevinma2010/smart-tab-switcher.git
+   cd smart-tab-switcher
    ```
 
 2. **Install Dependencies**
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Development Mode**
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
-4. **Load in Firefox**
-   - Navigate to `about:debugging`
-   - Click "This Firefox"
-   - Click "Load Temporary Add-on"
-   - Select `manifest.json` from the `dist` directory
+4. **Load in Browser**
+   - For Chrome/Edge:
+     * Go to `chrome://extensions` or `edge://extensions`
+     * Enable "Developer mode"
+     * Click "Load unpacked"
+     * Select the `dist` directory
+   - For Firefox:
+     * Navigate to `about:debugging`
+     * Click "This Firefox"
+     * Click "Load Temporary Add-on"
+     * Select `manifest.json` from the `dist` directory
 
 ### Build for Production
 
 ```bash
-npm run build
+pnpm build
 ```
 
-Built files will be located in the `dist` directory.
-
-### Project Structure
-
-```
-src/
-├── background/        # Background scripts
-├── popup/            # Popup interface
-│   ├── components/   # React components
-│   ├── hooks/        # Custom Hooks
-│   └── utils/        # Utility functions
-├── icons/            # Icon resources
-└── manifest.json     # Extension configuration
-```
-
-### Tech Stack
-
-- React 18
-- TypeScript
-- Tailwind CSS
-- Fuse.js
-- Firefox WebExtensions API (MV3)
-
-### Development Documentation
-
-For detailed technical documentation and development guidelines, please refer to [DEVELOPER.md](./DEVELOPER.md)
-
-## 🤝 Contributing
-
-We welcome all forms of contributions, including but not limited to:
-
-- 🐛 Bug Reports
-- 💡 Feature Suggestions
-- 📝 Documentation Improvements
-- 🔧 Code Contributions
-
-Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute.
-
-## 📄 License
-
-This project is open-sourced under the MIT License - see [LICENSE](./LICENSE) file for details.
-
-## 📞 Support & Feedback
-
-- Submit Issues: [GitHub Issues](https://github.com/yourusername/quick-tab-switcher/issues)
-- Contact Email: support@example.com
-
-## 🔄 Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for version history.
+Built files will be located in the `dist`

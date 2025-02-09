@@ -2,7 +2,7 @@
 
 ## 1. Project Overview
 
-Quick Tab Switcher is a Firefox browser extension that provides fast tab switching and management capabilities. Users can quickly invoke a search interface using a keyboard shortcut (Command+Shift+K) to search and switch between open tabs or access bookmarks in real-time.
+Quick Tab Switcher is a browser extension that provides fast tab switching and management capabilities. Users can quickly invoke a search interface using a keyboard shortcut (Command+Shift+K) to search and switch between open tabs or access bookmarks in real-time.
 
 ## 2. Core Features
 
@@ -159,9 +159,9 @@ interface BookmarkInfo {
 
 ### 9.1 Local Development
 ```bash
-npm install        # Install dependencies
-npm run dev       # Development mode
-npm run build     # Production build
+pnpm install        # Install dependencies
+pnpm dev           # Development mode
+pnpm build         # Production build
 ```
 
 ### 9.2 Debugging Methods
@@ -226,11 +226,11 @@ npm run build     # Production build
 ## 13. Deployment Process
 
 1. Version Update
-   - Update version in manifest.json
+   - Update version in package.json
    - Update changelog
 
 2. Build Process
-   - Run production build
+   - Run `pnpm build`
    - Generate distribution package
 
 3. Submission Process
