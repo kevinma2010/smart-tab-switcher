@@ -1,7 +1,7 @@
 {
   "name": "quick-tab-switcher",
   "version": "1.0.0",
-  "description": "Fast tab switching and management for Firefox",
+  "description": "Fast tab switching and management for modern browsers (Chrome, Firefox, and Chromium-based browsers)",
   "scripts": {
     "dev": "webpack --mode development --watch --progress",
     "build": "webpack --mode production --progress",

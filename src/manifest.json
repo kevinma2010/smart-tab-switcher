@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Quick Tab Switcher",
   "version": "1.0.0",
-  "description": "Fast tab switching and management for Firefox",
+  "description": "Fast tab switching and management with fuzzy search and keyboard shortcuts",
   
   "permissions": [
     "tabs",
@@ -43,7 +43,11 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "quick-tab-switcher@example.com"
+      "id": "quick-tab-switcher@example.com",
+      "strict_min_version": "109.0"
+    },
+    "chrome": {
+      "minimum_chrome_version": "88"
     }
   }
 }
