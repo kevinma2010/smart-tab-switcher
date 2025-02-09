@@ -1,8 +1,8 @@
-# Quick Tab Switcher - Technical Design Document
+# Smart Tab Switcher - Technical Design Document
 
 ## 1. Project Overview
 
-Quick Tab Switcher is a browser extension that provides fast tab switching and management capabilities. Users can quickly invoke a search interface using a keyboard shortcut (Command+Shift+K) to search and switch between open tabs or access bookmarks in real-time.
+Smart Tab Switcher is a browser extension that provides fast tab switching and management capabilities. Users can quickly invoke a search interface using a keyboard shortcut (Command+Shift+K) to search and switch between open tabs or access bookmarks in real-time.
 
 ## 2. Core Features
 
@@ -143,7 +143,7 @@ interface BookmarkInfo {
 {
   "browser_specific_settings": {
     "gecko": {
-      "id": "quick-tab-switcher@example.com",
+      "id": "smart-tab-switcher@kevinma2010.com",
       "strict_min_version": "109.0"
     }
   }

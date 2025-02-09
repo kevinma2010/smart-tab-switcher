@@ -2,8 +2,6 @@
 
 Smart Tab Switcher 是一个强大的浏览器扩展，通过直观的界面和快捷的搜索功能，帮助用户高效管理和切换浏览器标签页。
 
-![Quick Tab Switcher Screenshot](./screenshots/demo.png)
-
 ## ✨ 主要特性
 
 - 🚀 快速启动：使用快捷键 `Command+Shift+K` (Mac) 或 `Alt+T` (Windows/Linux) 快速调出
@@ -65,7 +63,7 @@ Smart Tab Switcher 是一个强大的浏览器扩展，通过直观的界面和�
 
 ### 环境要求
 
-- Node.js (v14+)
+- Node.js (v18+)
 - pnpm (v8+)
 - 浏览器 (Chrome v88+ / Firefox v109.0+ / Edge v88+)
 
@@ -159,8 +157,7 @@ GPLv3 许可证意味着：
 
 ## 📞 支持与反馈
 
-- 提交 Issue: [GitHub Issues](https://github.com/yourusername/smart-tab-switcher/issues)
-- 联系邮箱: support@example.com
+- [GitHub Issues](https://github.com/kevinma2010/smart-tab-switcher/issues)
 
 ## 🔄 更新日志
 

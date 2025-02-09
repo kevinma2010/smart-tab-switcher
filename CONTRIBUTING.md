@@ -1,10 +1,10 @@
-# Contributing to Quick Tab Switcher
+# Contributing to Smart Tab Switcher
 
-First off, thank you for considering contributing to Quick Tab Switcher! It's people like you that make Quick Tab Switcher such a great tool.
+First off, thank you for considering contributing to Smart Tab Switcher! It's people like you that make Smart Tab Switcher such a great tool.
 
 ## Code of Conduct
 
-By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior to [maintainer's email].
+By participating in this project, you are expected to uphold our Code of Conduct. Please report unacceptable behavior through GitHub Issues.
 
 ## How Can I Contribute?
 
@@ -40,9 +40,9 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 1. **Setup your environment**
    ```bash
-   git clone https://github.com/yourusername/quick-tab-switcher.git
-   cd quick-tab-switcher
-   npm install
+   git clone https://github.com/kevinma2010/smart-tab-switcher.git
+   cd smart-tab-switcher
+   pnpm install
    ```
 
 2. **Create a branch**
@@ -57,8 +57,8 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 4. **Test your changes**
    ```bash
-   npm run test
-   npm run lint
+   pnpm test
+   pnpm lint
    ```
 
 5. **Commit your changes**
@@ -112,12 +112,6 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 - Comment your code
 - Update TypeScript types
 
-## Community
-
-- Join our [Discord server](#)
-- Follow us on [Twitter](#)
-- Read our [blog](#)
-
 ## Questions?
 
-Feel free to open an issue or contact the maintainers directly.
+Feel free to open an issue on our [GitHub Issues](https://github.com/kevinma2010/smart-tab-switcher/issues) page.

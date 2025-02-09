@@ -2,8 +2,6 @@
 
 Smart Tab Switcher is a powerful browser extension that helps users efficiently manage and switch browser tabs through an intuitive interface and quick search functionality.
 
-![Quick Tab Switcher Screenshot](./screenshots/demo.png)
-
 ## ✨ Key Features
 
 - 🚀 Quick Launch: Trigger with `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
@@ -65,7 +63,7 @@ Or install manually:
 
 ### Prerequisites
 
-- Node.js (v14+)
+- Node.js (v18+)
 - pnpm (v8+)
 - Browser (Chrome v88+ / Firefox v109.0+ / Edge v88+)
 
@@ -120,3 +118,11 @@ The GPLv3 License means:
 - ❌ You cannot modify the license terms
 
 For more details, please see the full [license text](./LICENSE).
+
+## 📞 Support & Feedback
+
+- [GitHub Issues](https://github.com/kevinma2010/smart-tab-switcher/issues)
+
+## 🔄 Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for version history.

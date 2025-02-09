@@ -1,8 +1,8 @@
-# Quick Tab Switcher - Technical Design Document
+# Smart Tab Switcher - Technical Design Document
 
 ## 1. 项目概述
 
-Quick Tab Switcher 是一个浏览器扩展，提供快速的标签页切换和管理功能。用户可以通过快捷键（Command+Shift+K）快速调出搜索界面，实时搜索并切换已打开的标签页或打开收藏的书签。
+Smart Tab Switcher 是一个浏览器扩展，提供快速的标签页切换和管理功能。用户可以通过快捷键（Command+Shift+K）快速调出搜索界面，实时搜索并切换已打开的标签页或打开收藏的书签。
 
 ## 2. 核心功能
 
@@ -138,7 +138,7 @@ interface BookmarkInfo {
 {
   "browser_specific_settings": {
     "gecko": {
-      "id": "quick-tab-switcher@example.com",
+      "id": "smart-tab-switcher@kevinma2010.com",
       "strict_min_version": "109.0"
     }
   }
