@@ -254,3 +254,35 @@ pnpm build         # Production build
    - Regular security reviews
    - Dependency updates
    - Code scanning
+
+## 15. Branch and Version Management
+
+### 15.1 Branch Strategy
+- `main`: Main branch, maintains stable release state
+- `develop`: Development branch for feature integration
+- `feature/*`: Feature branches, branched from develop
+- `hotfix/*`: Emergency fix branches, branched from main
+
+### 15.2 Version Convention
+Using Semantic Versioning: vmajor.minor.patch
+- v1.0.0: First stable release
+- v1.1.0: New feature update
+- v1.1.1: Bug fixes
+
+### 15.3 Release Process
+1. Complete development and testing on develop branch
+2. Update version number and CHANGELOG.md
+3. Merge to main branch and create tag
+4. Release new version
+
+### 15.4 Commit Convention
+```bash
+# New feature
+feat: add tab grouping feature
+
+# Bug fix
+fix: resolve search result sorting issue
+
+# Documentation
+docs: update technical documentation
+```
