@@ -90,12 +90,12 @@ Or install manually:
      * Go to `chrome://extensions` or `edge://extensions`
      * Enable "Developer mode"
      * Click "Load unpacked"
-     * Select the `dist` directory
+     * Select the `dist/chrome` directory
    - For Firefox:
      * Navigate to `about:debugging`
      * Click "This Firefox"
      * Click "Load Temporary Add-on"
-     * Select `manifest.json` from the `dist` directory
+     * Select `manifest.json` from the `dist/firefox` directory
 
 ### Build for Production
 

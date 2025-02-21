@@ -37,7 +37,8 @@ quick-tab-switcher/
 │   │   ├── popup.tsx         # Entry file
 │   │   └── popup.html        # HTML template
 │   ├── icons/                # Icon resources
-│   └── manifest.json         # Extension configuration
+│   ├── manifest.chrome.json  # Chrome manifest
+│   └── manifest.firefox.json # Firefox manifest
 ```
 
 ### 4.2 Core Modules

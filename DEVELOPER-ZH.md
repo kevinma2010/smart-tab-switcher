@@ -37,7 +37,8 @@ quick-tab-switcher/
 │   │   ├── popup.tsx         # 入口文件
 │   │   └── popup.html        # HTML 模板
 │   ├── icons/                # 图标资源
-│   └── manifest.json         # 扩展配置
+│   ├── manifest.chrome.json  # Chrome 配置文件
+│   └── manifest.firefox.json # Firefox 配置文件
 ```
 
 ### 4.2 核心模块
