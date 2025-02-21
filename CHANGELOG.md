@@ -4,6 +4,19 @@ All notable changes to Quick Tab Switcher will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+- Auto-scroll functionality for keyboard navigation in search results
+
+### Changed
+- Improved browser compatibility:
+  - Created separate manifest files for Chrome and Firefox
+  - Updated build system to support multiple browsers
+  - Added browser-specific build commands
+
+### Fixed
+- Background script configuration for Chrome MV3 (service_worker)
+
 ## [1.0.0] - 2024-01-15
 ### Added
 - Quick tab switching with intuitive search interface

@@ -90,12 +90,12 @@ Smart Tab Switcher 是一个强大的浏览器扩展，通过直观的界面和�
      * 访问 `chrome://extensions` 或 `edge://extensions`
      * 开启"开发者模式"
      * 点击"加载已解压的扩展程序"
-     * 选择 `dist` 目录
+     * 选择 `dist/chrome` 目录
    - Firefox:
      * 访问 `about:debugging`
      * 点击 "This Firefox"
      * 点击 "Load Temporary Add-on"
-     * 选择 `dist` 目录中的 `manifest.json`
+     * 选择 `dist/firefox` 目录中的 `manifest.json`
 
 ### 构建发布版本
 

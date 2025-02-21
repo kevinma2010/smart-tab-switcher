@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Fast tab switching and management for modern browsers (Chrome, Firefox, and Chromium-based browsers)",
   "scripts": {
-    "dev": "webpack --mode development --watch --progress",
-    "build": "webpack --mode production --progress",
+    "dev:chrome": "webpack --mode development --watch --progress --env browser=chrome",
+    "dev:firefox": "webpack --mode development --watch --progress --env browser=firefox",
+    "build:chrome": "webpack --mode production --progress --env browser=chrome",
+    "build:firefox": "webpack --mode production --progress --env browser=firefox",
+    "build": "npm run build:chrome && npm run build:firefox",
     "type-check": "tsc --noEmit",
     "generate-icons": "node scripts/generate-icons.js",
     "prebuild": "npm run generate-icons"
