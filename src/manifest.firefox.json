@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Tab Switcher",
+  "version": "1.0.0",
+  "description": "Fast tab switching and management with fuzzy search and keyboard shortcuts",
+  
+  "permissions": [
+    "tabs",
+    "bookmarks"
+  ],
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+T",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Open quick switcher"
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/extension/icon-16.png",
+      "32": "icons/extension/icon-32.png",
+      "48": "icons/extension/icon-48.png",
+      "128": "icons/extension/icon-128.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/extension/icon-16.png",
+    "32": "icons/extension/icon-32.png",
+    "48": "icons/extension/icon-48.png",
+    "128": "icons/extension/icon-128.png"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "smart-tab-switcher@kevinma2010.com",
+      "strict_min_version": "109.0"
+    }
+  }
+} 
