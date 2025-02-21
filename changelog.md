@@ -6,10 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
-- Enhanced cross-browser compatibility for background scripts
-- Improved Firefox support (v109.0+) with dual background script configuration
-- Ensured consistent behavior across Chrome (v88+) and Firefox browsers
 - Added auto-scroll functionality for keyboard navigation in search results
+- Enhanced cross-browser compatibility:
+  - Created browser-specific manifest files for Chrome and Firefox
+  - Improved Firefox support (v109.0+) with background scripts configuration
+  - Ensured consistent behavior across Chrome (v88+) and Firefox
+
+### Changed
+- Updated build system for multi-browser support:
+  - Added separate build commands for Chrome and Firefox
+  - Modified webpack configuration for browser-specific builds
 
 ## [1.0.0] - 2024-01-15
 ### Added
