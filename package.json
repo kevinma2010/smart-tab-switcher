@@ -1,6 +1,6 @@
 {
   "name": "smart-tab-switcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fast tab switching and management for modern browsers (Chrome, Firefox, and Chromium-based browsers)",
   "scripts": {
     "dev:chrome": "webpack --mode development --watch --progress --env browser=chrome",
