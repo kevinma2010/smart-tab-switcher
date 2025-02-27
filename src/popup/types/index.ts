@@ -5,6 +5,8 @@ export interface SearchResult {
   url: string;
   favicon?: string;
   score?: number;
+  accessCount?: number;
+  lastAccessed?: number;
 }
 
 export interface TabInfo {
@@ -38,4 +40,20 @@ export type Theme = 'light' | 'dark' | 'system';
 export interface ThemeConfig {
   theme: Theme;
   isDark: boolean;
+}
+
+export interface SortSettings {
+  method: 'smart' | 'relevance' | 'usage';
+  weights?: {
+    relevance: number;
+    frequency: number;
+    recency: number;
+  };
+}
+
+export interface TabUsageData {
+  [tabUrl: string]: {
+    accessCount: number;
+    lastAccessed: number;
+  };
 }

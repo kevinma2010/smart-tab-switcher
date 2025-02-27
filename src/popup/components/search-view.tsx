@@ -3,36 +3,24 @@ import { SearchBox } from './search-box';
 import { ResultList } from './result-list';
 import { useSearch } from '../hooks/use-search-complete';
 import { useKeyboard } from '../hooks/use-keyboard';
-import { useTabs } from '../hooks/use-tabs';
 import { SearchResult } from '../types';
 
-export const SearchView: React.FC = () => {
+interface SearchViewProps {
+  onOpenSettings: () => void;
+}
+
+export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings }) => {
   const {
     query,
     setQuery,
     results,
     selectedIndex,
-    setSelectedIndex
+    setSelectedIndex,
+    handleSelect
   } = useSearch();
-
-  const { switchToTab, createTab } = useTabs();
 
   const handleClose = () => {
     window.close();
-  };
-
-  const handleSelect = async (result: SearchResult) => {
-    switch (result.type) {
-      case 'tab':
-        await switchToTab(Number(result.id));
-        break;
-      case 'bookmark':
-      case 'url':
-      case 'google':
-        await createTab(result.url);
-        break;
-    }
-    handleClose();
   };
 
   const {
@@ -40,18 +28,32 @@ export const SearchView: React.FC = () => {
     handleArrowDown,
     handleEnter,
     handleEscape
-  } = useKeyboard(results, selectedIndex, setSelectedIndex, handleClose);
+  } = useKeyboard(results, selectedIndex, setSelectedIndex, handleClose, handleSelect);
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-      <SearchBox
-        value={query}
-        onChange={setQuery}
-        onEscape={handleEscape}
-        onEnter={handleEnter}
-        onArrowUp={handleArrowUp}
-        onArrowDown={handleArrowDown}
-      />
+    <div>
+      <div className="flex items-center p-2">
+        <div className="flex-grow">
+          <SearchBox
+            value={query}
+            onChange={setQuery}
+            onEscape={handleEscape}
+            onEnter={handleEnter}
+            onArrowUp={handleArrowUp}
+            onArrowDown={handleArrowDown}
+          />
+        </div>
+        <button 
+          onClick={onOpenSettings}
+          className="ml-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+          title="Settings"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
       <ResultList
         results={results}
         selectedIndex={selectedIndex}

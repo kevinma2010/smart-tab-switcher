@@ -18,7 +18,7 @@ body {
   height: 100%;
 }
 
-/* 自定义滚动条样式 */
+/* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -36,7 +36,7 @@ body {
   @apply bg-gray-500 dark:bg-gray-500;
 }
 
-/* 动画效果 */
+/* Animation effects */
 .fade-enter {
   opacity: 0;
 }
