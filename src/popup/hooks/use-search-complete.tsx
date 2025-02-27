@@ -26,7 +26,7 @@ export const useSearch = () => {
   const [usageData, setUsageData] = useState<TabUsageData>({});
   const [currentTabId, setCurrentTabId] = useState<number | null>(null);
 
-  // Load sort settings and usage data
+  // 加载排序设置和使用数据
   useEffect(() => {
     const loadSettings = async () => {
       try {
@@ -52,7 +52,7 @@ export const useSearch = () => {
         browser.tabs.query({ active: true, currentWindow: true })
       ]);
 
-      // Save current tab ID
+      // 保存当前标签页的ID
       if (currentTabs[0]?.id) {
         setCurrentTabId(currentTabs[0].id);
       }
@@ -75,7 +75,7 @@ export const useSearch = () => {
     loadData();
   }, []);
 
-  // Get current tab
+  // 获取当前标签页
   useEffect(() => {
     const getCurrentTab = async () => {
       try {
@@ -113,7 +113,7 @@ export const useSearch = () => {
     const urlMap = new Map<string, SearchResult>();
 
     if (!searchQuery.trim()) {
-      // When no search query, show all tabs (except current tab), but still apply sorting
+      // 当没有搜索关键词时，显示所有标签页（除了当前标签页），但仍然应用排序
       tabs.forEach(tab => {
         if (tab.id !== currentTabId) {
           urlMap.set(normalizeUrl(tab.url), {
@@ -126,12 +126,12 @@ export const useSearch = () => {
     } else {
       // Search tabs
       if (includeTabs) {
-        // Filter out current tab before searching
+        // 过滤掉当前标签页后再进行搜索
         const searchableTabs = tabs;
         const tabsFuse = new Fuse(searchableTabs, SEARCH_OPTIONS);
         const tabResults = tabsFuse.search(searchQuery);
         tabResults.forEach(({ item, score = 1 }) => {
-          // Only filter out current tab when displaying results
+          // 只在显示结果时过滤掉当前标签页
           if (item.id !== currentTabId) {
             urlMap.set(normalizeUrl(item.url), {
               ...item,
@@ -150,11 +150,11 @@ export const useSearch = () => {
           const normalizedUrl = normalizeUrl(item.url);
           const existingResult = urlMap.get(normalizedUrl);
           
-          // Check if this bookmark is already open as a tab
+          // 检查这个书签是否已经作为标签页打开
           const openTab = tabs.find((tab: TabInfo) => normalizeUrl(tab.url || '') === normalizedUrl);
           
           if (openTab) {
-            // If bookmark is open and either no result exists or new score is better
+            // 如果书签已经打开，且还没有这个URL的结果，或者新的分数更好
             if (!existingResult || score < (existingResult.score || 1)) {
               urlMap.set(normalizedUrl, {
                 ...openTab,
@@ -164,7 +164,7 @@ export const useSearch = () => {
               });
             }
           } else if (!existingResult || score < (existingResult.score || 1)) {
-            // If bookmark is not open, keep as bookmark type
+            // 如果书签没有打开，保持为书签类型
             urlMap.set(normalizedUrl, {
               ...item,
               type: 'bookmark' as const,
@@ -196,7 +196,7 @@ export const useSearch = () => {
     // Add deduplicated results
     results.push(...urlMap.values());
 
-    // Sort results using the sorting algorithm
+    // 使用排序算法对结果进行排序
     return sortResults(results, sortSettings, usageData).slice(0, limit);
   }, [tabs, bookmarks, usageData, sortSettings, currentTabId]);
 
@@ -207,29 +207,29 @@ export const useSearch = () => {
     setSelectedIndex(0);
   }, [query, search]);
 
-  // Record selected result
+  // 记录选择的结果
   const handleSelect = async (result: SearchResult) => {
     try {
       if (result.type === 'tab') {
-        // Get current active tab
+        // 获取当前活动标签页
         const currentTabs = await browser.tabs.query({ active: true, currentWindow: true });
         const currentTab = currentTabs[0];
         
-        // Only activate if not the current tab
+        // 只在不是当前标签页时才激活
         if (currentTab && parseInt(result.id) !== currentTab.id) {
-          // Activate selected tab, access record will be handled by onActivated event
+          // 激活选择的标签页，访问记录会由 onActivated 事件处理
           await browser.tabs.update(parseInt(result.id), { active: true });
         }
         window.close();
       } else if (result.type === 'bookmark' || result.type === 'url' || result.type === 'google') {
-        // For new tabs, record access first
+        // 对于新标签页，先记录访问
         await recordTabAccess(result.url);
         
-        // Get updated usage data
+        // 重新获取最新的使用数据
         const updatedUsageData = await getUsageData();
         setUsageData(updatedUsageData);
         
-        // Create new tab
+        // 创建新标签页
         await browser.tabs.create({ url: result.url });
         window.close();
       }

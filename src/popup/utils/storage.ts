@@ -1,39 +1,38 @@
 import browser from 'webextension-polyfill';
 
-// Sort settings type definition
+// 检查 storage API 是否可用
+const isStorageAvailable = () => {
+  return browser && browser.storage && browser.storage.local;
+};
+
+// 排序设置类型定义
 export interface SortSettings {
   method: 'smart' | 'relevance' | 'usage';
-  weights?: {  // Optional, only used for smart sorting
+  weights?: {  // 设为可选，因为只有 smart 排序才会用到
     relevance: number;
     frequency: number;
     recency: number;
   };
 }
 
-// Tab usage data type definition
+// 标签页使用数据类型定义
 export interface TabUsageData {
   [tabUrl: string]: {
     accessCount: number;
-    lastAccessed: number; // timestamp
+    lastAccessed: number; // 时间戳
   };
 }
 
-// Default sort settings
+// 默认设置
 export const DEFAULT_SORT_SETTINGS: SortSettings = {
-  method: 'smart',
-  weights: {
-    relevance: 60,
-    frequency: 20,
-    recency: 20
-  }
+  method: 'smart'
 };
 
-// Check if storage API is available
-const isStorageAvailable = () => {
-  return typeof browser !== 'undefined' && browser.storage && browser.storage.local;
-};
+// 数据清理设置
+export const USAGE_DATA_MAX_ITEMS = 1000; // 最大存储项数
+export const USAGE_DATA_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30天，单位毫秒
 
-// Save sort settings
+// 保存排序设置
 export const saveSortSettings = async (settings: SortSettings): Promise<void> => {
   if (!isStorageAvailable()) {
     console.error('Storage API is not available');
@@ -47,7 +46,7 @@ export const saveSortSettings = async (settings: SortSettings): Promise<void> =>
   }
 };
 
-// Get sort settings
+// 获取排序设置
 export const getSortSettings = async (): Promise<SortSettings> => {
   if (!isStorageAvailable()) {
     console.error('Storage API is not available');
@@ -63,7 +62,7 @@ export const getSortSettings = async (): Promise<SortSettings> => {
   }
 };
 
-// Save usage data
+// 保存使用数据
 export const saveUsageData = async (data: TabUsageData): Promise<void> => {
   if (!isStorageAvailable()) {
     console.error('Storage API is not available');
@@ -71,13 +70,13 @@ export const saveUsageData = async (data: TabUsageData): Promise<void> => {
   }
   
   try {
-    await browser.storage.local.set({ usageData: data });
+    await browser.storage.local.set({ tabUsageData: data });
   } catch (error) {
     console.error('Error saving usage data:', error);
   }
 };
 
-// Get usage data
+// 获取使用数据
 export const getUsageData = async (): Promise<TabUsageData> => {
   if (!isStorageAvailable()) {
     console.error('Storage API is not available');
@@ -85,18 +84,53 @@ export const getUsageData = async (): Promise<TabUsageData> => {
   }
   
   try {
-    const result = await browser.storage.local.get('usageData');
-    return result.usageData || {};
+    const result = await browser.storage.local.get('tabUsageData');
+    return result.tabUsageData || {};
   } catch (error) {
     console.error('Error getting usage data:', error);
     return {};
   }
 };
 
-// Record tab access
+// 清理过期数据
+export const cleanupUsageData = async (): Promise<void> => {
+  if (!isStorageAvailable()) {
+    console.error('Storage API is not available');
+    return;
+  }
+  
+  try {
+    const data = await getUsageData();
+    const now = Date.now();
+    
+    // 删除过期数据
+    Object.keys(data).forEach(url => {
+      if (now - data[url].lastAccessed > USAGE_DATA_MAX_AGE) {
+        delete data[url];
+      }
+    });
+    
+    // 如果数据量过大，删除最不常用的项
+    if (Object.keys(data).length > USAGE_DATA_MAX_ITEMS) {
+      const sortedUrls = Object.keys(data).sort((a, b) => 
+        (data[a].accessCount / Math.sqrt(now - data[a].lastAccessed)) - 
+        (data[b].accessCount / Math.sqrt(now - data[b].lastAccessed))
+      );
+      
+      const urlsToRemove = sortedUrls.slice(0, sortedUrls.length - USAGE_DATA_MAX_ITEMS);
+      urlsToRemove.forEach(url => delete data[url]);
+    }
+    
+    await saveUsageData(data);
+  } catch (error) {
+    console.error('Error cleaning up usage data:', error);
+  }
+};
+
+// 记录标签页访问
 export const recordTabAccess = async (tabUrl: string): Promise<void> => {
   if (!tabUrl || tabUrl.startsWith('chrome://') || tabUrl.startsWith('about:')) {
-    return; // Ignore browser internal pages
+    return; // 忽略浏览器内部页面
   }
 
   if (!isStorageAvailable()) {

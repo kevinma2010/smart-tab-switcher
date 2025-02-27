@@ -1,10 +1,11 @@
 import browser from 'webextension-polyfill';
-import { TabUsageData } from '../popup/types';
-import { getUsageData, saveUsageData, recordTabAccess } from '../popup/utils/storage';
 
 console.log('Background script loaded');
 
-// Listen for keyboard shortcuts
+// 导入存储工具函数
+import { recordTabAccess, cleanupUsageData } from '../popup/utils/storage';
+
+// 监听快捷键命令
 browser.commands.onCommand.addListener(async (command) => {
   console.log('Command received:', command);
   if (command === '_execute_action') {
@@ -17,12 +18,12 @@ browser.commands.onCommand.addListener(async (command) => {
   }
 });
 
-// Maintain tab index cache
+// 维护标签页索引缓存
 let tabsCache = new Map();
-// Record recent access times to avoid duplicate records
+// 记录最近的访问时间，用于避免重复记录
 let lastAccessTimes = new Map<string, number>();
 
-// Initialize tab cache
+// 初始化标签页缓存
 async function initTabsCache() {
   const tabs = await browser.tabs.query({});
   tabsCache.clear();
@@ -39,7 +40,7 @@ async function initTabsCache() {
   });
 }
 
-// Check if access should be recorded (avoid duplicate records in short time)
+// 检查是否应该记录访问（避免短时间内重复记录）
 const shouldRecordAccess = (url: string): boolean => {
   if (!url || url === 'about:blank' || url.startsWith('chrome://')) {
     return false;
@@ -47,7 +48,7 @@ const shouldRecordAccess = (url: string): boolean => {
   
   const now = Date.now();
   const lastAccess = lastAccessTimes.get(url);
-  // Don't record if less than 1 second since last record
+  // 如果距离上次记录不足1秒，不重复记录
   if (lastAccess && now - lastAccess < 1000) {
     return false;
   }
@@ -56,7 +57,7 @@ const shouldRecordAccess = (url: string): boolean => {
   return true;
 };
 
-// Monitor tab changes
+// 监听标签页变化
 browser.tabs.onCreated.addListener(async (tab) => {
   if (tab.id) {
     tabsCache.set(tab.id, {
@@ -67,7 +68,7 @@ browser.tabs.onCreated.addListener(async (tab) => {
     });
   }
   
-  // Only record when URL exists and is not a blank page
+  // 只有当URL存在且不是空白页时才记录
   if (tab.url && shouldRecordAccess(tab.url)) {
     await recordTabAccess(tab.url);
   }
@@ -87,13 +88,13 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     });
   }
   
-  // Record access when tab completes loading and URL changes
+  // 当标签页完成加载且URL改变时记录访问
   if (changeInfo.status === 'complete' && changeInfo.url && shouldRecordAccess(changeInfo.url)) {
     recordTabAccess(changeInfo.url);
   }
 });
 
-// Monitor tab activation events to record usage data
+// 监听标签页激活事件，记录访问数据
 browser.tabs.onActivated.addListener(async (activeInfo) => {
   const tab = await browser.tabs.get(activeInfo.tabId);
   if (tab.url && shouldRecordAccess(tab.url)) {
@@ -101,16 +102,35 @@ browser.tabs.onActivated.addListener(async (activeInfo) => {
   }
 });
 
-// Handle extension installation and updates
+// 初始化缓存
+initTabsCache();
+
+// 创建定期清理数据的定时任务
+browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 }); // 每天清理一次
+
+// 监听定时任务
+browser.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === 'cleanupUsageData') {
+    cleanupUsageData();
+  }
+});
+
+// 处理插件安装和更新
 browser.runtime.onInstalled.addListener(async ({ reason }) => {
   console.log('Extension installed/updated:', reason);
   if (reason === 'install') {
-    // Logic for first installation
+    // 首次安装时的逻辑
     console.log('Quick Tab Switcher installed');
     await initTabsCache();
+    
+    // 创建定时清理任务
+    browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
   } else if (reason === 'update') {
-    // Logic for updates
+    // 更新时的逻辑
     console.log('Quick Tab Switcher updated');
     await initTabsCache();
+    
+    // 确保定时清理任务存在
+    browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
   }
 });

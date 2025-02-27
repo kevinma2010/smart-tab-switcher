@@ -35,7 +35,7 @@ export const ResultList: React.FC<ResultListProps> = ({
     }
   }, [selectedIndex]);
 
-  // Group results by type
+  // 对结果进行分组
   const groupedResults = results.reduce((groups, result) => {
     const type = result.type;
     if (!groups[type]) {
@@ -45,13 +45,13 @@ export const ResultList: React.FC<ResultListProps> = ({
     return groups;
   }, {} as Record<string, SearchResult[]>);
 
-  // Define group order and titles
+  // 定义分组顺序和标题
   const groupOrder = ['tab', 'bookmark', 'url', 'google'];
   const groupTitles = {
-    tab: 'Tabs',
-    bookmark: 'Bookmarks',
-    url: 'URLs',
-    google: 'Search'
+    tab: '标签页',
+    bookmark: '书签',
+    url: '网址',
+    google: '搜索'
   };
 
   return (
@@ -100,10 +100,10 @@ export const ResultList: React.FC<ResultListProps> = ({
             </svg>
           </div>
           <div className="text-gray-500 dark:text-gray-400 text-sm">
-            No matching results found
+            未找到匹配结果
           </div>
           <div className="text-gray-400 dark:text-gray-500 text-xs mt-1">
-            Press Enter to search Google or open URL
+            按回车键搜索 Google 或打开网址
           </div>
         </div>
       )}

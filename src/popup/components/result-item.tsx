@@ -28,32 +28,32 @@ export const ResultItem: React.FC<ResultItemProps> = ({
     }
   };
 
-  // Show usage data (only for tabs and bookmarks)
+  // 显示使用数据（仅对标签页和书签）
   const showUsageData = result.type === 'tab' || result.type === 'bookmark';
 
-  // Generate frequency stars (0-5 stars)
+  // 生成访问频率星级（0-5星）
   const getFrequencyStars = () => {
     if (!result.accessCount || result.accessCount <= 0) return 0;
-    if (result.accessCount >= 10) return 5;  // Frequently used (10+ times)
-    if (result.accessCount >= 5) return 4;   // Multiple uses (5-9 times)
-    if (result.accessCount >= 3) return 3;   // Occasional use (3-4 times)
-    if (result.accessCount >= 2) return 2;   // Used a few times (2 times)
-    return 1;                                // Used once
+    if (result.accessCount >= 10) return 5;  // 经常使用（10次以上）
+    if (result.accessCount >= 5) return 4;   // 多次使用（5-9次）
+    if (result.accessCount >= 3) return 3;   // 偶尔使用（3-4次）
+    if (result.accessCount >= 2) return 2;   // 用过几次（2次）
+    return 1;                                // 用过一次
   };
 
   const frequencyStars = getFrequencyStars();
 
-  // Get type label
+  // 获取类型标签
   const getTypeLabel = () => {
     switch (result.type) {
       case 'tab':
-        return { text: 'Tab', bgColor: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' };
+        return { text: '标签页', bgColor: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' };
       case 'bookmark':
-        return { text: 'Bookmark', bgColor: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' };
+        return { text: '书签', bgColor: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' };
       case 'google':
-        return { text: 'Search', bgColor: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' };
+        return { text: '搜索', bgColor: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' };
       case 'url':
-        return { text: 'URL', bgColor: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' };
+        return { text: '网址', bgColor: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' };
       default:
         return { text: '', bgColor: '' };
     }
@@ -98,7 +98,7 @@ export const ResultItem: React.FC<ResultItemProps> = ({
               ))}
             </div>
             {result.lastAccessed && result.lastAccessed > 0 && (
-              <div className="flex items-center" title="Last accessed">
+              <div className="flex items-center" title="最后访问时间">
                 <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>

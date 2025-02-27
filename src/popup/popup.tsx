@@ -5,10 +5,10 @@ import { SettingsView } from './components/settings-view';
 import { useTheme } from './hooks/use-theme';
 import './styles.css';
 
-// Add logging functionality
+// 添加日志功能
 console.log('Popup script loaded');
 
-// Add error listener
+// 添加错误监听
 window.addEventListener('error', (e) => {
   console.error('Popup error:', e);
 });
@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
     
-    // Try to focus after component mount
+    // 在组件挂载后尝试聚焦
     const focusSearchInput = () => {
       if (view === 'search') {
         const searchInput = document.querySelector('input[type="text"]');
@@ -30,20 +30,20 @@ const App = () => {
       }
     };
 
-    // Try to focus immediately
+    // 立即尝试聚焦
     focusSearchInput();
     
-    // Try again in case first attempt fails
+    // 以防第一次尝试失败，再次尝试
     const timeoutId = setTimeout(focusSearchInput, 100);
     
     return () => clearTimeout(timeoutId);
   }, [isDark, view]);
 
-  // Add logs for DOMContentLoaded and load events
+  // 添加 DOMContentLoaded 和 load 事件的日志
   useEffect(() => {
     console.log('React App mounted');
     
-    // Since DOMContentLoaded might have fired when React component mounts, only log load event
+    // 由于 React 组件挂载时，DOMContentLoaded 事件可能已经触发，所以这里只记录 load 事件
     if (document.readyState === 'complete') {
       console.log('Popup fully loaded (already)');
     } else {
