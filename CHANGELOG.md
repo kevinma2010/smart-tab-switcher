@@ -4,6 +4,29 @@ All notable changes to Quick Tab Switcher will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+- Advanced sorting optimization:
+  - Smart sorting algorithm combining relevance, frequency, and recency
+  - Usage-based sorting with access frequency tracking
+  - Recency-based sorting using last access time
+  - Settings page for customizing sort methods
+  - Visual indicators for usage frequency (star rating)
+  - Last accessed time display in search results
+- Usage data management:
+  - Automatic tracking of tab access patterns
+  - Periodic cleanup of outdated usage data
+  - Memory optimization for long-term usage
+
+### Changed
+- Enhanced bookmark handling:
+  - Display opened bookmarks as tabs in search results
+  - Maintain original bookmark type for unopened bookmarks
+- Improved result item display:
+  - Added frequency indicators (0-5 stars)
+  - Added relative time display
+  - Better visual organization of metadata
+
 ## [1.0.1] - 2024-03-26
 ### Added
 - Auto-scroll functionality for keyboard navigation in search results
