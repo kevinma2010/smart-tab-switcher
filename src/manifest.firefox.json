@@ -6,7 +6,9 @@
   
   "permissions": [
     "tabs",
-    "bookmarks"
+    "bookmarks",
+    "alarms",
+    "storage"
   ],
 
   "commands": {

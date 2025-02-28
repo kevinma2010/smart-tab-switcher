@@ -1,0 +1,9 @@
+---
+description: Best practices for using Tailwind CSS in your project
+globs:  **/*.{ts,tsx,css}
+alwaysApply: false
+---
+- Use utility-first approach for styling components
+- Create custom utility classes for frequently used styles
+- Utilize responsive design utilities for different screen sizes
+- Keep your `tailwind.config.js` organized and maintainable

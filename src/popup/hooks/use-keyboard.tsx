@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 import { SearchResult } from '../types';
-import browser from 'webextension-polyfill';
 
 export const useKeyboard = (
   results: SearchResult[],
   selectedIndex: number,
   setSelectedIndex: (value: number | ((prev: number) => number)) => void,
-  onClose: () => void
+  onClose: () => void,
+  onSelect?: (result: SearchResult) => Promise<void>
 ) => {
   const handleArrowUp = useCallback(() => {
     setSelectedIndex((prev: number) => 
@@ -23,24 +23,22 @@ export const useKeyboard = (
   const handleEnter = useCallback(async () => {
     if (!results.length) return;
     
-    const selected = results[selectedIndex];
-    
-    switch (selected.type) {
-      case 'tab':
-        // Switch to existing tab
-        await browser.tabs.update(Number(selected.id), { active: true });
-        break;
+    try {
+      const selected = results[selectedIndex];
       
-      case 'bookmark':
-      case 'url':
-      case 'google':
-        // Open new tab
-        await browser.tabs.create({ url: selected.url });
-        break;
+      if (onSelect) {
+        // Use the provided selection handling function
+        await onSelect(selected);
+      } else {
+        // Default behavior remains unchanged
+        onClose();
+      }
+    } catch (error) {
+      console.error('Error handling enter key:', error);
+      // If an error occurs, try to close the window
+      onClose();
     }
-    
-    onClose();
-  }, [results, selectedIndex, onClose]);
+  }, [results, selectedIndex, onClose, onSelect]);
 
   const handleEscape = useCallback(() => {
     onClose();

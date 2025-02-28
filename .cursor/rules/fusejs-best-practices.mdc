@@ -1,0 +1,9 @@
+---
+description: Best practices for using Fuse.js for fuzzy search functionality
+globs: **/*.{ts,tsx,js,jsx}
+alwaysApply: false
+---
+- Preprocess your data to improve search performance
+- Use appropriate options like `threshold` and `distance` for better search results
+- Implement caching mechanisms for frequently searched queries
+- Consider using `Fuse.createIndex` for large datasets to speed up initialization

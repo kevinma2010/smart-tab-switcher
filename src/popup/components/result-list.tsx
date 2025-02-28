@@ -35,21 +35,76 @@ export const ResultList: React.FC<ResultListProps> = ({
     }
   }, [selectedIndex]);
 
+  // Group results
+  const groupedResults = results.reduce((groups, result) => {
+    const type = result.type;
+    if (!groups[type]) {
+      groups[type] = [];
+    }
+    groups[type].push(result);
+    return groups;
+  }, {} as Record<string, SearchResult[]>);
+
+  // Define group order and titles
+  const groupOrder = ['tab', 'bookmark', 'url', 'google'];
+  const groupTitles = {
+    tab: 'Tabs',
+    bookmark: 'Bookmarks',
+    url: 'URLs',
+    google: 'Search'
+  };
+
   return (
     <div ref={listRef} className="max-h-96 overflow-y-auto">
-      {results.map((result, index) => (
-        <div key={`${result.type}-${result.id}`} ref={index === selectedIndex ? selectedRef : null}>
-          <ResultItem
-            result={result}
-            isSelected={index === selectedIndex}
-            onClick={() => onSelect(result)}
-          />
-        </div>
-      ))}
-      
-      {results.length === 0 && (
-        <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-          No results found. Press Enter to search Google or open URL.
+      {results.length > 0 ? (
+        <>
+          {groupOrder.map(group => {
+            const groupResults = groupedResults[group];
+            if (!groupResults || groupResults.length === 0) return null;
+            
+            return (
+              <div key={group} className="mb-2">
+                <div className="px-3 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">
+                  {groupTitles[group as keyof typeof groupTitles]} ({groupResults.length})
+                </div>
+                {groupResults.map((result, groupIndex) => {
+                  const index = results.findIndex(r => r.id === result.id);
+                  return (
+                    <div 
+                      key={`${result.type}-${result.id}`} 
+                      ref={index === selectedIndex ? selectedRef : null}
+                    >
+                      <ResultItem
+                        result={result}
+                        isSelected={index === selectedIndex}
+                        onClick={() => {
+                          try {
+                            onSelect(result);
+                          } catch (error) {
+                            console.error('Error selecting result:', error);
+                          }
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <div className="p-8 text-center">
+          <div className="text-gray-400 dark:text-gray-500 mb-2">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <div className="text-gray-500 dark:text-gray-400 text-sm">
+            No matching results found
+          </div>
+          <div className="text-gray-400 dark:text-gray-500 text-xs mt-1">
+            Press Enter to search Google or open URL
+          </div>
         </div>
       )}
     </div>

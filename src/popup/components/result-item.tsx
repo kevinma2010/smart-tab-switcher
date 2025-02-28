@@ -1,5 +1,6 @@
 import React from 'react';
 import { SearchResult } from '../types';
+import { formatRelativeTime } from '../utils/time';
 
 interface ResultItemProps {
   result: SearchResult;
@@ -27,12 +28,45 @@ export const ResultItem: React.FC<ResultItemProps> = ({
     }
   };
 
+  // Display usage data (only for tabs and bookmarks)
+  const showUsageData = result.type === 'tab' || result.type === 'bookmark';
+
+  // Generate frequency stars (0-5 stars)
+  const getFrequencyStars = () => {
+    if (!result.accessCount || result.accessCount <= 0) return 0;
+    if (result.accessCount >= 10) return 5;  // Frequently used (10+ times)
+    if (result.accessCount >= 5) return 4;   // Multiple uses (5-9 times)
+    if (result.accessCount >= 3) return 3;   // Occasional use (3-4 times)
+    if (result.accessCount >= 2) return 2;   // Used a few times (2 times)
+    return 1;                                // Used once
+  };
+
+  const frequencyStars = getFrequencyStars();
+
+  // Get type label
+  const getTypeLabel = () => {
+    switch (result.type) {
+      case 'tab':
+        return { text: 'Tab', bgColor: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' };
+      case 'bookmark':
+        return { text: 'Bookmark', bgColor: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' };
+      case 'google':
+        return { text: 'Search', bgColor: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' };
+      case 'url':
+        return { text: 'URL', bgColor: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' };
+      default:
+        return { text: '', bgColor: '' };
+    }
+  };
+
+  const typeLabel = getTypeLabel();
+
   return (
     <div
-      className={`p-3 flex items-center cursor-pointer 
-        hover:bg-gray-100 dark:hover:bg-gray-700
+      className={`p-3 flex items-center cursor-pointer border-b border-gray-100 dark:border-gray-700
+        hover:bg-gray-50 dark:hover:bg-gray-700
         ${isSelected ? 'bg-blue-50 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600' : ''}
-        dark:text-gray-100`}
+        dark:text-gray-100 transition-colors`}
       onClick={onClick}
     >
       <img
@@ -41,18 +75,39 @@ export const ResultItem: React.FC<ResultItemProps> = ({
         alt=""
       />
       <div className="flex-grow min-w-0">
-        <div className="text-sm font-medium truncate dark:text-gray-100">
-          {result.title}
+        <div className="flex items-center mb-1">
+          <div className="text-sm font-medium truncate dark:text-gray-100 mr-2">
+            {result.title}
+          </div>
+          <div className={`text-xs px-1.5 py-0.5 rounded-full ${typeLabel.bgColor} flex-shrink-0`}>
+            {typeLabel.text}
+          </div>
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
-          {result.url}
+        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+          <div className="truncate">
+            {result.url}
+          </div>
         </div>
+        {showUsageData && (result.accessCount ?? 0) > 0 && (
+          <div className="flex items-center mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <div className="flex mr-3">
+              {[...Array(5)].map((_, i) => (
+                <span key={i} className={i < frequencyStars ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-600'}>
+                  ★
+                </span>
+              ))}
+            </div>
+            {result.lastAccessed && result.lastAccessed > 0 && (
+              <div className="flex items-center" title="Last accessed">
+                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {formatRelativeTime(result.lastAccessed)}
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      {result.type === 'tab' && (
-        <div className="ml-2 px-2 py-1 text-xs bg-gray-200 dark:bg-gray-600 rounded flex-shrink-0">
-          Switch to Tab
-        </div>
-      )}
     </div>
   );
 };
