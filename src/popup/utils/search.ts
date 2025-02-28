@@ -33,7 +33,7 @@ export const debounce = <F extends (...args: any[]) => any>(
       return 0.8 * weight;
     }
   
-    // 计算编辑距离的简单实现
+    // Simple implementation of edit distance calculation
     const words = text.split(/\s+/);
     const queryWords = query.split(/\s+/);
   

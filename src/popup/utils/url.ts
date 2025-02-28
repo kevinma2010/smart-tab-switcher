@@ -1,6 +1,6 @@
 export const isValidUrl = (urlString: string): boolean => {
     try {
-      // 修正常见的 URL 输入
+      // Fix common URL input
       if (!urlString.match(/^[a-zA-Z]+:\/\//)) {
         urlString = 'https://' + urlString;
       }

@@ -66,7 +66,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
             focus:outline-none focus:ring-2 focus:ring-blue-500
             dark:placeholder-gray-400"
-          placeholder="搜索标签页、书签或输入网址..."
+          placeholder="Search tabs, bookmarks or enter URL..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -78,7 +78,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
           <button
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
             onClick={handleClear}
-            aria-label="清除搜索"
+            aria-label="Clear search"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -89,14 +89,14 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
       <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
         <div>
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">↑↓</kbd>
-          <span className="mr-3">导航</span>
+          <span className="mr-3">Navigate</span>
           
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Enter</kbd>
-          <span>选择</span>
+          <span>Select</span>
         </div>
         <div>
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
-          <span>关闭</span>
+          <span>Close</span>
         </div>
       </div>
     </div>

@@ -27,15 +27,15 @@ export const useKeyboard = (
       const selected = results[selectedIndex];
       
       if (onSelect) {
-        // 使用传入的选择处理函数
+        // Use the provided selection handling function
         await onSelect(selected);
       } else {
-        // 默认行为保持不变
+        // Default behavior remains unchanged
         onClose();
       }
     } catch (error) {
       console.error('Error handling enter key:', error);
-      // 如果出错，尝试关闭窗口
+      // If an error occurs, try to close the window
       onClose();
     }
   }, [results, selectedIndex, onClose, onSelect]);
