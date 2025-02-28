@@ -13,14 +13,19 @@ KEY FEATURES:
 • Real-time Search: Lightning-fast search through open tabs and bookmarks
 • Keyboard-Centric: Complete keyboard navigation support
 • Smart Matching: Fuzzy search for quick target page location
++ • Intelligent Sorting: Smart algorithm combining recency, frequency, and relevance
++ • Usage Tracking: Automatically remembers your most visited and recent tabs
++ • Visual Indicators: See tab usage frequency and last access time at a glance
 • Bookmark Integration: Seamlessly search through bookmarks
 • URL Recognition: Smart URL detection and direct opening
 • Google Search: Instant Google search when no matches found
++ • Customizable Settings: Personalize sorting methods and display preferences
 
 Perfect for:
 • Power users who work with many tabs
 • Productivity enthusiasts
 • Anyone who wants faster tab navigation
++ • Users who frequently switch between recently used tabs
 
 Open source and free forever!
 
