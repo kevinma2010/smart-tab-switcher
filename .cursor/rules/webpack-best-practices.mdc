@@ -1,0 +1,9 @@
+---
+description: Best practices for configuring and optimizing Webpack
+globs: **/webpack.config.js
+alwaysApply: false
+---
+- Use code splitting to reduce bundle size and improve load times
+- Implement source maps for better debugging in development
+- Utilize tree shaking to eliminate dead code
+- Optimize images and assets using appropriate loaders and plugins
