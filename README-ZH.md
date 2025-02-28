@@ -20,7 +20,7 @@ Smart Tab Switcher 是一个强大的浏览器扩展，通过直观的界面和�
 
 <div align="center">
 
-[![Chrome 应用商店](https://img.shields.io/chrome-web-store/v/smart-tab-switcher?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chrome.google.com/webstore/detail/smart-tab-switcher)
+[![Chrome 应用商店](https://img.shields.io/chrome-web-store/v/smart-tab-switcher?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/jjjkdlhleiedpjijkfofahkjfoehamok)
 [![Firefox 附加组件](https://img.shields.io/amo/v/smart-tab-switcher?label=Firefox&style=for-the-badge&logo=firefox&logoColor=white)](https://addons.mozilla.org/firefox/addon/smart-tab-switcher)
 [![Edge 外接程序](https://img.shields.io/badge/Edge-v1.0.0-blue?style=for-the-badge&logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/smart-tab-switcher)
 
