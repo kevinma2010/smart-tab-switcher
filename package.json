@@ -10,7 +10,8 @@
     "build": "npm run build:chrome && npm run build:firefox",
     "type-check": "tsc --noEmit",
     "generate-icons": "node scripts/generate-icons.js",
-    "prebuild": "npm run generate-icons"
+    "prebuild": "npm run generate-icons",
+    "build:release": "node scripts/build-release.js"
   },
   "dependencies": {
     "copy-webpack-plugin": "^12.0.2",

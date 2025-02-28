@@ -170,6 +170,23 @@ pnpm build         # Production build
 2. Check background page console
 3. Inspect popup page elements
 
+### 9.3 Building for Release
+
+To create release packages for both Chrome and Firefox:
+
+```bash
+npm run build:release
+```
+
+This will:
+1. Build the extension for both browsers
+2. Create zip files in the `release` directory
+3. Generate packages named:
+   - `smart-tab-switcher-chrome-v{version}.zip`
+   - `smart-tab-switcher-firefox-v{version}.zip`
+
+These packages are ready to be submitted to the Chrome Web Store and Firefox Add-ons.
+
 ## 10. Future Improvements
 
 1. Search Algorithm Enhancement

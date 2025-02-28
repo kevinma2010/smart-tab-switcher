@@ -165,6 +165,23 @@ pnpm build         # 生产构建
 2. 查看 background 页面控制台
 3. 检查 popup 页面元素
 
+### 9.3 构建发布版本
+
+要创建 Chrome 和 Firefox 的发布包：
+
+```bash
+npm run build:release
+```
+
+这个命令会：
+1. 为两个浏览器构建扩展
+2. 在 `release` 目录中创建 zip 文件
+3. 生成以下命名的包：
+   - `smart-tab-switcher-chrome-v{version}.zip`
+   - `smart-tab-switcher-firefox-v{version}.zip`
+
+这些包可以直接提交到 Chrome Web Store 和 Firefox Add-ons。
+
 ## 10. 待优化项目
 
 1. 搜索算法优化

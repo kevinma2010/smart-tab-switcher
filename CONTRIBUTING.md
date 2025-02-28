@@ -78,6 +78,31 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
    - Link any relevant issues
    - Request review from maintainers
 
+### Release Process
+
+1. **Update version and changelog**
+   - Update version in `package.json`
+   - Add your changes to `CHANGELOG.md` under a new version section
+
+2. **Build release packages**
+   ```bash
+   npm run build:release
+   ```
+   This will create:
+   - `smart-tab-switcher-chrome-v{version}.zip`
+   - `smart-tab-switcher-firefox-v{version}.zip`
+   in the `release` directory.
+
+3. **Create GitHub Release**
+   - Create a new release on GitHub
+   - Tag version as `v{version}`
+   - Upload the zip files
+   - Include the changelog in release notes
+
+4. **Submit to Browser Stores**
+   - Submit to Chrome Web Store
+   - Submit to Firefox Add-ons
+
 ### Style Guidelines
 
 #### JavaScript/TypeScript
