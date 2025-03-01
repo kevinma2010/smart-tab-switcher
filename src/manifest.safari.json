@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Tab Switcher",
+  "version": "1.0.0",
+  "description": "Fast tab switching and management with fuzzy search and keyboard shortcuts",
+  
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "alarms",
+    "storage"
+  ],
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+T",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Open quick switcher"
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/extension/icon.svg"
+  },
+
+  "icons": {
+    "16": "icons/extension/icon-16.png",
+    "32": "icons/extension/icon-32.png",
+    "48": "icons/extension/icon-48.png",
+    "96": "icons/extension/icon-96.png",
+    "128": "icons/extension/icon-128.png",
+    "256": "icons/extension/icon-256.png",
+    "512": "icons/extension/icon-512.png"
+  },
+
+  "browser_specific_settings": {
+    "safari": {
+      "strict_min_version": "14.0"
+    }
+  }
+} 

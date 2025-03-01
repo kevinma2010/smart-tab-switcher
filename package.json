@@ -5,9 +5,11 @@
   "scripts": {
     "dev:chrome": "webpack --mode development --watch --progress --env browser=chrome",
     "dev:firefox": "webpack --mode development --watch --progress --env browser=firefox",
+    "dev:safari": "webpack --mode development --watch --progress --env browser=safari",
     "build:chrome": "webpack --mode production --progress --env browser=chrome",
     "build:firefox": "webpack --mode production --progress --env browser=firefox",
-    "build": "npm run build:chrome && npm run build:firefox",
+    "build:safari": "webpack --mode production --progress --env browser=safari",
+    "build": "npm run build:chrome && npm run build:firefox && npm run build:safari",
     "type-check": "tsc --noEmit",
     "generate-icons": "node scripts/generate-icons.js",
     "prebuild": "npm run generate-icons",

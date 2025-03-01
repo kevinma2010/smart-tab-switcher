@@ -20,9 +20,9 @@ fs.readdirSync(releaseDir).forEach(file => {
 console.log('Building extension...');
 execSync('npm run build', { stdio: 'inherit' });
 
-// Create zip files for both browsers
+// Create zip files for all browsers
 console.log('\nCreating release packages...');
-['chrome', 'firefox'].forEach(browser => {
+['chrome', 'firefox', 'safari'].forEach(browser => {
   const distDir = path.join(__dirname, '../dist', browser);
   const zipFile = path.join(releaseDir, `smart-tab-switcher-${browser}-v${version}.zip`);
   

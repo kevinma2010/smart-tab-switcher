@@ -23,6 +23,7 @@ You can install Smart Tab Switcher from your browser's extension store:
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/smart-tab-switcher?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/jjjkdlhleiedpjijkfofahkjfoehamok)
 [![Firefox Add-ons](https://img.shields.io/amo/v/smart-tab-switcher?label=Firefox&style=for-the-badge&logo=firefox&logoColor=white)](https://addons.mozilla.org/firefox/addon/smart-tab-switcher)
 [![Edge Add-ons](https://img.shields.io/badge/Edge-v1.0.0-blue?style=for-the-badge&logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/smart-tab-switcher)
+[![Safari Extensions](https://img.shields.io/badge/Safari-v1.0.0-blue?style=for-the-badge&logo=safari&logoColor=white)](https://apps.apple.com/app/smart-tab-switcher/id123456789)
 
 </div>
 
@@ -39,6 +40,8 @@ Or install manually:
      * Click "This Firefox"
      * Click "Load Temporary Add-on"
      * Select `manifest.json` from the extracted folder
+   - Safari:
+     * See [Safari Packaging Guide](./SAFARI-PACKAGING.md) for detailed instructions
 
 ### How to Use
 
@@ -65,7 +68,8 @@ Or install manually:
 
 - Node.js (v18+)
 - pnpm (v8+)
-- Browser (Chrome v88+ / Firefox v109.0+ / Edge v88+)
+- Browser (Chrome v88+ / Firefox v109.0+ / Edge v88+ / Safari v14.0+)
+- Xcode 12+ (for Safari extension)
 
 ### Local Development
 
@@ -82,7 +86,14 @@ Or install manually:
 
 3. **Development Mode**
    ```bash
-   pnpm dev
+   # For Chrome
+   pnpm dev:chrome
+   
+   # For Firefox
+   pnpm dev:firefox
+   
+   # For Safari
+   pnpm dev:safari
    ```
 
 4. **Load in Browser**
@@ -96,14 +107,22 @@ Or install manually:
      * Click "This Firefox"
      * Click "Load Temporary Add-on"
      * Select `manifest.json` from the `dist/firefox` directory
+   - For Safari:
+     * See [Safari Packaging Guide](./SAFARI-PACKAGING.md) for detailed instructions
 
 ### Build for Production
 
 ```bash
+# Build for all browsers
 pnpm build
+
+# Build for specific browser
+pnpm build:chrome
+pnpm build:firefox
+pnpm build:safari
 ```
 
-Built files will be located in the `dist`
+Built files will be located in the `dist` directory
 
 ## 📄 License
 
