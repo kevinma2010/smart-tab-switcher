@@ -40,6 +40,7 @@ export type Theme = 'light' | 'dark' | 'system';
 export interface ThemeConfig {
   theme: Theme;
   isDark: boolean;
+  updateTheme?: (newTheme: Theme) => void;
 }
 
 export interface SortSettings {

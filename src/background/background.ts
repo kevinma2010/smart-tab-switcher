@@ -134,3 +134,14 @@ browser.runtime.onInstalled.addListener(async ({ reason }) => {
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
   }
 });
+
+// 添加消息处理程序
+browser.runtime.onMessage.addListener((message, sender, sendResponse: (response?: any) => void) => {
+  console.log('Background script received message:', message);
+  
+  if (message.action === 'getTabs') {
+    console.log('Returning cached tabs:', Array.from(tabsCache.values()));
+    // 返回缓存的标签页数据
+    sendResponse({ tabs: Array.from(tabsCache.values()) });
+  }
+});
