@@ -2,8 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const SIZES = [16, 32, 48, 128];
-const SAFARI_SIZES = [16, 32, 48, 96, 128, 256, 512];
+const SIZES = [16, 32, 48, 96, 128, 256, 512];
 const UI_ICON_SIZE = 48;
 
 async function generateExtensionIcons() {
@@ -30,19 +29,6 @@ async function generateExtensionIcons() {
     path.join(__dirname, '../src/icons/extension-icon.svg'),
     path.join(extensionDir, 'icon.svg')
   );
-  
-  // 生成 Safari 特定尺寸的图标
-  const safariDir = path.join(__dirname, '../src/icons/safari');
-  if (!fs.existsSync(safariDir)) {
-    fs.mkdirSync(safariDir, { recursive: true });
-  }
-  
-  for (const size of SAFARI_SIZES) {
-    await sharp(Buffer.from(extensionIconSvg))
-      .resize(size, size)
-      .png()
-      .toFile(path.join(safariDir, `icon-${size}.png`));
-  }
 }
 
 async function generateUiIcons() {
