@@ -5,10 +5,10 @@ import { OnboardingView } from './components/onboarding-view';
 import { useTheme } from './hooks/use-theme';
 import './styles.css';
 
-// 添加日志功能
+// Add logging functionality
 console.log('Onboarding script loaded');
 
-// 添加错误监听器
+// Add error listener
 window.addEventListener('error', (e) => {
   console.error('Onboarding error:', e);
 });
@@ -21,14 +21,14 @@ const App = () => {
   }, [isDark]);
 
   const handleFinish = () => {
-    // 关闭当前标签页
+    // Close current tab
     browser.tabs.getCurrent().then(tab => {
       if (tab && tab.id) {
         browser.tabs.remove(tab.id);
       }
     }).catch(error => {
-      console.error('关闭标签页失败:', error);
-      // 如果无法关闭标签页，尝试重定向到扩展的弹出页面
+      console.error('Failed to close tab:', error);
+      // If unable to close the tab, try to redirect to the extension's popup
       window.close();
     });
   };

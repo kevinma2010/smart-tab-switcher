@@ -7,13 +7,13 @@ interface OnboardingViewProps {
 
 export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
   const handleFinish = () => {
-    // 将引导页完成状态保存到存储中
+    // Save onboarding completion status to storage
     browser.storage.local.set({ onboardingCompleted: true })
       .then(() => {
         onFinish();
       })
       .catch(error => {
-        console.error('保存引导页状态失败:', error);
+        console.error('Failed to save onboarding status:', error);
         onFinish();
       });
   };
@@ -27,16 +27,16 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
           className="w-24 h-24 mx-auto mb-4"
         />
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-          欢迎使用 Smart Tab Switcher
+          Welcome to Smart Tab Switcher
         </h1>
         <p className="text-gray-600 dark:text-gray-300">
-          快速切换和管理您的浏览器标签页
+          Quickly switch and manage your browser tabs
         </p>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6 w-full">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-          主要功能
+          Key Features
         </h2>
         
         <div className="mb-6">
@@ -47,8 +47,8 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
               </svg>
             </div>
             <div>
-              <h3 className="font-medium text-gray-800 dark:text-white">快速切换</h3>
-              <p className="text-gray-600 dark:text-gray-300">使用键盘快捷键 <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{navigator.platform.includes('Mac') ? '⌘+⇧+K' : 'Alt+T'}</span> 快速打开标签切换器</p>
+              <h3 className="font-medium text-gray-800 dark:text-white">Quick Switching</h3>
+              <p className="text-gray-600 dark:text-gray-300">Use keyboard shortcut <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{navigator.platform.includes('Mac') ? '⌘+⇧+K' : 'Alt+T'}</span> to quickly open the tab switcher</p>
             </div>
           </div>
           
@@ -59,8 +59,8 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
               </svg>
             </div>
             <div>
-              <h3 className="font-medium text-gray-800 dark:text-white">模糊搜索</h3>
-              <p className="text-gray-600 dark:text-gray-300">输入关键词即可快速找到您需要的标签页，无需完全匹配</p>
+              <h3 className="font-medium text-gray-800 dark:text-white">Fuzzy Search</h3>
+              <p className="text-gray-600 dark:text-gray-300">Type keywords to quickly find the tabs you need, no exact match required</p>
             </div>
           </div>
           
@@ -71,8 +71,8 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
               </svg>
             </div>
             <div>
-              <h3 className="font-medium text-gray-800 dark:text-white">智能排序</h3>
-              <p className="text-gray-600 dark:text-gray-300">根据您的使用习惯，自动将最常用的标签页排在前面</p>
+              <h3 className="font-medium text-gray-800 dark:text-white">Smart Sorting</h3>
+              <p className="text-gray-600 dark:text-gray-300">Automatically prioritizes your most frequently used tabs based on your habits</p>
             </div>
           </div>
           
@@ -84,8 +84,8 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
               </svg>
             </div>
             <div>
-              <h3 className="font-medium text-gray-800 dark:text-white">自定义设置</h3>
-              <p className="text-gray-600 dark:text-gray-300">根据您的喜好自定义外观和行为</p>
+              <h3 className="font-medium text-gray-800 dark:text-white">Customizable Settings</h3>
+              <p className="text-gray-600 dark:text-gray-300">Customize appearance and behavior according to your preferences</p>
             </div>
           </div>
         </div>
@@ -93,14 +93,14 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6 w-full">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
-          如何使用
+          How to Use
         </h2>
         
         <ol className="list-decimal pl-5 space-y-3 text-gray-600 dark:text-gray-300">
-          <li>使用键盘快捷键 <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{navigator.platform.includes('Mac') ? '⌘+⇧+K' : 'Alt+T'}</span> 或点击工具栏上的扩展图标打开标签切换器</li>
-          <li>在搜索框中输入关键词以查找标签页</li>
-          <li>使用上下箭头键选择标签页，按回车键切换到所选标签页</li>
-          <li>点击设置图标自定义扩展的行为和外观</li>
+          <li>Use keyboard shortcut <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{navigator.platform.includes('Mac') ? '⌘+⇧+K' : 'Alt+T'}</span> or click the extension icon in the toolbar to open the tab switcher</li>
+          <li>Type keywords in the search box to find tabs</li>
+          <li>Use up and down arrow keys to select a tab, press Enter to switch to the selected tab</li>
+          <li>Click the settings icon to customize the extension's behavior and appearance</li>
         </ol>
       </div>
 
@@ -108,7 +108,7 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
         onClick={handleFinish}
         className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
       >
-        开始使用
+        Get Started
       </button>
     </div>
   );

@@ -49,12 +49,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     }
   };
 
-  // 打开引导页
+  // Open onboarding page
   const openOnboardingPage = async () => {
     try {
       const onboardingUrl = browser.runtime.getURL('onboarding.html');
       await browser.tabs.create({ url: onboardingUrl });
-      window.close(); // 关闭弹出窗口
+      window.close(); // Close popup window
     } catch (error) {
       console.error('Error opening onboarding page:', error);
     }
@@ -128,9 +128,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
               </svg>
             </div>
             <div className="text-left">
-              <div className="font-medium">查看使用指南</div>
+              <div className="font-medium">View User Guide</div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                重新打开引导页面，了解扩展的功能和使用方法
+                Reopen the onboarding page to learn about the extension's features and usage
               </p>
             </div>
           </button>

@@ -115,18 +115,18 @@ browser.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
-// 检查是否应该显示引导页
+// Check if onboarding should be shown
 async function shouldShowOnboarding(): Promise<boolean> {
   try {
     const data = await browser.storage.local.get('onboardingCompleted');
     return !data.onboardingCompleted;
   } catch (error) {
     console.error('Error checking onboarding status:', error);
-    return true; // 如果出错，默认显示引导页
+    return true; // Default to showing onboarding if there's an error
   }
 }
 
-// 打开引导页
+// Open onboarding page
 async function openOnboardingPage() {
   try {
     const onboardingUrl = browser.runtime.getURL('onboarding.html');
@@ -148,7 +148,7 @@ browser.runtime.onInstalled.addListener(async ({ reason }) => {
     // Create scheduled cleanup task
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
     
-    // 打开引导页
+    // Open onboarding page
     await openOnboardingPage();
   } else if (reason === 'update') {
     // Logic for update
@@ -158,8 +158,8 @@ browser.runtime.onInstalled.addListener(async ({ reason }) => {
     // Ensure scheduled cleanup task exists
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
     
-    // 检查是否需要显示引导页（例如，如果是重大更新）
-    // 这里我们选择不在更新时显示引导页，但您可以根据需要修改此逻辑
+    // Check if onboarding should be shown (e.g., for major updates)
+    // We choose not to show onboarding on updates, but you can modify this logic as needed
     // const shouldShow = await shouldShowOnboarding();
     // if (shouldShow) {
     //   await openOnboardingPage();
