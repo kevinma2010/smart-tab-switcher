@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Smart Tab Switcher Documentation
+    url: https://github.com/kevinma2010/smart-tab-switcher#readme
+    about: Check our documentation before creating an issue
+  - name: Chrome Web Store
+    url: https://chromewebstore.google.com/detail/smart-tab-switcher/jjjkdlhleiedpjijkfofahkjfoehamok
+    about: Leave a review or feedback on the Chrome Web Store
+  - name: Firefox Add-ons
+    url: https://addons.mozilla.org/firefox/addon/smart-tab-switcher/
+    about: Leave a review or feedback on Firefox Add-ons 
