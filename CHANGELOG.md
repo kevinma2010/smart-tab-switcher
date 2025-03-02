@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-03-02
+### Added
+- About view with version and project information
+- Onboarding experience for new users
+- User guide button in About and Settings views
+
+### Changed
+- Enhanced empty search results view layout and styling
+- Improved settings button styling and alignment in search view
+- Updated webpack and dependencies to latest versions
+
+### Build
+- Added clean scripts for Chrome and Firefox build processes
+- Added release build script
+- Updated documentation with Chrome Web Store link
+
 ## [1.1.0] - 2024-03-27
 ### Added
 - Advanced sorting optimization:
