@@ -115,22 +115,54 @@ browser.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
+// Check if onboarding should be shown
+async function shouldShowOnboarding(): Promise<boolean> {
+  try {
+    const data = await browser.storage.local.get('onboardingCompleted');
+    return !data.onboardingCompleted;
+  } catch (error) {
+    console.error('Error checking onboarding status:', error);
+    return true; // Default to showing onboarding if there's an error
+  }
+}
+
+// Open onboarding page
+async function openOnboardingPage() {
+  try {
+    const onboardingUrl = browser.runtime.getURL('onboarding.html');
+    await browser.tabs.create({ url: onboardingUrl });
+    console.log('Onboarding page opened');
+  } catch (error) {
+    console.error('Error opening onboarding page:', error);
+  }
+}
+
 // Handle plugin installation and update
 browser.runtime.onInstalled.addListener(async ({ reason }) => {
   console.log('Extension installed/updated:', reason);
   if (reason === 'install') {
     // Logic for first installation
-    console.log('Quick Tab Switcher installed');
+    console.log('Smart Tab Switcher installed');
     await initTabsCache();
     
     // Create scheduled cleanup task
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
+    
+    // Open onboarding page
+    await openOnboardingPage();
   } else if (reason === 'update') {
     // Logic for update
-    console.log('Quick Tab Switcher updated');
+    console.log('Smart Tab Switcher updated');
     await initTabsCache();
     
     // Ensure scheduled cleanup task exists
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
+    
+    // Check if onboarding should be shown (e.g., for major updates)
+    // We choose not to show onboarding on updates, but you can modify this logic as needed
+    // const shouldShow = await shouldShowOnboarding();
+    // if (shouldShow) {
+    //   await openOnboardingPage();
+    // }
   }
 });

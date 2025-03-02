@@ -9,10 +9,12 @@ module.exports = (env) => {
     entry: {
       popup: './src/popup/popup.tsx',
       background: './src/background/background.ts',
+      onboarding: './src/popup/onboarding.tsx',
     },
     output: {
       path: path.resolve(__dirname, `dist/${browser}`),
       filename: '[name].js',
+      publicPath: '/',
     },
     module: {
       rules: [
@@ -55,6 +57,10 @@ module.exports = (env) => {
           {
             from: 'src/popup/popup.html',
             to: 'popup.html',
+          },
+          {
+            from: 'src/popup/onboarding.html',
+            to: 'onboarding.html',
           },
           {
             from: 'src/icons',

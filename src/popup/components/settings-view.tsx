@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import browser from 'webextension-polyfill';
 import { SortSettings } from '../types';
 import { getSortSettings, saveSortSettings, DEFAULT_SORT_SETTINGS } from '../utils/storage';
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SearchView } from './components/search-view';
 import { SettingsView } from './components/settings-view';
+import { AboutView } from './components/about-view';
 import { useTheme } from './hooks/use-theme';
 import './styles.css';
 
@@ -15,7 +16,7 @@ window.addEventListener('error', (e) => {
 
 const App = () => {
   const { isDark } = useTheme();
-  const [view, setView] = useState<'search' | 'settings'>('search');
+  const [view, setView] = useState<'search' | 'settings' | 'about'>('search');
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
@@ -56,9 +57,14 @@ const App = () => {
   return (
     <div className="w-full max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       {view === 'search' ? (
-        <SearchView onOpenSettings={() => setView('settings')} />
-      ) : (
+        <SearchView 
+          onOpenSettings={() => setView('settings')} 
+          onOpenAbout={() => setView('about')} 
+        />
+      ) : view === 'settings' ? (
         <SettingsView onBack={() => setView('search')} />
+      ) : (
+        <AboutView onBack={() => setView('search')} />
       )}
     </div>
   );
