@@ -7,9 +7,10 @@ import { SearchResult } from '../types';
 
 interface SearchViewProps {
   onOpenSettings: () => void;
+  onOpenAbout: () => void;
 }
 
-export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings }) => {
+export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAbout }) => {
   const {
     query,
     setQuery,
@@ -44,8 +45,17 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings }) => {
           />
         </div>
         <button 
+          onClick={onOpenAbout}
+          className="self-start mt-5 mr-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+          title="About"
+        >
+          <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+        <button 
           onClick={onOpenSettings}
-          className="self-start mt-5 mr-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center"
+          className="self-start mt-5 mr-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
           title="Settings"
         >
           <svg className="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
