@@ -14,6 +14,7 @@ module.exports = (env) => {
     output: {
       path: path.resolve(__dirname, `dist/${browser}`),
       filename: '[name].js',
+      publicPath: '/',
     },
     module: {
       rules: [

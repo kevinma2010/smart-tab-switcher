@@ -30,7 +30,6 @@
     "@types/react-dom": "^18.2.0",
     "@types/webextension-polyfill": "^0.10.0",
     "autoprefixer": "^10.4.0",
-    "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.7.0",
     "postcss": "^8.4.0",
     "postcss-loader": "^7.3.0",
@@ -39,7 +38,7 @@
     "ts-loader": "^9.4.0",
     "typescript": "^5.0.0",
     "webextension-polyfill": "^0.10.0",
-    "webpack": "^5.80.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.0.0"
   }
 }
