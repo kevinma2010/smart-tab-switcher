@@ -1,4 +1,5 @@
 import React from 'react';
+import browser from 'webextension-polyfill';
 import { VERSION } from '../utils/version';
 
 interface AboutViewProps {
@@ -6,6 +7,17 @@ interface AboutViewProps {
 }
 
 export const AboutView: React.FC<AboutViewProps> = ({ onBack }) => {
+  // Open onboarding page
+  const openOnboardingPage = async () => {
+    try {
+      const onboardingUrl = browser.runtime.getURL('onboarding.html');
+      await browser.tabs.create({ url: onboardingUrl });
+      window.close(); // Close popup window
+    } catch (error) {
+      console.error('Error opening onboarding page:', error);
+    }
+  };
+
   return (
     <div className="p-4">
       <div className="flex items-center mb-4">
@@ -39,6 +51,30 @@ export const AboutView: React.FC<AboutViewProps> = ({ onBack }) => {
           <p className="text-sm text-gray-600 dark:text-gray-400">
             This extension is open source and licensed under the GNU General Public License v3.0.
           </p>
+        </div>
+        
+        {/* User Guide */}
+        <div>
+          <h3 className="text-md font-medium text-gray-900 dark:text-gray-100 mb-2">User Guide</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            Need help getting started? View our user guide to learn about all the features.
+          </p>
+          <button 
+            onClick={openOnboardingPage}
+            className="w-full flex items-center p-2 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100"
+          >
+            <div className="bg-indigo-100 dark:bg-indigo-900 p-2 rounded-full mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="text-left">
+              <div className="font-medium">View User Guide</div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Open the onboarding page to learn about the extension's features and usage
+              </p>
+            </div>
+          </button>
         </div>
         
         {/* Author Information */}

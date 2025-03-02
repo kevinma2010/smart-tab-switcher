@@ -6,6 +6,10 @@ interface OnboardingViewProps {
 }
 
 export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
+  // Determine if user is on Mac or Windows/Linux
+  const isMac = navigator.platform.includes('Mac');
+  const shortcutKey = isMac ? '⌘+⇧+K' : 'Alt+T';
+  
   const handleFinish = () => {
     // Save onboarding completion status to storage
     browser.storage.local.set({ onboardingCompleted: true })
@@ -48,7 +52,11 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
             </div>
             <div>
               <h3 className="font-medium text-gray-800 dark:text-white">Quick Switching</h3>
-              <p className="text-gray-600 dark:text-gray-300">Use keyboard shortcut <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{navigator.platform.includes('Mac') ? '⌘+⇧+K' : 'Alt+T'}</span> to quickly open the tab switcher</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Use keyboard shortcut <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{shortcutKey}</span> to quickly open the tab switcher
+                {!isMac && <span className="text-xs ml-1">(Windows/Linux)</span>}
+                {isMac && <span className="text-xs ml-1">(Mac)</span>}
+              </p>
             </div>
           </div>
           
@@ -97,7 +105,12 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
         </h2>
         
         <ol className="list-decimal pl-5 space-y-3 text-gray-600 dark:text-gray-300">
-          <li>Use keyboard shortcut <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{navigator.platform.includes('Mac') ? '⌘+⇧+K' : 'Alt+T'}</span> or click the extension icon in the toolbar to open the tab switcher</li>
+          <li>
+            Use keyboard shortcut <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{shortcutKey}</span> 
+            {!isMac && <span className="text-xs ml-1">(Windows/Linux)</span>}
+            {isMac && <span className="text-xs ml-1">(Mac)</span>} 
+            or click the extension icon in the toolbar to open the tab switcher
+          </li>
           <li>Type keywords in the search box to find tabs</li>
           <li>Use up and down arrow keys to select a tab, press Enter to switch to the selected tab</li>
           <li>Click the settings icon to customize the extension's behavior and appearance</li>
