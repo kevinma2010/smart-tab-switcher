@@ -115,22 +115,54 @@ browser.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
+// 检查是否应该显示引导页
+async function shouldShowOnboarding(): Promise<boolean> {
+  try {
+    const data = await browser.storage.local.get('onboardingCompleted');
+    return !data.onboardingCompleted;
+  } catch (error) {
+    console.error('Error checking onboarding status:', error);
+    return true; // 如果出错，默认显示引导页
+  }
+}
+
+// 打开引导页
+async function openOnboardingPage() {
+  try {
+    const onboardingUrl = browser.runtime.getURL('onboarding.html');
+    await browser.tabs.create({ url: onboardingUrl });
+    console.log('Onboarding page opened');
+  } catch (error) {
+    console.error('Error opening onboarding page:', error);
+  }
+}
+
 // Handle plugin installation and update
 browser.runtime.onInstalled.addListener(async ({ reason }) => {
   console.log('Extension installed/updated:', reason);
   if (reason === 'install') {
     // Logic for first installation
-    console.log('Quick Tab Switcher installed');
+    console.log('Smart Tab Switcher installed');
     await initTabsCache();
     
     // Create scheduled cleanup task
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
+    
+    // 打开引导页
+    await openOnboardingPage();
   } else if (reason === 'update') {
     // Logic for update
-    console.log('Quick Tab Switcher updated');
+    console.log('Smart Tab Switcher updated');
     await initTabsCache();
     
     // Ensure scheduled cleanup task exists
     browser.alarms.create('cleanupUsageData', { periodInMinutes: 60 * 24 });
+    
+    // 检查是否需要显示引导页（例如，如果是重大更新）
+    // 这里我们选择不在更新时显示引导页，但您可以根据需要修改此逻辑
+    // const shouldShow = await shouldShowOnboarding();
+    // if (shouldShow) {
+    //   await openOnboardingPage();
+    // }
   }
 });

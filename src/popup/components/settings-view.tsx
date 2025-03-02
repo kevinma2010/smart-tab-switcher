@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import browser from 'webextension-polyfill';
 import { SortSettings } from '../types';
 import { getSortSettings, saveSortSettings, DEFAULT_SORT_SETTINGS } from '../utils/storage';
 
@@ -45,6 +46,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
         return 'Put most frequently used items first, especially those accessed in the last week';
       default:
         return '';
+    }
+  };
+
+  // 打开引导页
+  const openOnboardingPage = async () => {
+    try {
+      const onboardingUrl = browser.runtime.getURL('onboarding.html');
+      await browser.tabs.create({ url: onboardingUrl });
+      window.close(); // 关闭弹出窗口
+    } catch (error) {
+      console.error('Error opening onboarding page:', error);
     }
   };
   
@@ -100,6 +112,28 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
               </label>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <h3 className="text-md font-medium text-gray-900 dark:text-gray-100 mb-2">Help & Support</h3>
+        <div className="space-y-3 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+          <button 
+            onClick={openOnboardingPage}
+            className="w-full flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100"
+          >
+            <div className="bg-indigo-100 dark:bg-indigo-900 p-2 rounded-full mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-600 dark:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="text-left">
+              <div className="font-medium">查看使用指南</div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                重新打开引导页面，了解扩展的功能和使用方法
+              </p>
+            </div>
+          </button>
         </div>
       </div>
     </div>
