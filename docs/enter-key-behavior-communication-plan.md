@@ -1,140 +1,140 @@
-# Enter 键行为设计 - 用户告知计划
+# Enter Key Behavior Design - User Communication Plan
 
-## 背景
-根据 Issue #11，计划更改 Enter 键的默认行为：
-- **当前行为**：Enter 在新标签页打开书签/搜索结果
-- **新行为**：Enter 在当前标签页打开，Ctrl+Enter（Mac 上 Cmd+Enter）在新标签页打开
+## Background
+Based on Issue #11, we're planning to change the default Enter key behavior:
+- **Current behavior**: Enter opens bookmarks/search results in new tab
+- **New behavior**: Enter opens in current tab, Ctrl+Enter (Cmd+Enter on Mac) opens in new tab
 
-## 用户告知位置和实施计划
+## User Communication Locations and Implementation Plan
 
-### 1. 搜索框底部提示（最高优先级）
-**位置**：`src/popup/components/search-box.tsx:90-100`
+### 1. Search Box Bottom Hints (Highest Priority)
+**Location**: `src/popup/components/search-box.tsx:90-100`
 
-**当前显示**：
+**Current display**:
 ```
 ↑↓ Navigate    Enter Select    Esc Close
 ```
 
-**建议更新为**：
+**Updated to**:
 ```
 ↑↓ Navigate    Enter Open    Ctrl+Enter New Tab    Esc Close
 ```
 
-**实施细节**：
-- 在较窄的窗口中可以简化为：`Enter Open · Ctrl+Enter New`
-- 使用图标辅助：`⏎ Open · ⌘⏎ New Tab`（Mac）或 `⏎ Open · Ctrl+⏎ New Tab`（Windows/Linux）
+**Implementation details**:
+- In narrower windows, can be simplified to: `Enter Open · Ctrl+Enter New`
+- Use icons for assistance: `⏎ Open · ⌘⏎ New Tab` (Mac) or `⏎ Open · Ctrl+⏎ New Tab` (Windows/Linux)
 
-### 2. 设置页面选项
-**位置**：`src/popup/components/settings-view.tsx`
+### 2. Settings Page Option
+**Location**: `src/popup/components/settings-view.tsx`
 
-**新增设置项**：
+**New setting item**:
 ```typescript
-// 默认打开方式
-□ 经典模式：Enter 键总是在新标签页打开
-■ 标准模式：Enter 在当前标签页，Ctrl+Enter 在新标签页（推荐）
+// Default opening method
+□ Classic mode: Enter key always opens in new tab
+■ Standard mode: Enter opens in current tab, Ctrl+Enter opens in new tab (recommended)
 ```
 
-**实施细节**：
-- 默认选中"标准模式"
-- 添加说明文字解释两种模式的区别
-- 设置会立即生效，无需重启
+**Implementation details**:
+- Default to "Standard mode"
+- Add explanatory text describing the differences between modes
+- Settings take effect immediately, no restart required
 
-### 3. 新用户引导更新
-**位置**：`src/popup/components/onboarding-view.tsx:115`
+### 3. New User Onboarding Update
+**Location**: `src/popup/components/onboarding-view.tsx:115`
 
-**当前文字**：
+**Current text**:
 ```
 Use up and down arrow keys to select a tab, press Enter to switch to the selected tab
 ```
 
-**更新为**：
+**Updated to**:
 ```
-快捷键使用：
-• ↑↓ - 上下选择结果
-• Enter - 在当前标签页打开
-• Ctrl+Enter (Mac 上 Cmd+Enter) - 在新标签页打开
-• Esc - 关闭搜索
+Keyboard shortcuts:
+• ↑↓ - Navigate between results
+• Enter - Open in current tab
+• Ctrl+Enter (Cmd+Enter on Mac) - Open in new tab
+• Esc - Close search
 ```
 
-### 4. 搜索无结果时的提示
-**位置**：`src/popup/components/result-list.tsx:106`
+### 4. No Search Results Hint
+**Location**: `src/popup/components/result-list.tsx:106`
 
-**当前提示**：
+**Current hint**:
 ```
 Press Enter to search Google or open URL
 ```
 
-**更新为**：
+**Updated to**:
 ```
 Press Enter to search in current tab
 Press Ctrl+Enter to search in new tab
 ```
 
-### 5. 版本更新通知
-**实施方案**：
-- 在扩展更新到包含此功能的版本时，显示一次性通知
-- 使用 `browser.storage.local` 记录是否已显示过通知
+### 5. Version Update Notification
+**Implementation approach**:
+- Show one-time notification when extension updates to version containing this feature
+- Use `browser.storage.local` to record whether notification has been shown
 
-**通知内容**：
+**Notification content**:
 ```
-🎉 新功能：更灵活的标签页控制！
+🎉 New Feature: More Flexible Tab Control!
 
-现在你可以选择如何打开链接：
-• Enter - 在当前标签页打开
-• Ctrl+Enter - 在新标签页打开
+Now you can choose how to open links:
+• Enter - Open in current tab
+• Ctrl+Enter - Open in new tab
 
-可以在设置中切换回经典模式。
+You can switch back to classic mode in settings.
 ```
 
-### 6. 视觉提示增强
-**搜索结果项优化**：
-- 鼠标悬停时，在结果项右侧显示快捷键提示
-- 使用 tooltip 显示："Enter: 当前标签页 | Ctrl+Enter: 新标签页"
+### 6. Visual Hint Enhancement
+**Search result item optimization**:
+- On mouse hover, show keyboard shortcut hints on the right side of result items
+- Use tooltip to display: "Enter: current tab | Ctrl+Enter: new tab"
 
-### 7. 文档更新清单
-需要更新的文档：
-- [ ] README.md - 更新快捷键说明部分
-- [ ] Chrome Web Store 描述 - 在功能列表中说明
-- [ ] Firefox Add-ons 描述 - 同步更新
-- [ ] GitHub Release Notes - 详细说明行为变更
+### 7. Documentation Update Checklist
+Documents that need updating:
+- [ ] README.md - Update keyboard shortcuts section
+- [ ] Chrome Web Store description - Explain in feature list
+- [ ] Firefox Add-ons description - Sync updates
+- [ ] GitHub Release Notes - Detail behavior changes
 
-### 8. 迁移策略
-为了平滑过渡：
-1. **第一阶段**：添加 Ctrl+Enter 支持，保持 Enter 原有行为
-2. **第二阶段**：在设置中提供切换选项，默认仍为旧行为
-3. **第三阶段**：新安装用户默认使用新行为，老用户保持原设置
-4. **第四阶段**：提示老用户尝试新行为（可选）
+### 8. Migration Strategy
+For smooth transition:
+1. **Phase 1**: Add Ctrl+Enter support, maintain Enter's original behavior
+2. **Phase 2**: Provide toggle option in settings, default still to old behavior
+3. **Phase 3**: New installations default to new behavior, existing users keep original settings
+4. **Phase 4**: Prompt existing users to try new behavior (optional)
 
-## 实施优先级
+## Implementation Priority
 
-1. **立即实施**：
-   - 搜索框底部提示更新
-   - 添加 Ctrl+Enter 功能支持
+1. **Immediate implementation**:
+   - Search box bottom hint updates
+   - Add Ctrl+Enter functionality support
 
-2. **下一版本**：
-   - 设置页面选项
-   - 更新通知
-   - 文档更新
+2. **Next version**:
+   - Settings page option
+   - Update notification
+   - Documentation updates
 
-3. **后续优化**：
-   - 视觉提示增强
-   - 新手引导优化
+3. **Future optimization**:
+   - Visual hint enhancement
+   - Onboarding optimization
 
-## 成功指标
+## Success Metrics
 
-- 用户反馈中关于"不知道如何在新标签页打开"的问题减少
-- Issue #11 得到解决
-- 没有大量用户抱怨行为变更
+- Reduced user feedback about "don't know how to open in new tab"
+- Issue #11 resolved
+- No significant user complaints about behavior changes
 
-## 风险管理
+## Risk Management
 
-- **风险**：老用户不适应新行为
-- **缓解**：提供设置选项，允许切换回经典模式
+- **Risk**: Existing users uncomfortable with new behavior
+- **Mitigation**: Provide settings option to switch back to classic mode
 
-- **风险**：快捷键提示占用过多空间
-- **缓解**：响应式设计，在小窗口中简化提示
+- **Risk**: Keyboard shortcut hints take up too much space
+- **Mitigation**: Responsive design, simplify hints in small windows
 
 ---
 
-*创建日期：2025-01-23*
-*相关 Issue：#11*
+*Created: 2025-01-23*
+*Related Issue: #11*

@@ -1,156 +1,156 @@
-# 开放 Issues 用户场景分析
+# Open Issues: User Scenarios Analysis
 
-本文档记录了 Smart Tab Switcher 当前开放 Issues 相关的用户场景，用于产品功能规划和优先级评估。
+This document analyzes user scenarios related to open issues in Smart Tab Switcher for product planning and prioritization.
 
-## Issue #11: 更改 Enter 键行为 - 在当前标签页打开
+## Issue #11: Change Enter Key Behavior - Open in Current Tab
 
-### 当前行为
-- **已打开的标签**：Enter 切换到该标签
-- **书签/搜索/URL**：Enter 在新标签页打开（前台）
+### Current Behavior
+- **Open tabs**: Enter switches to that tab
+- **Bookmarks/Search/URLs**: Enter opens in new tab (foreground)
 
-### 用户期望行为
-- **Enter**：在当前标签页打开（替换当前内容）
-- **Ctrl+Enter**：在新标签页打开（保留当前页面）
+### User Expected Behavior
+- **Enter**: Open in current tab (replace current content)
+- **Ctrl+Enter**: Open in new tab (preserve current page)
 
-### 场景 1：Obsidian + Firefox 工作流
-- **用户角色**：Anarchtism（Issue 提交者）
-- **使用环境**：在 Obsidian 和 Firefox 之间切换工作
-- **具体需求**：从 Obsidian 切换到浏览器后，想要在当前标签页浏览内容
-- **当前痛点**：每次打开书签都创建新标签，导致标签页过多
-- **期望行为**：
-  - `Enter`: 在当前标签页打开，保持简洁的标签栏
-  - `Ctrl+Enter`: 需要保留当前页面时，在新标签页打开
+### Scenario 1: Obsidian + Firefox Workflow
+- **User**: Anarchtism (Issue reporter)
+- **Environment**: Switching between Obsidian and Firefox
+- **Need**: After switching from Obsidian to browser, wants to browse content in current tab
+- **Current pain point**: Opening bookmarks always creates new tabs, leading to tab clutter
+- **Expected behavior**:
+  - `Enter`: Open in current tab, keeping a clean tab bar
+  - `Ctrl+Enter`: Open in new tab when current page needs to be preserved
 
-### 场景 2：单标签页浏览模式
-- **用户角色**：极简主义用户
-- **使用环境**：习惯在一个标签页中浏览，通过前进/后退导航
-- **具体需求**：搜索并访问书签时，希望在当前标签页打开
-- **价值**：减少标签页管理负担，保持浏览器整洁
+### Scenario 2: Single-Tab Browsing Mode
+- **User**: Minimalist users
+- **Environment**: Prefer browsing in one tab, navigating with forward/back
+- **Need**: When searching and accessing bookmarks, prefer opening in current tab
+- **Value**: Reduces tab management burden, keeps browser clean
 
-### 场景 3：快速信息查询
-- **用户角色**：信息工作者
-- **使用环境**：需要快速查看多个书签内容
-- **工作流**：
-  1. 打开一个空白标签页
-  2. 使用 Smart Tab Switcher 搜索书签
-  3. Enter 在当前标签页查看
-  4. 继续搜索下一个书签，重复使用同一标签页
-- **好处**：避免打开过多标签页
+### Scenario 3: Quick Information Lookup
+- **User**: Information workers
+- **Environment**: Need to quickly check multiple bookmark contents
+- **Workflow**:
+  1. Open a blank tab
+  2. Use Smart Tab Switcher to search bookmarks
+  3. Enter to view in current tab
+  4. Continue searching next bookmark, reusing the same tab
+- **Benefit**: Avoid opening too many tabs
 
-### 场景 4：参考 Obsidian Quick Switcher 行为
-- **背景**：用户习惯了 Obsidian 的快速切换器行为
-- **Obsidian 行为**：
-  - Enter 在当前面板打开文件
-  - Ctrl/Cmd+Enter 在新面板打开文件
-- **期望**：浏览器扩展保持一致的交互模式
+### Scenario 4: Referencing Obsidian Quick Switcher Behavior
+- **Background**: Users are familiar with Obsidian's quick switcher behavior
+- **Obsidian behavior**:
+  - Enter opens file in current panel
+  - Ctrl/Cmd+Enter opens file in new panel
+- **Expectation**: Browser extension maintains consistent interaction patterns
 
-## Issue #10: 符号前缀切换查询模式
+## Issue #10: Symbol Prefix for Query Mode Switching
 
-### 场景 1：专注搜索书签
-- **用户角色**：知识工作者
-- **使用环境**：收藏了 200+ 技术文档书签，当前打开 50+ 标签页
-- **痛点**：搜索时标签页结果干扰书签查找
-- **期望**：输入 `@react` 只搜索书签中的 React 资源
+### Scenario 1: Focus on Bookmark Search
+- **User**: Knowledge workers
+- **Environment**: 200+ technical documentation bookmarks, 50+ open tabs
+- **Pain point**: Tab results interfere with bookmark finding during search
+- **Expectation**: Type `@react` to search only React resources in bookmarks
 
-### 场景 2：仅搜索当前标签
-- **用户角色**：全栈开发者
-- **使用环境**：打开多个 localhost 不同端口
-- **需求**：输入 `:3000` 只在已打开的标签中搜索
-- **价值**：避免误触发搜索引擎或显示无关书签
+### Scenario 2: Search Current Tabs Only
+- **User**: Full-stack developers
+- **Environment**: Multiple localhost ports open
+- **Need**: Type `:3000` to search only among open tabs
+- **Value**: Avoid triggering search engines or showing irrelevant bookmarks
 
-### 场景 3：直接网络搜索
-- **用户角色**：通用用户
-- **使用环境**：想搜索新内容而非切换标签
-- **期望**：输入 `!machine learning` 直接用搜索引擎
-- **好处**：统一入口，减少操作步骤
+### Scenario 3: Direct Web Search
+- **User**: General users
+- **Environment**: Want to search new content rather than switch tabs
+- **Expectation**: Type `!machine learning` to directly use search engine
+- **Benefit**: Unified entry point, fewer operation steps
 
-### 符号前缀示例
+### Symbol Prefix Examples
 ```
-@文档      → 只显示书签中的文档
-:localhost → 只在打开的标签中搜索
-!新技术    → 直接 Google 搜索
-#工作      → 只显示带"工作"标签的书签（如果支持标签功能）
+@documentation  → Show only bookmarks containing documentation
+:localhost      → Search only among open tabs
+!new tech       → Direct Google search
+#work           → Show only bookmarks tagged "work" (if tag feature supported)
 ```
 
-## Issue #9: 改进键盘导航（Tab/Ctrl+J/K）
+## Issue #9: Improved Keyboard Navigation (Tab/Ctrl+J/K)
 
-### 场景 1：单手操作
-- **用户角色**：多任务处理者
-- **使用环境**：左手拿咖啡/接电话，右手操作键盘
-- **痛点**：右手从主键盘区移到方向键太远
-- **期望**：用 Tab 键上下选择结果
+### Scenario 1: One-Handed Operation
+- **User**: Multitaskers
+- **Environment**: Left hand holding coffee/phone, right hand on keyboard
+- **Pain point**: Moving right hand from main keyboard area to arrow keys is too far
+- **Expectation**: Use Tab key to navigate up/down through results
 
-### 场景 2：Vim 用户习惯
-- **用户角色**：程序员（Vim 用户）
-- **使用环境**：习惯 Vim 键位（J 向下，K 向上）
-- **期望**：`Ctrl+J/K` 导航，保持手在主键盘区
-- **效率提升**：搜索和选择一气呵成
+### Scenario 2: Vim User Habits
+- **User**: Programmers (Vim users)
+- **Environment**: Familiar with Vim keybindings (J down, K up)
+- **Expectation**: `Ctrl+J/K` navigation, keeping hands in main keyboard area
+- **Efficiency boost**: Search and selection in one fluid motion
 
-### 场景 3：快速连续操作
-- **用户角色**：销售人员
-- **使用环境**：快速切换多个客户页面
-- **工作流**：
-  1. 输入客户名前几个字母
-  2. Tab 快速选择（不移动手）
-  3. Enter 确认
-- **价值**：整个过程手不离开主键盘区
+### Scenario 3: Rapid Sequential Operations
+- **User**: Sales personnel
+- **Environment**: Quickly switching between multiple customer pages
+- **Workflow**:
+  1. Type first few letters of customer name
+  2. Tab to quickly select (without moving hands)
+  3. Enter to confirm
+- **Value**: Entire process without leaving main keyboard area
 
-### 场景 4：笔记本电脑用户
-- **用户角色**：移动办公用户
-- **使用环境**：使用笔记本触控板，方向键位置别扭
-- **需求**：更符合人体工程学的导航方式
+### Scenario 4: Laptop Users
+- **User**: Mobile office workers
+- **Environment**: Using laptop trackpad, arrow key positions awkward
+- **Need**: More ergonomic navigation methods
 
-## 综合使用场景
+## Comprehensive Usage Scenarios
 
-### 知识工作者的一天
-1. **早上查邮件**：`!gmail` 前缀快速搜索并打开邮箱
-2. **处理任务**：`@jira` 只看收藏的项目看板
-3. **研究问题**：找到资料用 `Ctrl+Enter` 新标签打开对比
-4. **编写文档**：用 `Tab` 键快速在参考资料间切换
-5. **团队沟通**：`:slack` 快速找到团队沟通页面
+### Knowledge Worker's Day
+1. **Morning email check**: `!gmail` prefix to quickly search and open email
+2. **Task processing**: `@jira` to see only favorited project boards
+3. **Research**: Find resources, use `Ctrl+Enter` to open in new tab for comparison
+4. **Documentation writing**: Use `Tab` key to quickly switch between reference materials
+5. **Team communication**: `:slack` to quickly find team communication pages
 
-### 开发者工作流
-1. **本地开发**：`:3000` 快速定位开发服务器
-2. **查找文档**：`@mdn` 在书签中找 MDN 文档
-3. **解决问题**：发现 bug 后 `!error message` 直接搜索
-4. **代码审查**：`Ctrl+J/K` 快速浏览多个 PR 页面
+### Developer Workflow
+1. **Local development**: `:3000` to quickly locate development server
+2. **Documentation lookup**: `@mdn` to find MDN docs in bookmarks
+3. **Problem solving**: After finding bug, `!error message` to search directly
+4. **Code review**: `Ctrl+J/K` to quickly browse multiple PR pages
 
-## 功能优先级建议
+## Feature Priority Recommendations
 
-基于用户场景分析，建议优先级如下：
+Based on user scenario analysis, suggested priority order:
 
-1. **高优先级**：Issue #11（新标签页打开）
-   - 基础需求，影响所有用户
-   - 实现相对简单
-   - 立即提升用户体验
+1. **High Priority**: Issue #11 (New tab opening)
+   - Basic need affecting all users
+   - Relatively simple implementation
+   - Immediate user experience improvement
 
-2. **中优先级**：Issue #10（查询模式切换）
-   - 高级用户功能
-   - 显著提升搜索效率
-   - 需要良好的 UI/UX 设计
+2. **Medium Priority**: Issue #10 (Query mode switching)
+   - Advanced user feature
+   - Significantly improves search efficiency
+   - Requires good UI/UX design
 
-3. **低优先级**：Issue #9（替代导航键）
-   - 锦上添花的功能
-   - 满足特定用户群体
-   - 可作为设置选项提供
+3. **Low Priority**: Issue #9 (Alternative navigation keys)
+   - Nice-to-have feature
+   - Serves specific user groups
+   - Can be provided as settings option
 
-## 实现建议
+## Implementation Suggestions
 
-1. **Issue #11**：
-   - 添加键盘事件监听
-   - 在设置中允许自定义行为
-   - 保持与浏览器原生行为一致
+1. **Issue #11**:
+   - Add keyboard event listening
+   - Allow behavior customization in settings
+   - Maintain consistency with native browser behavior
 
-2. **Issue #10**：
-   - 设计清晰的符号系统
-   - 提供符号提示/帮助
-   - 考虑可配置性
+2. **Issue #10**:
+   - Design clear symbol system
+   - Provide symbol hints/help
+   - Consider configurability
 
-3. **Issue #9**：
-   - 作为可选设置
-   - 支持多种导航模式
-   - 不影响现有用户习惯
+3. **Issue #9**:
+   - Provide as optional setting
+   - Support multiple navigation modes
+   - Don't affect existing user habits
 
 ---
 
-*最后更新：2025-01-23*
+*Last updated: 2025-01-23*
