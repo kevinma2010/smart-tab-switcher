@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import browser from 'webextension-polyfill';
-import { SortSettings } from '../types';
-import { getSortSettings, saveSortSettings, DEFAULT_SORT_SETTINGS } from '../utils/storage';
+import { SortSettings, TabOpeningSettings } from '../types';
+import { getSortSettings, saveSortSettings, DEFAULT_SORT_SETTINGS, getTabOpeningSettings, saveTabOpeningSettings, DEFAULT_TAB_OPENING_SETTINGS } from '../utils/storage';
 
 interface SettingsViewProps {
   onBack: () => void;
@@ -9,6 +9,7 @@ interface SettingsViewProps {
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
   const [settings, setSettings] = useState<SortSettings>(DEFAULT_SORT_SETTINGS);
+  const [tabOpeningSettings, setTabOpeningSettings] = useState<TabOpeningSettings>(DEFAULT_TAB_OPENING_SETTINGS);
   
   // Load settings
   useEffect(() => {
@@ -16,6 +17,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
       try {
         const savedSettings = await getSortSettings();
         setSettings(savedSettings);
+        
+        const savedTabOpeningSettings = await getTabOpeningSettings();
+        setTabOpeningSettings(savedTabOpeningSettings);
       } catch (error) {
         console.error('Error loading settings:', error);
       }
@@ -35,6 +39,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     }
   };
   
+  // Change tab opening mode
+  const handleTabOpeningModeChange = async (mode: TabOpeningSettings['mode']) => {
+    try {
+      const newSettings = { ...tabOpeningSettings, mode };
+      await saveTabOpeningSettings(newSettings);
+      setTabOpeningSettings(newSettings);
+    } catch (error) {
+      console.error('Error changing tab opening mode:', error);
+    }
+  };
+  
   // Get method description
   const getMethodDescription = (method: SortSettings['method']) => {
     switch (method) {
@@ -44,6 +59,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
         return 'Sort by search match relevance, useful when looking for specific tabs';
       case 'usage':
         return 'Put most frequently used items first, especially those accessed in the last week';
+      default:
+        return '';
+    }
+  };
+  
+  // Get tab opening mode description
+  const getModeDescription = (mode: TabOpeningSettings['mode']) => {
+    switch (mode) {
+      case 'standard':
+        return 'Enter opens in current tab, Ctrl/Cmd+Enter opens in new tab (recommended)';
+      case 'classic':
+        return 'Enter always opens in new tab (original behavior)';
       default:
         return '';
     }
@@ -96,6 +123,45 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
                   </div>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     {getMethodDescription(option.id as SortSettings['method'])}
+                  </p>
+                </div>
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className="mb-6">
+        <h3 className="text-md font-medium text-gray-900 dark:text-gray-100 mb-2">Tab Opening Behavior</h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+          Choose how Enter key opens bookmarks and search results
+        </p>
+        <div className="space-y-3 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+          {[
+            { id: 'standard', label: 'Standard Mode', icon: '⚡' },
+            { id: 'classic', label: 'Classic Mode', icon: '📋' }
+          ].map(option => (
+            <div key={option.id} className={`p-2 rounded-lg transition-colors ${
+              tabOpeningSettings.mode === option.id 
+                ? 'bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-blue-100' 
+                : 'hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
+            }`}>
+              <label className="flex items-start cursor-pointer">
+                <input
+                  type="radio"
+                  name="tabOpeningMode"
+                  value={option.id}
+                  checked={tabOpeningSettings.mode === option.id}
+                  onChange={() => handleTabOpeningModeChange(option.id as TabOpeningSettings['mode'])}
+                  className="mt-1 mr-2"
+                />
+                <div>
+                  <div className="flex items-center">
+                    <span className="mr-1">{option.icon}</span>
+                    <span className="font-medium">{option.label}</span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {getModeDescription(option.id as TabOpeningSettings['mode'])}
                   </p>
                 </div>
               </label>

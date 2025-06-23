@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
-import { SearchResult } from '../types';
+import { SearchResult, OpeningMode } from '../types';
 
 export const useKeyboard = (
   results: SearchResult[],
   selectedIndex: number,
   setSelectedIndex: (value: number | ((prev: number) => number)) => void,
   onClose: () => void,
-  onSelect?: (result: SearchResult) => Promise<void>
+  onSelect?: (result: SearchResult, mode: OpeningMode) => Promise<void>
 ) => {
   const handleArrowUp = useCallback(() => {
     setSelectedIndex((prev: number) => 
@@ -20,15 +20,16 @@ export const useKeyboard = (
     );
   }, [results.length, setSelectedIndex]);
 
-  const handleEnter = useCallback(async () => {
+  const handleEnter = useCallback(async (withModifier: boolean = false) => {
     if (!results.length) return;
     
     try {
       const selected = results[selectedIndex];
       
       if (onSelect) {
-        // Use the provided selection handling function
-        await onSelect(selected);
+        // Determine opening mode based on modifier key
+        const mode: OpeningMode = withModifier ? 'new' : 'current';
+        await onSelect(selected, mode);
       } else {
         // Default behavior remains unchanged
         onClose();

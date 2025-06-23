@@ -5,7 +5,7 @@ interface SearchBoxProps {
   value: string;
   onChange: (value: string) => void;
   onEscape: () => void;
-  onEnter: () => void;
+  onEnter: (withModifier?: boolean) => void;
   onArrowUp: () => void;
   onArrowDown: () => void;
   className?: string;
@@ -33,7 +33,9 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
         onEscape();
         break;
       case 'Enter':
-        onEnter();
+        // Check for Ctrl (Windows/Linux) or Cmd (Mac) modifier key
+        const withModifier = e.ctrlKey || e.metaKey;
+        onEnter(withModifier);
         break;
       case 'ArrowUp':
         e.preventDefault();
@@ -92,7 +94,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
           <span className="mr-3">Navigate</span>
           
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Enter</kbd>
-          <span>Select</span>
+          <span className="mr-3">Open</span>
+          
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">
+            {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}+Enter
+          </kbd>
+          <span>New Tab</span>
         </div>
         <div>
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
