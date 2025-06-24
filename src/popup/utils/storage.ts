@@ -33,6 +33,7 @@ export const DEFAULT_TAB_OPENING_SETTINGS: TabOpeningSettings = {
   mode: 'standard'
 };
 
+
 // Data cleanup settings
 export const USAGE_DATA_MAX_ITEMS = 1000; // Maximum number of stored items
 export const USAGE_DATA_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30 days, in milliseconds
@@ -190,4 +191,6 @@ export const getTabOpeningSettings = async (): Promise<TabOpeningSettings> => {
     console.error('Error getting tab opening settings:', error);
     return DEFAULT_TAB_OPENING_SETTINGS;
   }
-}; 
+};
+
+ 
