@@ -68,6 +68,8 @@ The extension follows the WebExtension API architecture with:
 
 ### Keyboard Navigation
 - Default shortcuts: `Cmd+Shift+K` (Mac) / `Alt+T` (Windows/Linux)
+- Custom keyboard shortcuts: Users can modify shortcuts through browser settings (Settings → Keyboard Shortcut)
+- Cross-browser support: Chrome, Firefox, and Edge
 - Full keyboard navigation within search interface
 - Arrow keys for selection, Enter to activate, Escape to close
 
