@@ -39,7 +39,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
             value={query}
             onChange={setQuery}
             onEscape={handleEscape}
-            onEnter={handleEnter}
+            onEnter={(withModifier) => handleEnter(withModifier)}
             onArrowUp={handleArrowUp}
             onArrowDown={handleArrowDown}
           />
@@ -67,7 +67,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
       <ResultList
         results={results}
         selectedIndex={selectedIndex}
-        onSelect={handleSelect}
+        onSelect={(result) => handleSelect(result, 'current')}
       />
     </div>
   );

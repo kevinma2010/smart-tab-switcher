@@ -112,7 +112,15 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
             or click the extension icon in the toolbar to open the tab switcher
           </li>
           <li>Type keywords in the search box to find tabs</li>
-          <li>Use up and down arrow keys to select a tab, press Enter to switch to the selected tab</li>
+          <li>
+            Use arrow keys to navigate results:
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">↑↓</span> - Navigate between results</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">Enter</span> - Open in current tab</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{isMac ? '⌘' : 'Ctrl'}+Enter</span> - Open in new tab</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">Esc</span> - Close switcher</li>
+            </ul>
+          </li>
           <li>Click the settings icon to customize the extension's behavior and appearance</li>
         </ol>
       </div>

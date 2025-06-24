@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill';
+import { TabOpeningSettings } from '../types';
 
 // Check if storage API is available
 const isStorageAvailable = () => {
@@ -26,6 +27,10 @@ export interface TabUsageData {
 // Default settings
 export const DEFAULT_SORT_SETTINGS: SortSettings = {
   method: 'smart'
+};
+
+export const DEFAULT_TAB_OPENING_SETTINGS: TabOpeningSettings = {
+  mode: 'standard'
 };
 
 // Data cleanup settings
@@ -154,5 +159,35 @@ export const recordTabAccess = async (tabUrl: string): Promise<void> => {
     await saveUsageData(usageData);
   } catch (error) {
     console.error('Error recording tab access:', error);
+  }
+};
+
+// Save tab opening settings
+export const saveTabOpeningSettings = async (settings: TabOpeningSettings): Promise<void> => {
+  if (!isStorageAvailable()) {
+    console.error('Storage API is not available');
+    return;
+  }
+  
+  try {
+    await browser.storage.local.set({ tabOpeningSettings: settings });
+  } catch (error) {
+    console.error('Error saving tab opening settings:', error);
+  }
+};
+
+// Get tab opening settings
+export const getTabOpeningSettings = async (): Promise<TabOpeningSettings> => {
+  if (!isStorageAvailable()) {
+    console.error('Storage API is not available');
+    return DEFAULT_TAB_OPENING_SETTINGS;
+  }
+  
+  try {
+    const result = await browser.storage.local.get('tabOpeningSettings');
+    return result.tabOpeningSettings || DEFAULT_TAB_OPENING_SETTINGS;
+  } catch (error) {
+    console.error('Error getting tab opening settings:', error);
+    return DEFAULT_TAB_OPENING_SETTINGS;
   }
 }; 

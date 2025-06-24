@@ -57,3 +57,9 @@ export interface TabUsageData {
     lastAccessed: number;
   };
 }
+
+export interface TabOpeningSettings {
+  mode: 'classic' | 'standard';
+}
+
+export type OpeningMode = 'current' | 'new';

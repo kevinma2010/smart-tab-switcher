@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import Fuse from 'fuse.js';
-import { SearchResult, TabInfo, BookmarkInfo, SearchOptions, SortSettings, TabUsageData } from '../types';
+import { SearchResult, TabInfo, BookmarkInfo, SearchOptions, SortSettings, TabUsageData, OpeningMode, TabOpeningSettings } from '../types';
 import { isValidUrl } from '../utils/url';
 import browser from 'webextension-polyfill';
 import * as psl from 'psl';
-import { recordTabAccess, getSortSettings, getUsageData } from '../utils/storage';
+import { recordTabAccess, getSortSettings, getUsageData, getTabOpeningSettings } from '../utils/storage';
 import { sortResults } from '../utils/sort';
 
 const SEARCH_OPTIONS = {
@@ -25,8 +25,9 @@ export const useSearch = () => {
   });
   const [usageData, setUsageData] = useState<TabUsageData>({});
   const [currentTabId, setCurrentTabId] = useState<number | null>(null);
+  const [tabOpeningSettings, setTabOpeningSettings] = useState<TabOpeningSettings>({ mode: 'standard' });
 
-  // Load sorting settings and usage data
+  // Load sorting settings, usage data, and tab opening settings
   useEffect(() => {
     const loadSettings = async () => {
       try {
@@ -35,6 +36,9 @@ export const useSearch = () => {
         
         const usage = await getUsageData();
         setUsageData(usage);
+        
+        const tabSettings = await getTabOpeningSettings();
+        setTabOpeningSettings(tabSettings);
       } catch (error) {
         console.error('Error loading settings:', error);
       }
@@ -208,7 +212,7 @@ export const useSearch = () => {
   }, [query, search]);
 
   // Record selected result
-  const handleSelect = async (result: SearchResult) => {
+  const handleSelect = async (result: SearchResult, openingMode: OpeningMode) => {
     try {
       if (result.type === 'tab') {
         // Get current active tab
@@ -222,19 +226,41 @@ export const useSearch = () => {
         }
         window.close();
       } else if (result.type === 'bookmark' || result.type === 'url' || result.type === 'google') {
-        // For new tabs, first record access
+        // For new content, first record access
         await recordTabAccess(result.url);
         
         // Get the latest usage data
         const updatedUsageData = await getUsageData();
         setUsageData(updatedUsageData);
         
-        // Create a new tab
-        await browser.tabs.create({ url: result.url });
+        // Determine where to open based on mode and settings
+        const shouldOpenInCurrentTab = determineShouldOpenInCurrentTab(openingMode, tabOpeningSettings);
+        
+        if (shouldOpenInCurrentTab) {
+          // Update current tab
+          const currentTabs = await browser.tabs.query({ active: true, currentWindow: true });
+          if (currentTabs[0]) {
+            await browser.tabs.update(currentTabs[0].id, { url: result.url });
+          }
+        } else {
+          // Create a new tab
+          await browser.tabs.create({ url: result.url });
+        }
         window.close();
       }
     } catch (error) {
       console.error('Error handling selection:', error);
+    }
+  };
+
+  // Helper function to determine opening behavior
+  const determineShouldOpenInCurrentTab = (mode: OpeningMode, settings: TabOpeningSettings): boolean => {
+    if (settings.mode === 'classic') {
+      // Classic mode: Enter always opens in new tab, Ctrl+Enter not applicable (current behavior)
+      return false;
+    } else {
+      // Standard mode: Enter opens in current tab, Ctrl+Enter opens in new tab
+      return mode === 'current';
     }
   };
 

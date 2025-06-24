@@ -103,7 +103,8 @@ export const ResultList: React.FC<ResultListProps> = ({
             No matching results found
           </div>
           <div className="text-gray-400 dark:text-gray-500 text-sm">
-            Press Enter to search Google or open URL
+            Press Enter to search in current tab<br/>
+            Press {navigator.platform.includes('Mac') ? 'Cmd' : 'Ctrl'}+Enter to search in new tab
           </div>
         </div>
       )}
