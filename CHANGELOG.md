@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-06-25
+### Added
+- Custom keyboard shortcut settings through browser settings
+  - Cross-browser support for Chrome, Firefox, and Edge
+  - Platform-specific instructions and settings access
+  - Display default shortcuts based on OS (Cmd+Shift+K on Mac, Alt+T elsewhere)
+- Enhanced Enter key behavior with configurable tab opening modes
+  - Standard mode: Enter opens in current tab, Ctrl/Cmd+Enter opens in new tab
+  - Classic mode: Enter always opens in new tab
+  - Configurable through settings
+
+### Fixed
+- Updated brace-expansion to 2.0.2 to resolve CVE-2025-5889
+
 ## [1.2.0] - 2025-03-02
 ### Added
 - About view with version and project information

@@ -21,6 +21,29 @@ Smart Tab Switcher is a browser extension built with TypeScript and React that p
 ### Asset Generation
 - `pnpm generate-icons` - Generate icon assets in multiple sizes from source SVGs
 
+### Release Management
+- `pnpm release:prepare` - Run pre-release checks to ensure everything is ready
+- `pnpm release` - Interactive release process (choose version type)
+- `pnpm release:patch` - Quick release for bug fixes (e.g., 1.2.3 → 1.2.4)
+- `pnpm release:minor` - Quick release for new features (e.g., 1.2.3 → 1.3.0)
+- `pnpm release:major` - Quick release for breaking changes (e.g., 1.2.3 → 2.0.0)
+
+#### Release Workflow
+1. Ensure all changes are committed and pushed to main branch
+2. Update CHANGELOG.md with all changes under `[Unreleased]` section
+3. Run `pnpm release:prepare` to verify release readiness
+4. Run appropriate release command (e.g., `pnpm release:minor`)
+5. Follow the interactive prompts
+6. The script will automatically:
+   - Update version numbers
+   - Update CHANGELOG with release date
+   - Create git commits and tags
+   - Build release packages
+   - Create GitHub release with zip files
+7. Manually upload to Chrome Web Store and Firefox Add-ons
+
+See [RELEASE.md](./RELEASE.md) for detailed release process documentation.
+
 ## Architecture
 
 ### Extension Structure

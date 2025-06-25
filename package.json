@@ -1,6 +1,6 @@
 {
   "name": "smart-tab-switcher",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Fast tab switching and management for modern browsers (Chrome, Firefox, and Chromium-based browsers)",
   "scripts": {
     "clean": "rm -rf dist",
@@ -14,7 +14,12 @@
     "type-check": "tsc --noEmit",
     "generate-icons": "node scripts/generate-icons.js",
     "prebuild": "npm run generate-icons",
-    "build:release": "node scripts/build-release.js"
+    "build:release": "node scripts/build-release.js",
+    "release:prepare": "node scripts/prepare-release.js",
+    "release": "node scripts/release.js",
+    "release:patch": "npm run release -- patch",
+    "release:minor": "npm run release -- minor",
+    "release:major": "npm run release -- major"
   },
   "dependencies": {
     "copy-webpack-plugin": "^12.0.2",
