@@ -84,3 +84,21 @@ The extension follows the WebExtension API architecture with:
 - Version updates require manual changes to package.json and CHANGELOG.md
 - Production builds automatically inject version from package.json into manifests
 - The extension requires tabs, bookmarks, and storage permissions
+
+
+## Git Commit Guidelines
+
+**IMPORTANT**: Do not include any AI tool attribution in git operations:
+
+- No "Generated with [Claude Code]" in commit messages
+- No "Co-Authored-By: Claude" in commit messages
+- No AI tool references in tags, releases, issues, or pull requests
+- Keep all git information clean and focused on the actual changes
+## Git Commit Guidelines
+
+**IMPORTANT**: Do not include any AI tool attribution in git operations:
+
+- No "Generated with [Claude Code]" in commit messages
+- No "Co-Authored-By: Claude" in commit messages
+- No AI tool references in tags, releases, issues, or pull requests
+- Keep all git information clean and focused on the actual changes
