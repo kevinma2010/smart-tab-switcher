@@ -6,12 +6,14 @@ interface ResultListProps {
   results: SearchResult[];
   selectedIndex: number;
   onSelect: (result: SearchResult) => void;
+  onCloseTab?: (tabId: string) => void;
 }
 
 export const ResultList: React.FC<ResultListProps> = ({
   results,
   selectedIndex,
   onSelect,
+  onCloseTab,
 }) => {
   const listRef = useRef<HTMLDivElement>(null);
   const selectedRef = useRef<HTMLDivElement>(null);
@@ -84,6 +86,11 @@ export const ResultList: React.FC<ResultListProps> = ({
                             console.error('Error selecting result:', error);
                           }
                         }}
+                        onClose={
+                          result.type === 'tab' && onCloseTab
+                            ? () => onCloseTab(result.id)
+                            : undefined
+                        }
                       />
                     </div>
                   );

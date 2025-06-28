@@ -264,6 +264,33 @@ export const useSearch = () => {
     }
   };
 
+  // Close a tab
+  const closeTab = async (tabId: string) => {
+    try {
+      const tabIdNum = parseInt(tabId);
+      await browser.tabs.remove(tabIdNum);
+      
+      // Update the tabs list
+      setTabs(prevTabs => prevTabs.filter(tab => tab.id !== tabIdNum));
+      
+      // If the closed tab was in the results, update them
+      const newResults = results.filter(result => 
+        !(result.type === 'tab' && result.id === tabId)
+      );
+      
+      if (newResults.length !== results.length) {
+        setResults(newResults);
+        
+        // Adjust selected index if needed
+        if (selectedIndex >= newResults.length && newResults.length > 0) {
+          setSelectedIndex(newResults.length - 1);
+        }
+      }
+    } catch (error) {
+      console.error('Error closing tab:', error);
+    }
+  };
+
   return {
     query,
     setQuery,
@@ -273,6 +300,7 @@ export const useSearch = () => {
     tabs,
     bookmarks,
     handleSelect,
-    sortSettings
+    sortSettings,
+    closeTab
   };
 };

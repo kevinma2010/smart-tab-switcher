@@ -17,7 +17,8 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
     results,
     selectedIndex,
     setSelectedIndex,
-    handleSelect
+    handleSelect,
+    closeTab
   } = useSearch();
 
   const handleClose = () => {
@@ -28,8 +29,9 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
     handleArrowUp,
     handleArrowDown,
     handleEnter,
-    handleEscape
-  } = useKeyboard(results, selectedIndex, setSelectedIndex, handleClose, handleSelect);
+    handleEscape,
+    handleDelete
+  } = useKeyboard(results, selectedIndex, setSelectedIndex, handleClose, handleSelect, closeTab);
 
   return (
     <div>
@@ -42,6 +44,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
             onEnter={(withModifier) => handleEnter(withModifier)}
             onArrowUp={handleArrowUp}
             onArrowDown={handleArrowDown}
+            onDelete={handleDelete}
           />
         </div>
         <button 
@@ -68,6 +71,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
         results={results}
         selectedIndex={selectedIndex}
         onSelect={(result) => handleSelect(result, 'current')}
+        onCloseTab={closeTab}
       />
     </div>
   );
