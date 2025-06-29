@@ -273,18 +273,35 @@ export const useSearch = () => {
       // Update the tabs list
       setTabs(prevTabs => prevTabs.filter(tab => tab.id !== tabIdNum));
       
-      // If the closed tab was in the results, update them
-      const newResults = results.filter(result => 
-        !(result.type === 'tab' && result.id === tabId)
+      // Find the index of the closed tab in the results
+      const closedTabIndex = results.findIndex(result => 
+        result.type === 'tab' && result.id === tabId
       );
       
-      if (newResults.length !== results.length) {
+      // If the closed tab was in the results, update them
+      if (closedTabIndex !== -1) {
+        const newResults = results.filter(result => 
+          !(result.type === 'tab' && result.id === tabId)
+        );
+        
         setResults(newResults);
         
-        // Adjust selected index if needed
-        if (selectedIndex >= newResults.length && newResults.length > 0) {
-          setSelectedIndex(newResults.length - 1);
+        // Adjust selected index based on the position of the closed tab
+        if (newResults.length === 0) {
+          // No results left
+          setSelectedIndex(0);
+        } else if (closedTabIndex < selectedIndex) {
+          // Closed tab was before the selected item, decrease index
+          setSelectedIndex(selectedIndex - 1);
+        } else if (closedTabIndex === selectedIndex) {
+          // Closed tab was the selected item
+          if (selectedIndex >= newResults.length) {
+            // Was at the end, select the new last item
+            setSelectedIndex(newResults.length - 1);
+          }
+          // Otherwise keep the same index (next item will be selected)
         }
+        // If closedTabIndex > selectedIndex, no adjustment needed
       }
     } catch (error) {
       console.error('Error closing tab:', error);
