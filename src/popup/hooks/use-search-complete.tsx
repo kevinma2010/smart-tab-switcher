@@ -296,11 +296,25 @@ export const useSearch = () => {
       let newSelectedIndex = selectedIndex;
 
       if (closedTabIndex !== -1) {
+        const remainingCount = results.length - 1; // Number of items after removal
+        
         if (closedTabIndex < selectedIndex) {
+          // Closed tab was before the selected item, adjust index down
           newSelectedIndex = Math.max(0, selectedIndex - 1);
         } else if (closedTabIndex === selectedIndex) {
-          newSelectedIndex = selectedIndex; // The next item will take its place
+          // Closed tab was the selected item
+          if (remainingCount === 0) {
+            // No items left, reset to 0
+            newSelectedIndex = 0;
+          } else if (selectedIndex >= remainingCount) {
+            // Selected index would be out of bounds, select the last item
+            newSelectedIndex = remainingCount - 1;
+          } else {
+            // Keep current index (next item will take this position)
+            newSelectedIndex = selectedIndex;
+          }
         }
+        // If closedTabIndex > selectedIndex, no adjustment needed
       }
       
       // Store the calculated index in the ref
