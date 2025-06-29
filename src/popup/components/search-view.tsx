@@ -11,37 +11,52 @@ interface SearchViewProps {
 }
 
 export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAbout }) => {
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+  
   const {
     query,
     setQuery,
     results,
     selectedIndex,
     setSelectedIndex,
-    handleSelect
+    handleSelect,
+    closeTab
   } = useSearch();
 
   const handleClose = () => {
     window.close();
   };
 
+  // Wrap closeTab to ensure focus is maintained
+  const handleCloseTab = React.useCallback(async (tabId: string) => {
+    await closeTab(tabId);
+    // Ensure search input keeps focus
+    setTimeout(() => {
+      searchInputRef.current?.focus();
+    }, 0);
+  }, [closeTab]);
+
   const {
     handleArrowUp,
     handleArrowDown,
     handleEnter,
-    handleEscape
-  } = useKeyboard(results, selectedIndex, setSelectedIndex, handleClose, handleSelect);
+    handleEscape,
+    handleDelete
+  } = useKeyboard(results, selectedIndex, setSelectedIndex, handleClose, handleSelect, handleCloseTab);
 
   return (
     <div>
       <div className="flex items-center p-2">
         <div className="flex-grow">
           <SearchBox
+            ref={searchInputRef}
             value={query}
             onChange={setQuery}
             onEscape={handleEscape}
             onEnter={(withModifier) => handleEnter(withModifier)}
             onArrowUp={handleArrowUp}
             onArrowDown={handleArrowDown}
+            onDelete={handleDelete}
           />
         </div>
         <button 
@@ -68,6 +83,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
         results={results}
         selectedIndex={selectedIndex}
         onSelect={(result) => handleSelect(result, 'current')}
+        onCloseTab={handleCloseTab}
       />
     </div>
   );

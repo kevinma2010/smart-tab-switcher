@@ -6,7 +6,8 @@ export const useKeyboard = (
   selectedIndex: number,
   setSelectedIndex: (value: number | ((prev: number) => number)) => void,
   onClose: () => void,
-  onSelect?: (result: SearchResult, mode: OpeningMode) => Promise<void>
+  onSelect?: (result: SearchResult, mode: OpeningMode) => Promise<void>,
+  onCloseTab?: (tabId: string) => Promise<void>
 ) => {
   const handleArrowUp = useCallback(() => {
     setSelectedIndex((prev: number) => 
@@ -45,10 +46,24 @@ export const useKeyboard = (
     onClose();
   }, [onClose]);
 
+  const handleDelete = useCallback(async () => {
+    if (!results.length || !onCloseTab) return;
+    
+    const selected = results[selectedIndex];
+    if (selected.type === 'tab') {
+      try {
+        await onCloseTab(selected.id);
+      } catch (error) {
+        console.error('Error closing tab:', error);
+      }
+    }
+  }, [results, selectedIndex, onCloseTab]);
+
   return {
     handleArrowUp,
     handleArrowDown,
     handleEnter,
-    handleEscape
+    handleEscape,
+    handleDelete
   };
 };

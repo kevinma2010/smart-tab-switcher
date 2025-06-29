@@ -6,13 +6,16 @@ interface ResultItemProps {
   result: SearchResult;
   isSelected: boolean;
   onClick: () => void;
+  onClose?: () => void;
 }
 
 export const ResultItem: React.FC<ResultItemProps> = ({
   result,
   isSelected,
   onClick,
+  onClose,
 }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
   const getIcon = () => {
     switch (result.type) {
       case 'tab':
@@ -63,12 +66,46 @@ export const ResultItem: React.FC<ResultItemProps> = ({
 
   return (
     <div
-      className={`p-3 flex items-center cursor-pointer border-b border-gray-100 dark:border-gray-700
+      className={`relative p-3 flex items-center cursor-pointer border-b border-gray-100 dark:border-gray-700
         hover:bg-gray-50 dark:hover:bg-gray-700
         ${isSelected ? 'bg-blue-50 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600' : ''}
         dark:text-gray-100 transition-colors`}
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
+      {(isHovered || isSelected) && result.type === 'tab' && onClose && (
+        <button
+          className="absolute top-0.5 left-0.5 w-5 h-5 flex items-center justify-center
+            bg-gray-200/80 dark:bg-gray-600/80 hover:bg-gray-300 dark:hover:bg-gray-500
+            rounded-full transition-colors shadow-sm z-10"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onClose();
+          }}
+          onMouseDown={(e) => {
+            // Prevent focus loss
+            e.preventDefault();
+          }}
+          title="Close tab"
+        >
+          <svg
+            className="w-3 h-3 text-gray-600 dark:text-gray-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      )}
       <img
         src={getIcon()}
         className="w-6 h-6 mr-3 flex-shrink-0"

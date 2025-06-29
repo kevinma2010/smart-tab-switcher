@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Fuse from 'fuse.js';
 import { SearchResult, TabInfo, BookmarkInfo, SearchOptions, SortSettings, TabUsageData, OpeningMode, TabOpeningSettings } from '../types';
 import { isValidUrl } from '../utils/url';
@@ -26,6 +26,9 @@ export const useSearch = () => {
   const [usageData, setUsageData] = useState<TabUsageData>({});
   const [currentTabId, setCurrentTabId] = useState<number | null>(null);
   const [tabOpeningSettings, setTabOpeningSettings] = useState<TabOpeningSettings>({ mode: 'standard' });
+  
+  // Ref to manage index updates after tab closure
+  const postClosureSelectedIndex = React.useRef<number | null>(null);
 
   // Load sorting settings, usage data, and tab opening settings
   useEffect(() => {
@@ -77,6 +80,17 @@ export const useSearch = () => {
     };
 
     loadData();
+    
+    // Listen for tab closures
+    const handleTabRemoved = (tabId: number) => {
+      setTabs(prevTabs => prevTabs.filter(tab => tab.id !== tabId));
+    };
+    
+    browser.tabs.onRemoved.addListener(handleTabRemoved);
+    
+    return () => {
+      browser.tabs.onRemoved.removeListener(handleTabRemoved);
+    };
   }, []);
 
   // Get current tab
@@ -192,7 +206,7 @@ export const useSearch = () => {
       results.push({
         id: 'google-' + searchQuery,
         type: 'google',
-        title: `Search Google for "${searchQuery}"`,
+        title: `Search Google for \"${searchQuery}\" `,
         url: `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`
       });
     }
@@ -204,12 +218,20 @@ export const useSearch = () => {
     return sortResults(results, sortSettings, usageData).slice(0, limit);
   }, [tabs, bookmarks, usageData, sortSettings, currentTabId]);
 
-  // Update results when query changes
+  // Update results when query or tabs change
   useEffect(() => {
-    const results = search(query);
-    setResults(results);
-    setSelectedIndex(0);
-  }, [query, search]);
+    const newResults = search(query);
+    setResults(newResults);
+    
+    // If a post-closure index is set, use it
+    if (postClosureSelectedIndex.current !== null) {
+      setSelectedIndex(Math.min(postClosureSelectedIndex.current, newResults.length - 1));
+      postClosureSelectedIndex.current = null;
+    } else {
+      // Otherwise, reset to top
+      setSelectedIndex(0);
+    }
+  }, [query, tabs, search]);
 
   // Record selected result
   const handleSelect = async (result: SearchResult, openingMode: OpeningMode) => {
@@ -264,6 +286,50 @@ export const useSearch = () => {
     }
   };
 
+  // Close a tab
+  const closeTab = useCallback(async (tabId: string) => {
+    try {
+      const tabIdNum = parseInt(tabId);
+      
+      // Calculate the new selected index *before* closing the tab
+      const closedTabIndex = results.findIndex(r => r.id === tabId);
+      let newSelectedIndex = selectedIndex;
+
+      if (closedTabIndex !== -1) {
+        const remainingCount = results.length - 1; // Number of items after removal
+        
+        if (closedTabIndex < selectedIndex) {
+          // Closed tab was before the selected item, adjust index down
+          newSelectedIndex = Math.max(0, selectedIndex - 1);
+        } else if (closedTabIndex === selectedIndex) {
+          // Closed tab was the selected item
+          if (remainingCount === 0) {
+            // No items left, reset to 0
+            newSelectedIndex = 0;
+          } else if (selectedIndex >= remainingCount) {
+            // Selected index would be out of bounds, select the last item
+            newSelectedIndex = remainingCount - 1;
+          } else {
+            // Keep current index (next item will take this position)
+            newSelectedIndex = selectedIndex;
+          }
+        }
+        // If closedTabIndex > selectedIndex, no adjustment needed
+      }
+      
+      // Store the calculated index in the ref
+      postClosureSelectedIndex.current = newSelectedIndex;
+      
+      // Asynchronously close the tab. This will trigger the `onRemoved` listener
+      // and cause a state update for `tabs`, which will then run the `useEffect`.
+      await browser.tabs.remove(tabIdNum);
+      
+    } catch (error) {
+      console.error('Error closing tab:', error);
+      postClosureSelectedIndex.current = null; // Clear ref on error
+    }
+  }, [results, selectedIndex]);
+
   return {
     query,
     setQuery,
@@ -273,6 +339,7 @@ export const useSearch = () => {
     tabs,
     bookmarks,
     handleSelect,
-    sortSettings
+    sortSettings,
+    closeTab
   };
 };

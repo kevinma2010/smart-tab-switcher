@@ -8,20 +8,25 @@ interface SearchBoxProps {
   onEnter: (withModifier?: boolean) => void;
   onArrowUp: () => void;
   onArrowDown: () => void;
+  onDelete?: () => void;
   className?: string;
 }
 
-export const SearchBox: React.FC<SearchBoxProps> = ({
+export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
   value,
   onChange,
   onEscape,
   onEnter,
   onArrowUp,
   onArrowDown,
+  onDelete,
   className = '',
-}) => {
+}, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
+  
+  // Combine refs
+  React.useImperativeHandle(ref, () => inputRef.current!);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -44,6 +49,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
       case 'ArrowDown':
         e.preventDefault();
         onArrowDown();
+        break;
+      case 'Delete':
+        if (onDelete) {
+          e.preventDefault();
+          onDelete();
+        }
         break;
     }
   };
@@ -99,7 +110,10 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">
             {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}+Enter
           </kbd>
-          <span>New Tab</span>
+          <span className="mr-3">New Tab</span>
+          
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
+          <span>Close Tab</span>
         </div>
         <div>
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
@@ -108,4 +122,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
       </div>
     </div>
   );
-};
+});
+
+SearchBox.displayName = 'SearchBox';
