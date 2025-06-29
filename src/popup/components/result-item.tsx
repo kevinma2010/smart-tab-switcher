@@ -81,7 +81,12 @@ export const ResultItem: React.FC<ResultItemProps> = ({
             rounded-full transition-colors shadow-sm z-10"
           onClick={(e) => {
             e.stopPropagation();
+            e.preventDefault();
             onClose();
+          }}
+          onMouseDown={(e) => {
+            // Prevent focus loss
+            e.preventDefault();
           }}
           title="Close tab"
         >

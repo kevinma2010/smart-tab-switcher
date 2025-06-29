@@ -12,7 +12,7 @@ interface SearchBoxProps {
   className?: string;
 }
 
-export const SearchBox: React.FC<SearchBoxProps> = ({
+export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
   value,
   onChange,
   onEscape,
@@ -21,9 +21,12 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
   onArrowDown,
   onDelete,
   className = '',
-}) => {
+}, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
+  
+  // Combine refs
+  React.useImperativeHandle(ref, () => inputRef.current!);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -119,4 +122,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
       </div>
     </div>
   );
-};
+});
+
+SearchBox.displayName = 'SearchBox';

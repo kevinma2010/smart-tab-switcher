@@ -26,6 +26,7 @@ export const useSearch = () => {
   const [usageData, setUsageData] = useState<TabUsageData>({});
   const [currentTabId, setCurrentTabId] = useState<number | null>(null);
   const [tabOpeningSettings, setTabOpeningSettings] = useState<TabOpeningSettings>({ mode: 'standard' });
+  const [isClosingTab, setIsClosingTab] = useState(false);
 
   // Load sorting settings, usage data, and tab opening settings
   useEffect(() => {
@@ -204,12 +205,21 @@ export const useSearch = () => {
     return sortResults(results, sortSettings, usageData).slice(0, limit);
   }, [tabs, bookmarks, usageData, sortSettings, currentTabId]);
 
-  // Update results when query changes
+  // Update results when query changes or tabs update
   useEffect(() => {
     const results = search(query);
     setResults(results);
-    setSelectedIndex(0);
-  }, [query, search]);
+    
+    // Only reset selectedIndex if query changed or not closing tab
+    if (!isClosingTab) {
+      setSelectedIndex(0);
+    }
+    
+    // Reset flag if it was set
+    if (isClosingTab) {
+      setIsClosingTab(false);
+    }
+  }, [query, search, isClosingTab]);
 
   // Record selected result
   const handleSelect = async (result: SearchResult, openingMode: OpeningMode) => {
@@ -265,48 +275,54 @@ export const useSearch = () => {
   };
 
   // Close a tab
-  const closeTab = async (tabId: string) => {
+  const closeTab = useCallback(async (tabId: string) => {
     try {
       const tabIdNum = parseInt(tabId);
+      
+      // Find the index of the closed tab in the current results
+      const closedTabIndex = results.findIndex(result => 
+        result.type === 'tab' && result.id === tabId
+      );
+      
+      // Save current selected index before closing
+      const currentSelectedIndex = selectedIndex;
+      
+      // Set flag to prevent selectedIndex reset
+      setIsClosingTab(true);
+      
+      // Close the tab
       await browser.tabs.remove(tabIdNum);
       
       // Update the tabs list
       setTabs(prevTabs => prevTabs.filter(tab => tab.id !== tabIdNum));
       
-      // Find the index of the closed tab in the results
-      const closedTabIndex = results.findIndex(result => 
-        result.type === 'tab' && result.id === tabId
-      );
-      
-      // If the closed tab was in the results, update them
+      // Calculate new selected index
       if (closedTabIndex !== -1) {
-        const newResults = results.filter(result => 
-          !(result.type === 'tab' && result.id === tabId)
-        );
+        let newSelectedIndex = currentSelectedIndex;
         
-        setResults(newResults);
-        
-        // Adjust selected index based on the position of the closed tab
-        if (newResults.length === 0) {
-          // No results left
-          setSelectedIndex(0);
-        } else if (closedTabIndex < selectedIndex) {
-          // Closed tab was before the selected item, decrease index
-          setSelectedIndex(selectedIndex - 1);
-        } else if (closedTabIndex === selectedIndex) {
+        if (closedTabIndex < currentSelectedIndex) {
+          // Closed tab was before selected item
+          newSelectedIndex = Math.max(0, currentSelectedIndex - 1);
+        } else if (closedTabIndex === currentSelectedIndex) {
           // Closed tab was the selected item
-          if (selectedIndex >= newResults.length) {
-            // Was at the end, select the new last item
-            setSelectedIndex(newResults.length - 1);
+          const filteredResults = results.filter(result => 
+            !(result.type === 'tab' && result.id === tabId)
+          );
+          if (currentSelectedIndex >= filteredResults.length && filteredResults.length > 0) {
+            newSelectedIndex = filteredResults.length - 1;
           }
-          // Otherwise keep the same index (next item will be selected)
+          // else keep the same index (next item becomes selected)
         }
-        // If closedTabIndex > selectedIndex, no adjustment needed
+        // If closedTabIndex > currentSelectedIndex, no change needed
+        
+        // Set the new selected index
+        setSelectedIndex(newSelectedIndex);
       }
     } catch (error) {
       console.error('Error closing tab:', error);
+      setIsClosingTab(false);
     }
-  };
+  }, [results, selectedIndex]);
 
   return {
     query,
