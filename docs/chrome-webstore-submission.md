@@ -1,26 +1,17 @@
 # Chrome Web Store Submission Notes
 
-## Version 1.3.0 - What's New
+## Version 1.4.0 - What's New
 
-### Custom Keyboard Shortcuts
-Take control of how you access Smart Tab Switcher! You can now customize the keyboard shortcut through Chrome's extension settings:
-- Go to chrome://extensions/shortcuts
-- Find Smart Tab Switcher and set your preferred shortcut
-- Default: Cmd+Shift+K (Mac) or Alt+T (Windows/Linux)
+### Close Tab Button
+New convenient way to close tabs directly from the search interface:
+- Click the close button (×) that appears when hovering over tab results
+- Use keyboard shortcut Ctrl+W (Windows/Linux) or Cmd+W (Mac) to close selected tab
+- Streamlined tab management without leaving the search interface
 
-### Flexible Tab Opening
-Choose how tabs and bookmarks open with our new navigation modes:
-- **Standard Mode** (New Default): Enter opens in current tab, Ctrl/Cmd+Enter opens in new tab
-- **Classic Mode**: Enter always opens in new tab
-Switch modes easily in the Settings page to match your workflow!
-
-### Security Update
-- Resolved security vulnerability CVE-2025-5889 by updating dependencies
-
-### Improvements
-- Clearer keyboard hints throughout the interface
-- Enhanced onboarding experience
-- Improved settings page with detailed mode descriptions
+### Enhanced User Experience
+- Improved tab management workflow
+- Better visual feedback with hover effects
+- Seamless integration with existing keyboard navigation
 
 ---
 
@@ -38,10 +29,10 @@ Smart Tab Switcher - Lightning-fast tab management for power users
 ✓ Dark/Light theme support
 ✓ Privacy-focused: No data collection
 
-**New in v1.3.0:**
-- Customize your keyboard shortcut
-- Choose how tabs open (current vs new tab)
-- Enhanced keyboard navigation
+**New in v1.4.0:**
+- Close tab button for direct tab management
+- Hover effects for better visual feedback
+- Enhanced keyboard shortcuts for tab closing
 
 **How to Use:**
 1. Press your shortcut (default: Cmd+Shift+K or Alt+T)

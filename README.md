@@ -1,16 +1,20 @@
 # Smart Tab Switcher
 
-Smart Tab Switcher is a powerful browser extension that helps users efficiently manage and switch browser tabs through an intuitive interface and quick search functionality.
+Smart Tab Switcher is a powerful browser extension that provides lightning-fast tab switching and management through real-time search, intelligent sorting, and comprehensive keyboard navigation. Designed for power users who work with multiple tabs daily.
 
 ## ✨ Key Features
 
-- 🚀 Quick Launch: Trigger with `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
-- 🔍 Real-time Search: Instantly search through open tabs and bookmarks
-- ⌨️ Keyboard-Centric: Complete keyboard navigation support
-- 🎯 Smart Matching: Fuzzy search for quick target page location
-- 🔖 Bookmark Integration: Search results include bookmarks for quick access
-- 🌐 URL Recognition: Smart URL detection and direct opening
-- 🔄 Google Search: Direct Google search when no matches found
+- 🚀 **Quick Launch**: Trigger with `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
+- 🔍 **Real-time Search**: Instantly search through open tabs and bookmarks with fuzzy matching
+- ⌨️ **Keyboard-Centric**: Complete keyboard navigation with arrow keys, Enter, Escape
+- ✖️ **Smart Tab Closing**: Close tabs directly from search results with hover button or `Ctrl/Cmd+W`
+- 🧠 **Intelligent Sorting**: Smart algorithm combining relevance, frequency, and recency
+- ⭐ **Usage Tracking**: Visual indicators showing tab usage frequency and last access time
+- 🔖 **Bookmark Integration**: Search through bookmarks seamlessly alongside tabs
+- 🌐 **URL Recognition**: Smart URL detection and direct opening
+- 🔄 **Google Search**: Instant Google search when no local matches found
+- 🎨 **Theme Support**: Automatic dark/light mode based on system preferences
+- ⚙️ **Customizable Settings**: Personalize sorting methods and navigation behavior
 
 ## 📖 User Guide
 
@@ -20,7 +24,7 @@ You can install Smart Tab Switcher from your browser's extension store:
 
 <div align="center">
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/smart-tab-switcher?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/jjjkdlhleiedpjijkfofahkjfoehamok)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/jjjkdlhleiedpjijkfofahkjfoehamok?label=Chrome&style=for-the-badge&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/jjjkdlhleiedpjijkfofahkjfoehamok)
 [![Firefox Add-ons](https://img.shields.io/amo/v/smart-tab-switcher?label=Firefox&style=for-the-badge&logo=firefox&logoColor=white)](https://addons.mozilla.org/firefox/addon/smart-tab-switcher)
 [![Edge Add-ons](https://img.shields.io/badge/Edge-v1.0.0-blue?style=for-the-badge&logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/smart-tab-switcher)
 
@@ -53,11 +57,21 @@ Or install manually:
    - Press Enter to open selected item
    - Press Esc to close search interface
 
-3. **Search Result Types**
-   - 📑 Tabs: Switch directly to the corresponding tab
-   - 🔖 Bookmarks: Open in a new tab
-   - 🌐 URLs: Direct opening when URL is detected
-   - 🔍 Google: Search when no matches found
+3. **Tab Management**
+   - **Close tabs**: Hover over tab results to see close button (×) and click it
+   - **Keyboard shortcut**: Press `Ctrl+W` (Windows/Linux) or `Cmd+W` (Mac) to close selected tab
+   - **Multiple actions**: Switch to or close tabs without leaving the search interface
+
+4. **Search Result Types**
+   - 📑 **Tabs**: Switch directly to the corresponding tab or close it
+   - 🔖 **Bookmarks**: Open in a new tab
+   - 🌐 **URLs**: Direct opening when URL is detected
+   - 🔍 **Google**: Search when no matches found
+
+5. **Customization**
+   - Access settings through the extension popup
+   - Customize sorting preferences (relevance, frequency, recency)
+   - Adjust navigation behavior and display options
 
 ## 💻 Developer Guide
 
@@ -82,7 +96,11 @@ Or install manually:
 
 3. **Development Mode**
    ```bash
-   pnpm dev
+   # For Chrome development
+   pnpm dev:chrome
+   
+   # For Firefox development  
+   pnpm dev:firefox
    ```
 
 4. **Load in Browser**
@@ -100,10 +118,21 @@ Or install manually:
 ### Build for Production
 
 ```bash
+# Build for both browsers
 pnpm build
+
+# Build for specific browser
+pnpm build:chrome
+pnpm build:firefox
+
+# Build release packages
+pnpm build:release
 ```
 
-Built files will be located in the `dist`
+Built files will be located in:
+- `dist/chrome` - Chrome/Edge extension
+- `dist/firefox` - Firefox extension  
+- `release/` - Release packages (after running `build:release`)
 
 ## 📄 License
 

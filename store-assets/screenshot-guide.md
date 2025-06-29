@@ -5,6 +5,7 @@
 ### 1. Main Interface (main-interface.png)
 - Show the search popup with some example search results
 - Include a mix of tabs and bookmarks in results
+- **NEW**: Show hover effect with close button (×) visible on a tab result
 - Resolution: 1280x800
 - Format: PNG
 

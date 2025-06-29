@@ -1,35 +1,31 @@
 # Firefox Add-ons Submission Notes
 
-## Version 1.3.0 Release Notes
+## Version 1.4.0 Release Notes
 
 ### What's New
 
-**Custom Keyboard Shortcuts**
-- Users can now customize keyboard shortcuts through Firefox's Add-ons Manager
-- Navigate to: Add-ons Manager → Smart Tab Switcher → Manage → Settings → Manage Extension Shortcuts
-- Default shortcut remains Alt+T (Windows/Linux) or Cmd+Shift+K (Mac)
+**Close Tab Button**
+- Added close button (×) that appears when hovering over tab search results
+- Click to instantly close tabs without leaving the search interface
+- Keyboard shortcut support: Ctrl+W (Windows/Linux) or Cmd+W (Mac)
+- Enhances tab management workflow significantly
 
-**Enhanced Tab Navigation**
-- New tab opening modes for better user control:
-  - Standard Mode (NEW DEFAULT): Press Enter to open in current tab, Ctrl/Cmd+Enter for new tab
-  - Classic Mode: Press Enter to always open in new tab (previous behavior)
-- Mode can be changed in the extension's Settings page
-- Provides more intuitive navigation that matches browser conventions
-
-**Security Update**
-- Updated dependencies to resolve security vulnerability CVE-2025-5889
+**Enhanced User Experience**
+- Improved visual feedback with hover effects on tab items
+- Better tab management integration within the search interface
+- Maintains focus and navigation flow during tab operations
 
 ### Improvements
-- Better keyboard navigation hints in the UI
-- Updated onboarding experience with new keyboard shortcuts
-- Enhanced settings interface with clear mode descriptions
+- Streamlined tab management without context switching
+- Better visual cues for interactive elements
+- Enhanced keyboard navigation for power users
 
 ---
 
 ## Notes for Reviewer
 
 ### Summary
-Smart Tab Switcher is a productivity extension that provides fast tab switching and bookmark searching through a fuzzy search interface. This update (v1.3.0) adds user-requested features for keyboard shortcut customization and flexible tab opening behavior.
+Smart Tab Switcher is a productivity extension that provides fast tab switching and bookmark searching through a fuzzy search interface. This update (v1.4.0) adds a highly requested feature for closing tabs directly from the search interface.
 
 ### Key Changes in This Version
 
@@ -38,30 +34,28 @@ Smart Tab Switcher is a productivity extension that provides fast tab switching 
    - No external API calls or new data collection
 
 2. **Code Changes**
-   - Added settings for tab opening behavior (stored in browser.storage.sync)
-   - Implemented keyboard modifier detection (Ctrl/Cmd key)
-   - Added UI for displaying keyboard shortcut instructions
+   - Added close button UI component with hover effects
+   - Implemented keyboard shortcut for tab closing (Ctrl/Cmd+W)
+   - Enhanced tab management workflow
    - No changes to core search functionality
 
 3. **User Data Handling**
-   - New settings are stored in browser.storage.sync
-   - No changes to existing user data
-   - Backward compatible with previous versions
+   - No changes to existing user data or storage
+   - Fully backward compatible with previous versions
 
 ### Testing Instructions
 
 1. **Install the extension**
-2. **Test keyboard shortcut customization:**
-   - Open Add-ons Manager (Ctrl+Shift+A)
-   - Find Smart Tab Switcher → Manage → Settings → Manage Extension Shortcuts
-   - Try changing the shortcut
-3. **Test tab opening modes:**
+2. **Test close tab functionality:**
    - Open extension with shortcut (default: Alt+T)
-   - Search for any tab or bookmark
-   - Test Enter key (should open in current tab by default)
-   - Test Ctrl+Enter (should open in new tab)
-   - Go to Settings and switch to Classic Mode
-   - Verify Enter now always opens in new tab
+   - Search for any open tab
+   - Hover over a tab result to see the close button (×)
+   - Click the close button to verify tab closes
+   - Try keyboard shortcut Ctrl+W (or Cmd+W on Mac) to close selected tab
+3. **Test user experience:**
+   - Verify hover effects work properly on tab items
+   - Ensure search interface remains focused after closing tabs
+   - Test with multiple tabs to verify proper functionality
 4. **Verify no console errors or warnings**
 
 ### Build Information
