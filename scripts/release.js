@@ -204,7 +204,7 @@ async function main() {
     if (pushConfirm.toLowerCase() === 'y') {
       console.log('Pushing changes...');
       exec('git push origin main');
-      exec(`git push origin v${newVersion}`);
+      await exec(`git push origin v${newVersion}`);
       console.log('✅ Pushed successfully!');
     }
     
