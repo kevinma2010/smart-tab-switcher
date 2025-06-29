@@ -7,7 +7,7 @@
 **Close Tab Button**
 - Added close button (×) that appears when hovering over tab search results
 - Click to instantly close tabs without leaving the search interface
-- Keyboard shortcut support: Ctrl+W (Windows/Linux) or Cmd+W (Mac)
+- Keyboard shortcut support: Delete key
 - Enhances tab management workflow significantly
 
 **Enhanced User Experience**
@@ -35,7 +35,7 @@ Smart Tab Switcher is a productivity extension that provides fast tab switching 
 
 2. **Code Changes**
    - Added close button UI component with hover effects
-   - Implemented keyboard shortcut for tab closing (Ctrl/Cmd+W)
+   - Implemented keyboard shortcut for tab closing (Delete key)
    - Enhanced tab management workflow
    - No changes to core search functionality
 
@@ -51,7 +51,7 @@ Smart Tab Switcher is a productivity extension that provides fast tab switching 
    - Search for any open tab
    - Hover over a tab result to see the close button (×)
    - Click the close button to verify tab closes
-   - Try keyboard shortcut Ctrl+W (or Cmd+W on Mac) to close selected tab
+   - Try keyboard shortcut Delete key to close selected tab
 3. **Test user experience:**
    - Verify hover effects work properly on tab items
    - Ensure search interface remains focused after closing tabs

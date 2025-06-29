@@ -7,7 +7,7 @@ Smart Tab Switcher is a powerful browser extension that provides lightning-fast 
 - 🚀 **Quick Launch**: Trigger with `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
 - 🔍 **Real-time Search**: Instantly search through open tabs and bookmarks with fuzzy matching
 - ⌨️ **Keyboard-Centric**: Complete keyboard navigation with arrow keys, Enter, Escape
-- ✖️ **Smart Tab Closing**: Close tabs directly from search results with hover button or `Ctrl/Cmd+W`
+- ✖️ **Smart Tab Closing**: Close tabs directly from search results with hover button or `Delete` key
 - 🧠 **Intelligent Sorting**: Smart algorithm combining relevance, frequency, and recency
 - ⭐ **Usage Tracking**: Visual indicators showing tab usage frequency and last access time
 - 🔖 **Bookmark Integration**: Search through bookmarks seamlessly alongside tabs
@@ -59,7 +59,7 @@ Or install manually:
 
 3. **Tab Management**
    - **Close tabs**: Hover over tab results to see close button (×) and click it
-   - **Keyboard shortcut**: Press `Ctrl+W` (Windows/Linux) or `Cmd+W` (Mac) to close selected tab
+   - **Keyboard shortcut**: Press `Delete` key to close selected tab
    - **Multiple actions**: Switch to or close tabs without leaving the search interface
 
 4. **Search Result Types**

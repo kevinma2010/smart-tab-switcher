@@ -12,7 +12,7 @@ CORE FEATURES - TAB SWITCHING & SEARCH:
 • Instant Tab Switching: Launch with keyboard shortcuts (Cmd+Shift+K on Mac, Alt+T on Windows/Linux) and jump to any tab
 • Real-Time Fuzzy Search: Find tabs and bookmarks instantly as you type with intelligent matching
 • Lightning-Fast Results: Search through all open tabs and bookmarks simultaneously with instant results
-• Smart Tab Closing: Close tabs directly from search results with hover button or Ctrl/Cmd+W shortcut
+• Smart Tab Closing: Close tabs directly from search results with hover button or Delete key
 • Bookmark Search Integration: Search through your bookmarks seamlessly alongside open tabs
 • Direct URL Opening: Paste any URL and open it immediately without leaving the search interface
 

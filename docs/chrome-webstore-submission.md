@@ -5,7 +5,7 @@
 ### Close Tab Button
 New convenient way to close tabs directly from the search interface:
 - Click the close button (×) that appears when hovering over tab results
-- Use keyboard shortcut Ctrl+W (Windows/Linux) or Cmd+W (Mac) to close selected tab
+- Use keyboard shortcut Delete key to close selected tab
 - Streamlined tab management without leaving the search interface
 
 ### Enhanced User Experience
@@ -32,7 +32,7 @@ Smart Tab Switcher - Lightning-fast tab management for power users
 **New in v1.4.0:**
 - Close tab button for direct tab management
 - Hover effects for better visual feedback
-- Enhanced keyboard shortcuts for tab closing
+- Enhanced keyboard shortcuts for tab closing (Delete key)
 
 **How to Use:**
 1. Press your shortcut (default: Cmd+Shift+K or Alt+T)
