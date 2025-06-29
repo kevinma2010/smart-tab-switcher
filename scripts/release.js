@@ -91,7 +91,7 @@ async function main() {
     }
     
     // Check for uncommitted changes
-    const gitStatus = exec('git status --porcelain');
+    const gitStatus = await exec('git status --porcelain');
     if (gitStatus.trim()) {
       console.error('❌ Error: You have uncommitted changes. Please commit or stash them first.');
       console.log('\nUncommitted changes:');
