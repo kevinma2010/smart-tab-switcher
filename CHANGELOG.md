@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Subtle query modes hint in search placeholder
 
 ## [Unreleased]
+
+## [1.6.0] - 2025-06-30
 ### Added
 - Tab key navigation for search results
   - Tab navigates down through search results (same as ArrowDown)

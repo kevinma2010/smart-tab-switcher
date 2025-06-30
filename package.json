@@ -1,6 +1,6 @@
 {
   "name": "smart-tab-switcher",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Fast tab switching and management for modern browsers (Chrome, Firefox, and Chromium-based browsers)",
   "scripts": {
     "clean": "rm -rf dist",
