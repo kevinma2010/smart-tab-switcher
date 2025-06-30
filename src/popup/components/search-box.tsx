@@ -75,7 +75,7 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
   };
 
   return (
-    <div className={`p-4 border-b border-gray-200 dark:border-gray-700 ${className}`}>
+    <div className={`px-2 py-4 border-b border-gray-200 dark:border-gray-700 ${className}`}>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -112,26 +112,35 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           </button>
         )}
       </div>
-      <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
-        <div>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">↑↓</kbd>
-          <span className="mr-3">Navigate</span>
-          
+          <span>Navigate</span>
+        </div>
+        
+        <div className="flex items-center">
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Tab</kbd>
+          <span>Navigate</span>
+        </div>
+        
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Enter</kbd>
-          <span className="mr-3">Open</span>
-          
+          <span>Open</span>
+        </div>
+        
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">
             {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}+Enter
           </kbd>
-          <span className="mr-3">New Tab</span>
-          
+          <span>New Tab</span>
+        </div>
+        
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
           <span>Close Tab</span>
         </div>
-        <div>
-          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Tab</kbd>
-          <span className="mr-3">Navigate</span>
-          
+        
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
           <span>Close</span>
         </div>

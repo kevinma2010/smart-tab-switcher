@@ -48,7 +48,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
 
   return (
     <div>
-      <div className="flex items-center p-2">
+      <div className="flex items-center px-1 py-2">
         <div className="flex-grow">
           <SearchBox
             ref={searchInputRef}
@@ -64,7 +64,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
         </div>
         <button 
           onClick={onOpenAbout}
-          className="self-start mt-5 mr-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="self-start mt-5 mr-1 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           title="About"
           tabIndex={-1}
         >
@@ -74,7 +74,7 @@ export const SearchView: React.FC<SearchViewProps> = ({ onOpenSettings, onOpenAb
         </button>
         <button 
           onClick={onOpenSettings}
-          className="self-start mt-5 mr-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="self-start mt-5 mr-1 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           title="Settings"
           tabIndex={-1}
         >
