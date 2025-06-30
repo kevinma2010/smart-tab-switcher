@@ -37,10 +37,12 @@ Smart Tab Switcher is a browser extension built with TypeScript and React that p
 6. The script will automatically:
    - Update version numbers
    - Update CHANGELOG with release date
+   - Generate store-specific release notes from CHANGELOG
+   - Update Chrome Web Store and Firefox Add-ons submission documents
    - Create git commits and tags
    - Build release packages
    - Create GitHub release with zip files
-7. Manually upload to Chrome Web Store and Firefox Add-ons
+7. Manually upload to Chrome Web Store and Firefox Add-ons using the generated submission notes
 
 See [RELEASE.md](./RELEASE.md) for detailed release process documentation.
 

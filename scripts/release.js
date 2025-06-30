@@ -79,6 +79,81 @@ async function extractReleaseNotes(version) {
   return '';
 }
 
+async function generateStoreReleaseNotes(version, changelogContent) {
+  const templatePath = 'store-assets/release-notes-template.md';
+  
+  if (!fs.existsSync(templatePath)) {
+    console.log('⚠️  Release notes template not found, skipping store notes generation');
+    return;
+  }
+  
+  const template = fs.readFileSync(templatePath, 'utf8');
+  
+  // Parse changelog content
+  const sections = {
+    added: [],
+    changed: [],
+    fixed: [],
+    security: [],
+    removed: [],
+    deprecated: []
+  };
+  
+  const lines = changelogContent.split('\n');
+  let currentSection = null;
+  
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('### Added')) currentSection = 'added';
+    else if (trimmed.startsWith('### Changed')) currentSection = 'changed';
+    else if (trimmed.startsWith('### Fixed')) currentSection = 'fixed';
+    else if (trimmed.startsWith('### Security')) currentSection = 'security';
+    else if (trimmed.startsWith('### Removed')) currentSection = 'removed';
+    else if (trimmed.startsWith('### Deprecated')) currentSection = 'deprecated';
+    else if (trimmed.startsWith('- ') && currentSection) {
+      sections[currentSection].push(trimmed.substring(2));
+    }
+  }
+  
+  // Generate summaries
+  const newFeatures = sections.added.length > 0 ? sections.added.join('\n- ') : 'Bug fixes and improvements';
+  const improvements = [...sections.changed, ...sections.fixed].join('\n- ') || 'Performance and stability improvements';
+  const codeChanges = sections.added.concat(sections.changed, sections.fixed)
+    .map(item => `   - ${item}`).join('\n') || '   - General improvements and bug fixes';
+  
+  // Replace template variables
+  let chromeNotes = template.split('## Firefox Add-ons Release Notes Template')[0];
+  let firefoxNotes = template.split('## Firefox Add-ons Release Notes Template')[1] || template;
+  
+  const replacements = {
+    '{{VERSION}}': version,
+    '{{CHANGELOG_CONTENT}}': changelogContent,
+    '{{AUTO_GENERATED_SUMMARY}}': improvements,
+    '{{NEW_FEATURES_SUMMARY}}': `- ${newFeatures}`,
+    '{{IMPROVEMENTS_SUMMARY}}': improvements,
+    '{{UPDATE_SUMMARY}}': sections.added.length > 0 ? 'adds new features and improvements' : 'includes bug fixes and improvements',
+    '{{CODE_CHANGES_SUMMARY}}': codeChanges,
+    '{{TESTING_INSTRUCTIONS}}': sections.added.length > 0 ? 
+      '   - Test the new features mentioned above\n   - Verify existing functionality remains intact' :
+      '   - Verify all existing functionality works correctly\n   - Test performance improvements'
+  };
+  
+  for (const [placeholder, value] of Object.entries(replacements)) {
+    chromeNotes = chromeNotes.replace(new RegExp(placeholder.replace(/[{}]/g, '\\$&'), 'g'), value);
+    firefoxNotes = firefoxNotes.replace(new RegExp(placeholder.replace(/[{}]/g, '\\$&'), 'g'), value);
+  }
+  
+  // Write Chrome Web Store notes
+  fs.writeFileSync(`docs/chrome-webstore-submission.md`, 
+    `# Chrome Web Store Submission Notes\n\n${chromeNotes.trim()}\n`);
+  
+  // Write Firefox Add-ons notes
+  fs.writeFileSync(`docs/firefox-addon-submission.md`, 
+    `# Firefox Add-ons Submission Notes\n\n${firefoxNotes.trim()}\n`);
+  
+  console.log('📝 Generated store-specific release notes');
+}
+
 async function main() {
   try {
     console.log('🚀 Smart Tab Switcher Release Script\n');
@@ -165,6 +240,10 @@ async function main() {
     
     console.log('📝 Updating CHANGELOG...');
     await updateChangelog(newVersion);
+    
+    console.log('📝 Generating store release notes...');
+    const releaseNotes = await extractReleaseNotes(newVersion);
+    await generateStoreReleaseNotes(newVersion, releaseNotes);
     
     console.log('💾 Committing changes...');
     exec('git add package.json CHANGELOG.md');

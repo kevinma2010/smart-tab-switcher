@@ -1,31 +1,34 @@
 # Firefox Add-ons Submission Notes
 
-## Version 1.4.0 Release Notes
+## Version 1.5.0 Release Notes
 
 ### What's New
 
-**Close Tab Button**
-- Added close button (×) that appears when hovering over tab search results
-- Click to instantly close tabs without leaving the search interface
-- Keyboard shortcut support: Delete key
-- Enhances tab management workflow significantly
+**Query Modes with Prefix-Based Search**
+- Added `b:` prefix for bookmarks-only search filtering
+- Added `u:` prefix for URLs mode (tabs/bookmarks + URL suggestions)
+- Added `g:` prefix for Google search only
+- Maintains default behavior when no prefix is used
+- Enhanced search targeting and efficiency
 
 **Enhanced User Experience**
-- Improved visual feedback with hover effects on tab items
-- Better tab management integration within the search interface
-- Maintains focus and navigation flow during tab operations
+- Query modes help integrated into onboarding guide
+- Subtle query modes hint displayed in search placeholder
+- More intuitive search workflow for different use cases
+- Improved search precision and user control
 
 ### Improvements
-- Streamlined tab management without context switching
-- Better visual cues for interactive elements
-- Enhanced keyboard navigation for power users
+- More targeted search capabilities for specific content types
+- Better user guidance through enhanced onboarding
+- Improved search efficiency for power users
+- Enhanced discoverability of advanced features
 
 ---
 
 ## Notes for Reviewer
 
 ### Summary
-Smart Tab Switcher is a productivity extension that provides fast tab switching and bookmark searching through a fuzzy search interface. This update (v1.4.0) adds a highly requested feature for closing tabs directly from the search interface.
+Smart Tab Switcher is a productivity extension that provides fast tab switching and bookmark searching through a fuzzy search interface. This update (v1.5.0) introduces powerful query modes for more targeted and efficient searching.
 
 ### Key Changes in This Version
 
@@ -34,10 +37,11 @@ Smart Tab Switcher is a productivity extension that provides fast tab switching 
    - No external API calls or new data collection
 
 2. **Code Changes**
-   - Added close button UI component with hover effects
-   - Implemented keyboard shortcut for tab closing (Delete key)
-   - Enhanced tab management workflow
-   - No changes to core search functionality
+   - Added query mode prefix parsing and filtering logic
+   - Implemented bookmarks-only, URLs, and Google search modes
+   - Enhanced onboarding with query modes guidance
+   - Updated search placeholder with subtle hints
+   - No changes to core permissions or data handling
 
 3. **User Data Handling**
    - No changes to existing user data or storage
@@ -46,16 +50,17 @@ Smart Tab Switcher is a productivity extension that provides fast tab switching 
 ### Testing Instructions
 
 1. **Install the extension**
-2. **Test close tab functionality:**
+2. **Test query modes functionality:**
    - Open extension with shortcut (default: Alt+T)
-   - Search for any open tab
-   - Hover over a tab result to see the close button (×)
-   - Click the close button to verify tab closes
-   - Try keyboard shortcut Delete key to close selected tab
+   - Try `b:` prefix to search only bookmarks
+   - Try `u:` prefix for URLs mode with suggestions
+   - Try `g:` prefix for Google search only
+   - Test default behavior without prefix
 3. **Test user experience:**
-   - Verify hover effects work properly on tab items
-   - Ensure search interface remains focused after closing tabs
-   - Test with multiple tabs to verify proper functionality
+   - Verify query modes hints appear in search placeholder
+   - Check onboarding guide includes query modes help
+   - Test search filtering works correctly for each mode
+   - Ensure smooth transition between different search modes
 4. **Verify no console errors or warnings**
 
 ### Build Information

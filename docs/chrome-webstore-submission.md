@@ -1,17 +1,19 @@
 # Chrome Web Store Submission Notes
 
-## Version 1.4.0 - What's New
+## Version 1.5.0 - What's New
 
-### Close Tab Button
-New convenient way to close tabs directly from the search interface:
-- Click the close button (×) that appears when hovering over tab results
-- Use keyboard shortcut Delete key to close selected tab
-- Streamlined tab management without leaving the search interface
+### Query Modes with Prefix-Based Search
+Powerful new search filtering system:
+- `b:` prefix for bookmarks-only search
+- `u:` prefix for URLs mode (tabs/bookmarks + URL suggestions)
+- `g:` prefix for Google search only
+- No prefix maintains default behavior (search all)
 
 ### Enhanced User Experience
-- Improved tab management workflow
-- Better visual feedback with hover effects
-- Seamless integration with existing keyboard navigation
+- Query modes help integrated into onboarding guide
+- Subtle query modes hint in search placeholder
+- More targeted and efficient search capabilities
+- Improved search workflow for different use cases
 
 ---
 
@@ -29,10 +31,11 @@ Smart Tab Switcher - Lightning-fast tab management for power users
 ✓ Dark/Light theme support
 ✓ Privacy-focused: No data collection
 
-**New in v1.4.0:**
-- Close tab button for direct tab management
-- Hover effects for better visual feedback
-- Enhanced keyboard shortcuts for tab closing (Delete key)
+**New in v1.5.0:**
+- Query modes with prefix-based search filtering (b:, u:, g:)
+- Enhanced search targeting for bookmarks, URLs, and Google search
+- Improved onboarding with query modes guidance
+- More efficient search workflow for different use cases
 
 **How to Use:**
 1. Press your shortcut (default: Cmd+Shift+K or Alt+T)

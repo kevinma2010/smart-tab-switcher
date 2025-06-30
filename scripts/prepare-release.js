@@ -98,6 +98,12 @@ function checkRequirements() {
     checks.push({ pass: true, message: '✅ pnpm is installed' });
   }
   
+  // Check store documentation version consistency
+  console.log('\n🔍 Checking store documentation versions...');
+  const packageVersion = getPackageVersion();
+  const storeVersionChecks = checkStoreVersionConsistency(packageVersion);
+  checks.push(...storeVersionChecks);
+  
   return checks;
 }
 
@@ -119,6 +125,64 @@ function displayChecklist() {
   checklist.forEach(item => console.log(`   ${item}`));
 }
 
+function getPackageVersion() {
+  try {
+    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+    return packageJson.version;
+  } catch (error) {
+    return null;
+  }
+}
+
+function checkStoreVersionConsistency(currentVersion) {
+  const checks = [];
+  
+  if (!currentVersion) {
+    checks.push({ pass: false, message: '❌ Could not read version from package.json' });
+    return checks;
+  }
+  
+  // Check Chrome Web Store submission notes
+  try {
+    const chromeNotes = fs.readFileSync('docs/chrome-webstore-submission.md', 'utf8');
+    const chromeVersionMatch = chromeNotes.match(/Version\s+(\d+\.\d+\.\d+)/i);
+    
+    if (chromeVersionMatch) {
+      const chromeVersion = chromeVersionMatch[1];
+      if (chromeVersion === currentVersion) {
+        checks.push({ pass: true, message: `✅ Chrome Web Store notes version matches (${chromeVersion})` });
+      } else {
+        checks.push({ pass: false, message: `❌ Chrome Web Store notes version mismatch (${chromeVersion} vs ${currentVersion})` });
+      }
+    } else {
+      checks.push({ pass: false, message: '❌ Could not find version in Chrome Web Store notes' });
+    }
+  } catch (error) {
+    checks.push({ pass: false, message: '❌ Could not read Chrome Web Store submission notes' });
+  }
+  
+  // Check Firefox Add-ons submission notes
+  try {
+    const firefoxNotes = fs.readFileSync('docs/firefox-addon-submission.md', 'utf8');
+    const firefoxVersionMatch = firefoxNotes.match(/Version\s+(\d+\.\d+\.\d+)/i);
+    
+    if (firefoxVersionMatch) {
+      const firefoxVersion = firefoxVersionMatch[1];
+      if (firefoxVersion === currentVersion) {
+        checks.push({ pass: true, message: `✅ Firefox Add-ons notes version matches (${firefoxVersion})` });
+      } else {
+        checks.push({ pass: false, message: `❌ Firefox Add-ons notes version mismatch (${firefoxVersion} vs ${currentVersion})` });
+      }
+    } else {
+      checks.push({ pass: false, message: '❌ Could not find version in Firefox Add-ons notes' });
+    }
+  } catch (error) {
+    checks.push({ pass: false, message: '❌ Could not read Firefox Add-ons submission notes' });
+  }
+  
+  return checks;
+}
+
 function main() {
   console.log('🚀 Smart Tab Switcher - Pre-release Check\n');
   
@@ -131,6 +195,13 @@ function main() {
   
   if (failedChecks.length > 0) {
     console.log(`\n❌ ${failedChecks.length} check(s) failed. Please fix these issues before releasing.`);
+    
+    // Check if it's just store version mismatch
+    const storeVersionIssues = failedChecks.filter(c => c.message.includes('version mismatch') || c.message.includes('Could not find version'));
+    if (storeVersionIssues.length > 0 && storeVersionIssues.length === failedChecks.length) {
+      console.log('\n💡 Tip: Store version mismatches will be automatically fixed during release');
+    }
+    
     displayChecklist();
     process.exit(1);
   } else {
