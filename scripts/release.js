@@ -178,15 +178,27 @@ async function main() {
     const currentVersion = await getCurrentVersion();
     console.log(`Current version: ${currentVersion}`);
     
-    // Ask for version bump type
-    const versionType = await question(
-      '\nSelect version bump type:\n' +
-      '  1) patch (bug fixes)\n' +
-      '  2) minor (new features)\n' +
-      '  3) major (breaking changes)\n' +
-      '  4) custom version\n' +
-      'Enter your choice (1-4): '
-    );
+    // Check for command line argument first
+    let versionType;
+    const cliArg = process.argv[2];
+    
+    if (cliArg === 'patch') {
+      versionType = '1';
+    } else if (cliArg === 'minor') {
+      versionType = '2';
+    } else if (cliArg === 'major') {
+      versionType = '3';
+    } else {
+      // Ask for version bump type
+      versionType = await question(
+        '\nSelect version bump type:\n' +
+        '  1) patch (bug fixes)\n' +
+        '  2) minor (new features)\n' +
+        '  3) major (breaking changes)\n' +
+        '  4) custom version\n' +
+        'Enter your choice (1-4): '
+      );
+    }
     
     let newVersion;
     switch (versionType) {
