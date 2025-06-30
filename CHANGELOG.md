@@ -15,6 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Subtle query modes hint in search placeholder
 
 ## [Unreleased]
+### Added
+- Tab key navigation for search results
+  - Tab navigates down through search results (same as ArrowDown)
+  - Shift+Tab navigates up through search results (same as ArrowUp)
+  - Enhanced keyboard accessibility and user experience
+- Tab key navigation hints in search interface
+- Updated onboarding guide with Tab key navigation instructions
+
+### Changed
+- Optimized keyboard hints layout and clarity
+- Improved UI layout and spacing for better visual hierarchy
 
 ## [1.4.0] - 2025-06-29
 ### Added
