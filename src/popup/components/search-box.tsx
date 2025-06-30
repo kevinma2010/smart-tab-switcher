@@ -79,7 +79,7 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
             focus:outline-none focus:ring-2 focus:ring-blue-500
             dark:placeholder-gray-400"
-          placeholder="Search tabs, bookmarks (try b:, u:, g: prefixes)..."
+          placeholder="Search tabs, bookmarks..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -99,37 +99,25 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           </button>
         )}
       </div>
-      <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-        <div className="flex justify-between">
-          <div>
-            <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">↑↓</kbd>
-            <span className="mr-3">Navigate</span>
-            
-            <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Enter</kbd>
-            <span className="mr-3">Open</span>
-            
-            <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">
-              {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}+Enter
-            </kbd>
-            <span className="mr-3">New Tab</span>
-            
-            <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
-            <span>Close Tab</span>
-          </div>
-          <div>
-            <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
-            <span>Close</span>
-          </div>
+      <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
+        <div>
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">↑↓</kbd>
+          <span className="mr-3">Navigate</span>
+          
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Enter</kbd>
+          <span className="mr-3">Open</span>
+          
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">
+            {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}+Enter
+          </kbd>
+          <span className="mr-3">New Tab</span>
+          
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
+          <span>Close Tab</span>
         </div>
-        <div className="mt-1 text-center">
-          <span className="text-gray-400 dark:text-gray-500">Prefixes:</span>
-          <span className="ml-2">
-            <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">b:</kbd> bookmarks
-            <span className="mx-1 text-gray-400">•</span>
-            <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">u:</kbd> URLs
-            <span className="mx-1 text-gray-400">•</span>
-            <kbd className="px-1 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">g:</kbd> Google
-          </span>
+        <div>
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
+          <span>Close</span>
         </div>
       </div>
     </div>
