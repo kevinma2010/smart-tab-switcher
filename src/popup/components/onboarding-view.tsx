@@ -131,11 +131,12 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
             </ul>
           </li>
           <li>
-            Use arrow keys to navigate results:
+            Use keyboard navigation to browse results:
             <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">↑↓</span> - Navigate between results</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">↑↓</span> or <span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">Tab</span>/<span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">⇧Tab</span> - Navigate between results</li>
               <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">Enter</span> - Open in current tab</li>
               <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">{isMac ? '⌘' : 'Ctrl'}+Enter</span> - Open in new tab</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">Del</span> - Close selected tab</li>
               <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">Esc</span> - Close switcher</li>
             </ul>
           </li>

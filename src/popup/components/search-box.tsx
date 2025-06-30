@@ -9,6 +9,8 @@ interface SearchBoxProps {
   onArrowUp: () => void;
   onArrowDown: () => void;
   onDelete?: () => void;
+  onTab?: (shiftKey: boolean) => void;
+  onFocus?: () => void;
   className?: string;
 }
 
@@ -20,6 +22,8 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
   onArrowUp,
   onArrowDown,
   onDelete,
+  onTab,
+  onFocus,
   className = '',
 }, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -56,6 +60,12 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           onDelete();
         }
         break;
+      case 'Tab':
+        if (onTab) {
+          e.preventDefault();
+          onTab(e.shiftKey);
+        }
+        break;
     }
   };
 
@@ -65,7 +75,7 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
   };
 
   return (
-    <div className={`p-4 border-b border-gray-200 dark:border-gray-700 ${className}`}>
+    <div className={`px-2 py-4 border-b border-gray-200 dark:border-gray-700 ${className}`}>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +93,10 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          onFocus={() => setIsFocused(true)}
+          onFocus={() => {
+            setIsFocused(true);
+            onFocus?.();
+          }}
           onBlur={() => setIsFocused(false)}
           autoFocus
         />
@@ -99,25 +112,38 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           </button>
         )}
       </div>
-      <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
-        <div>
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">↑↓</kbd>
-          <span className="mr-3">Navigate</span>
-          
+          <span>Select</span>
+        </div>
+        
+        <div className="flex items-center">
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Tab</kbd>
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">⇧Tab</kbd>
+          <span>Move</span>
+        </div>
+        
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Enter</kbd>
-          <span className="mr-3">Open</span>
-          
+          <span>Open</span>
+        </div>
+        
+        <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">
             {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}+Enter
           </kbd>
-          <span className="mr-3">New Tab</span>
-          
-          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
-          <span>Close Tab</span>
+          <span>New Tab</span>
         </div>
-        <div>
-          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
+        
+        <div className="flex items-center">
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
           <span>Close</span>
+        </div>
+        
+        <div className="flex items-center">
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
+          <span>Exit</span>
         </div>
       </div>
     </div>
