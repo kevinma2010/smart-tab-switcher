@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Fuse from 'fuse.js';
-import { SearchResult, TabInfo, BookmarkInfo, SearchOptions, SortSettings, TabUsageData, OpeningMode, TabOpeningSettings } from '../types';
+import { SearchResult, TabInfo, BookmarkInfo, SearchOptions, SearchMode, SortSettings, TabUsageData, OpeningMode, TabOpeningSettings } from '../types';
 import { isValidUrl } from '../utils/url';
 import browser from 'webextension-polyfill';
 import * as psl from 'psl';
@@ -13,10 +13,32 @@ const SEARCH_OPTIONS = {
   includeScore: true,
 };
 
+// Parse query for search mode prefixes
+function parseQueryForMode(input: string): { mode: SearchMode; cleanQuery: string } {
+  const prefixMatch = input.match(/^([bug]):/i);
+  
+  if (!prefixMatch) {
+    return { mode: 'all', cleanQuery: input };
+  }
+  
+  const prefix = prefixMatch[1].toLowerCase();
+  const cleanQuery = input.slice(2).trim();
+  
+  const modeMap: Record<string, SearchMode> = {
+    'b': 'bookmarks',
+    'u': 'urls', 
+    'g': 'google'
+  };
+  
+  return { mode: modeMap[prefix] || 'all', cleanQuery };
+}
+
 export const useSearch = () => {
   const [tabs, setTabs] = useState<TabInfo[]>([]);
   const [bookmarks, setBookmarks] = useState<BookmarkInfo[]>([]);
   const [query, setQuery] = useState('');
+  const [searchMode, setSearchMode] = useState<SearchMode>('all');
+  const [cleanQuery, setCleanQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [sortSettings, setSortSettings] = useState<SortSettings>({
@@ -110,27 +132,65 @@ export const useSearch = () => {
     getCurrentTab();
   }, []);
 
+  // Handle query changes with mode parsing
+  const handleQueryChange = useCallback((input: string) => {
+    const { mode, cleanQuery } = parseQueryForMode(input);
+    setSearchMode(mode);
+    setCleanQuery(cleanQuery);
+    setQuery(input); // Keep original for display
+  }, []);
+
   const search = useCallback((searchQuery: string, options: SearchOptions = {}) => {
     const {
       includeBookmarks = true,
       includeTabs = true,
-      limit = 10
+      limit = 10,
+      mode: optionsMode
     } = options;
+    
+    const currentMode = optionsMode || searchMode;
+    const queryToSearch = cleanQuery || searchQuery;
 
     const results: SearchResult[] = [];
+    
+    // Handle mode-specific search logic
+    if (currentMode === 'google') {
+      // Google mode: only return Google search suggestion
+      if (!queryToSearch.trim()) return [];
+      return [{
+        id: 'google-' + queryToSearch,
+        type: 'google' as const,
+        title: `Search Google for "${queryToSearch}"`,
+        url: `https://www.google.com/search?q=${encodeURIComponent(queryToSearch)}`
+      }];
+    }
+    
+    if (currentMode === 'bookmarks') {
+      // Bookmarks mode: only search bookmarks
+      if (!queryToSearch.trim()) return [];
+      
+      const bookmarksFuse = new Fuse(bookmarks, SEARCH_OPTIONS);
+      const bookmarkResults = bookmarksFuse.search(queryToSearch);
+      
+      return bookmarkResults.map(({ item, score = 1 }): SearchResult => ({
+        ...item,
+        type: 'bookmark' as const,
+        score
+      })).slice(0, limit);
+    }
     
     // Normalize URL by removing trailing slash
     const normalizeUrl = (url: string) => url.replace(/\/$/, '');
     
     // Check if query could be a domain
-    const cleanQuery = searchQuery.toLowerCase().trim();
-    const isPotentialDomain = cleanQuery.includes('.') && psl.isValid(cleanQuery);
-    const potentialUrl = searchQuery.startsWith('http') ? searchQuery : `https://${searchQuery}`;
+    const cleanQueryLower = queryToSearch.toLowerCase().trim();
+    const isPotentialDomain = cleanQueryLower.includes('.') && psl.isValid(cleanQueryLower);
+    const potentialUrl = queryToSearch.startsWith('http') ? queryToSearch : `https://${queryToSearch}`;
     
     // Search tabs and bookmarks first
     const urlMap = new Map<string, SearchResult>();
 
-    if (!searchQuery.trim()) {
+    if (!queryToSearch.trim()) {
       // When there is no search keyword, display all tabs (except the current tab), but still apply sorting
       tabs.forEach(tab => {
         if (tab.id !== currentTabId) {
@@ -142,12 +202,12 @@ export const useSearch = () => {
         }
       });
     } else {
-      // Search tabs
-      if (includeTabs) {
+      // Search tabs (skip if bookmarks-only mode)
+      if (includeTabs && (currentMode === 'all' || currentMode === 'urls')) {
         // Filter out the current tab before searching
         const searchableTabs = tabs;
         const tabsFuse = new Fuse(searchableTabs, SEARCH_OPTIONS);
-        const tabResults = tabsFuse.search(searchQuery);
+        const tabResults = tabsFuse.search(queryToSearch);
         tabResults.forEach(({ item, score = 1 }) => {
           // Only filter out the current tab when displaying results
           if (item.id !== currentTabId) {
@@ -160,10 +220,10 @@ export const useSearch = () => {
         });
       }
 
-      // Search bookmarks
-      if (includeBookmarks) {
+      // Search bookmarks (skip if we're not in all/bookmarks/urls mode)
+      if (includeBookmarks && ['all', 'bookmarks', 'urls'].includes(currentMode)) {
         const bookmarksFuse = new Fuse(bookmarks, SEARCH_OPTIONS);
-        const bookmarkResults = bookmarksFuse.search(searchQuery);
+        const bookmarkResults = bookmarksFuse.search(queryToSearch);
         bookmarkResults.forEach(({ item, score = 1 }) => {
           const normalizedUrl = normalizeUrl(item.url);
           const existingResult = urlMap.get(normalizedUrl);
@@ -192,23 +252,28 @@ export const useSearch = () => {
         });
       }
 
-      // Only add URL result if it's a potential domain, valid URL, and URL doesn't exist in results
-      if (isPotentialDomain && isValidUrl(searchQuery) && !urlMap.has(normalizeUrl(potentialUrl))) {
-        results.push({
-          id: 'url-' + searchQuery,
-          type: 'url',
-          title: 'Open URL',
-          url: potentialUrl
-        });
+      // Add URL result based on mode
+      if (isPotentialDomain && isValidUrl(queryToSearch) && !urlMap.has(normalizeUrl(potentialUrl))) {
+        // Always add in URLs mode, or in all mode if it doesn't exist
+        if (currentMode === 'urls' || currentMode === 'all') {
+          results.push({
+            id: 'url-' + queryToSearch,
+            type: 'url' as const,
+            title: 'Open URL',
+            url: potentialUrl
+          });
+        }
       }
 
-      // Add Google search result
-      results.push({
-        id: 'google-' + searchQuery,
-        type: 'google',
-        title: `Search Google for \"${searchQuery}\" `,
-        url: `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`
-      });
+      // Add Google search result only in all mode
+      if (currentMode === 'all') {
+        results.push({
+          id: 'google-' + queryToSearch,
+          type: 'google' as const,
+          title: `Search Google for \"${queryToSearch}\" `,
+          url: `https://www.google.com/search?q=${encodeURIComponent(queryToSearch)}`
+        });
+      }
     }
 
     // Add deduplicated results
@@ -216,11 +281,11 @@ export const useSearch = () => {
 
     // Use sorting algorithm to sort results
     return sortResults(results, sortSettings, usageData).slice(0, limit);
-  }, [tabs, bookmarks, usageData, sortSettings, currentTabId]);
+  }, [tabs, bookmarks, usageData, sortSettings, currentTabId, searchMode, cleanQuery]);
 
   // Update results when query or tabs change
   useEffect(() => {
-    const newResults = search(query);
+    const newResults = search(cleanQuery || query);
     setResults(newResults);
     
     // If a post-closure index is set, use it
@@ -231,7 +296,7 @@ export const useSearch = () => {
       // Otherwise, reset to top
       setSelectedIndex(0);
     }
-  }, [query, tabs, search]);
+  }, [query, cleanQuery, tabs, search]);
 
   // Record selected result
   const handleSelect = async (result: SearchResult, openingMode: OpeningMode) => {
@@ -332,7 +397,7 @@ export const useSearch = () => {
 
   return {
     query,
-    setQuery,
+    setQuery: handleQueryChange,
     results,
     selectedIndex,
     setSelectedIndex,

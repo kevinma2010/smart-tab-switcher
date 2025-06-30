@@ -84,6 +84,18 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
             </div>
           </div>
           
+          <div className="flex items-start mb-4">
+            <div className="bg-orange-100 dark:bg-orange-900 p-2 rounded-full mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-orange-600 dark:text-orange-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-800 dark:text-white">Query Modes</h3>
+              <p className="text-gray-600 dark:text-gray-300">Use prefixes to filter search results: <span className="font-mono text-sm">b:</span> bookmarks, <span className="font-mono text-sm">u:</span> URLs, <span className="font-mono text-sm">g:</span> Google search</p>
+            </div>
+          </div>
+          
           <div className="flex items-start">
             <div className="bg-yellow-100 dark:bg-yellow-900 p-2 rounded-full mr-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-600 dark:text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,7 +123,13 @@ export const OnboardingView: React.FC<OnboardingViewProps> = ({ onFinish }) => {
             {isMac && <span className="text-xs ml-1">(Mac)</span>} 
             or click the extension icon in the toolbar to open the tab switcher
           </li>
-          <li>Type keywords in the search box to find tabs</li>
+          <li>Type keywords in the search box to find tabs or use prefixes:
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">b:react</span> - Search only bookmarks</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">u:github.com</span> - Search tabs/bookmarks with URL suggestions</li>
+              <li><span className="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono">g:tutorial</span> - Direct Google search</li>
+            </ul>
+          </li>
           <li>
             Use arrow keys to navigate results:
             <ul className="list-disc pl-5 mt-2 space-y-1">

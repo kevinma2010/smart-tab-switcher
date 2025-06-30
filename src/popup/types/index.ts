@@ -29,10 +29,13 @@ export interface SearchState {
   selectedIndex: number;
 }
 
+export type SearchMode = 'all' | 'bookmarks' | 'urls' | 'google';
+
 export interface SearchOptions {
   includeBookmarks?: boolean;
   includeTabs?: boolean;
   limit?: number;
+  mode?: SearchMode;
 }
 
 export type Theme = 'light' | 'dark' | 'system';

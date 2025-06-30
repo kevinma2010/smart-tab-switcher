@@ -79,7 +79,7 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
             dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100
             focus:outline-none focus:ring-2 focus:ring-blue-500
             dark:placeholder-gray-400"
-          placeholder="Search tabs, bookmarks or enter URL..."
+          placeholder="Search tabs, bookmarks..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
