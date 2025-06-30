@@ -98,6 +98,29 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
             </svg>
           </button>
         )}
+        
+        {/* Search suggestions dropdown */}
+        {isFocused && !value && (
+          <div className="absolute top-full left-0 right-0 bg-white dark:bg-gray-800 shadow-lg rounded-b-lg border border-gray-200 dark:border-gray-600 border-t-0 z-10">
+            <div className="p-3">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">Try these search modes:</div>
+              <div className="space-y-1">
+                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono mr-2">b:react</kbd>
+                  <span>Search only bookmarks</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono mr-2">u:github.com</kbd>
+                  <span>Search tabs & URLs</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-mono mr-2">g:tutorial</kbd>
+                  <span>Google search</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
         <div>
