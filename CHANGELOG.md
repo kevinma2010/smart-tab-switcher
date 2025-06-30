@@ -15,7 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `u:` prefix for URLs mode (tabs/bookmarks + URL suggestions)
   - `g:` prefix for Google search only
   - No prefix maintains default behavior (search all)
-- Technical documentation for query modes implementation
 
 ## [1.3.0] - 2025-06-25
 ### Added
