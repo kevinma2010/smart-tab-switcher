@@ -63,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added release build script
 - Updated documentation with Chrome Web Store link
 
-## [1.1.0] - 2024-03-27
+## [1.1.0] - 2025-02-28
 ### Added
 - Advanced sorting optimization:
   - Smart sorting algorithm combining relevance, frequency, and recency
@@ -86,7 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added relative time display
   - Better visual organization of metadata
 
-## [1.0.1] - 2024-03-26
+## [1.0.1] - 2025-02-24
 ### Added
 - Auto-scroll functionality for keyboard navigation in search results
 
@@ -99,7 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Background script configuration for Chrome MV3 (service_worker)
 
-## [1.0.0] - 2024-01-15
+## [1.0.0] - 2025-02-09
 ### Added
 - Quick tab switching with intuitive search interface
 - Real-time fuzzy search for tabs and bookmarks
