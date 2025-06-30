@@ -12,7 +12,7 @@ const rl = readline.createInterface({
 
 const question = (query) => new Promise((resolve) => rl.question(query, resolve));
 
-async function exec(command, options = {}) {
+function exec(command, options = {}) {
   try {
     return execSync(command, { encoding: 'utf8', stdio: 'pipe', ...options });
   } catch (error) {
@@ -166,7 +166,7 @@ async function main() {
     }
     
     // Check for uncommitted changes
-    const gitStatus = await exec('git status --porcelain');
+    const gitStatus = exec('git status --porcelain');
     if (gitStatus.trim()) {
       console.error('❌ Error: You have uncommitted changes. Please commit or stash them first.');
       console.log('\nUncommitted changes:');
