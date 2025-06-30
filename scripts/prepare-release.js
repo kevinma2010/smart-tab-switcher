@@ -63,7 +63,7 @@ function checkRequirements() {
   // Check CHANGELOG has unreleased content
   try {
     const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
-    const unreleasedSection = changelog.match(/## \[Unreleased\]\s*\n(.*?)(?=##|$)/s);
+    const unreleasedSection = changelog.match(/## \[Unreleased\]\s*\n(.*?)(?=\n## \[|$)/s);
     
     if (!unreleasedSection || !unreleasedSection[1].trim()) {
       checks.push({ pass: false, message: '❌ No changes in CHANGELOG.md [Unreleased] section' });
