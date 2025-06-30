@@ -5,17 +5,29 @@ import { formatRelativeTime } from '../utils/time';
 interface ResultItemProps {
   result: SearchResult;
   isSelected: boolean;
+  isFocused?: boolean;
   onClick: () => void;
   onClose?: () => void;
+  onFocus?: () => void;
 }
 
 export const ResultItem: React.FC<ResultItemProps> = ({
   result,
   isSelected,
+  isFocused = false,
   onClick,
   onClose,
+  onFocus,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
+  const itemRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    if (isFocused && itemRef.current) {
+      itemRef.current.focus();
+    }
+  }, [isFocused]);
   const getIcon = () => {
     switch (result.type) {
       case 'tab':
@@ -66,19 +78,36 @@ export const ResultItem: React.FC<ResultItemProps> = ({
 
   return (
     <div
+      ref={itemRef}
       className={`relative p-3 flex items-center cursor-pointer border-b border-gray-100 dark:border-gray-700
         hover:bg-gray-50 dark:hover:bg-gray-700
         ${isSelected ? 'bg-blue-50 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600' : ''}
-        dark:text-gray-100 transition-colors`}
+        ${isFocused ? 'ring-2 ring-blue-500 ring-inset' : ''}
+        dark:text-gray-100 transition-colors focus:outline-none`}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onFocus={onFocus}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          onClick();
+        } else if (e.key === 'Delete' && result.type === 'tab' && onClose) {
+          e.preventDefault();
+          onClose();
+        } else if (e.key === 'Tab' && e.shiftKey && isHovered && result.type === 'tab' && onClose) {
+          // Allow shift+tab to focus the close button if visible
+          e.preventDefault();
+          closeButtonRef.current?.focus();
+        }
+      }}
+      tabIndex={isFocused ? 0 : -1}
     >
       {(isHovered || isSelected) && result.type === 'tab' && onClose && (
         <button
+          ref={closeButtonRef}
           className="absolute top-0.5 left-0.5 w-5 h-5 flex items-center justify-center
             bg-gray-200/80 dark:bg-gray-600/80 hover:bg-gray-300 dark:hover:bg-gray-500
-            rounded-full transition-colors shadow-sm z-10"
+            rounded-full transition-colors shadow-sm z-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -88,7 +117,19 @@ export const ResultItem: React.FC<ResultItemProps> = ({
             // Prevent focus loss
             e.preventDefault();
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.stopPropagation();
+              onClose();
+            } else if (e.key === 'Tab' && !e.shiftKey) {
+              // Tab from close button goes back to the item
+              e.preventDefault();
+              itemRef.current?.focus();
+            }
+          }}
           title="Close tab"
+          tabIndex={isFocused && isHovered ? 0 : -1}
         >
           <svg
             className="w-3 h-3 text-gray-600 dark:text-gray-300"

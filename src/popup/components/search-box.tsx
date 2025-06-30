@@ -9,6 +9,8 @@ interface SearchBoxProps {
   onArrowUp: () => void;
   onArrowDown: () => void;
   onDelete?: () => void;
+  onTab?: (shiftKey: boolean) => void;
+  onFocus?: () => void;
   className?: string;
 }
 
@@ -20,6 +22,8 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
   onArrowUp,
   onArrowDown,
   onDelete,
+  onTab,
+  onFocus,
   className = '',
 }, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -56,6 +60,12 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           onDelete();
         }
         break;
+      case 'Tab':
+        if (onTab) {
+          e.preventDefault();
+          onTab(e.shiftKey);
+        }
+        break;
     }
   };
 
@@ -83,7 +93,10 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          onFocus={() => setIsFocused(true)}
+          onFocus={() => {
+            setIsFocused(true);
+            onFocus?.();
+          }}
           onBlur={() => setIsFocused(false)}
           autoFocus
         />
@@ -116,6 +129,9 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           <span>Close Tab</span>
         </div>
         <div>
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Tab</kbd>
+          <span className="mr-3">Navigate</span>
+          
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
           <span>Close</span>
         </div>

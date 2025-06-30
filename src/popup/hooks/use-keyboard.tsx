@@ -59,11 +59,20 @@ export const useKeyboard = (
     }
   }, [results, selectedIndex, onCloseTab]);
 
+  const handleTab = useCallback((isShifted: boolean) => {
+    if (isShifted) {
+      handleArrowUp();
+    } else {
+      handleArrowDown();
+    }
+  }, [handleArrowUp, handleArrowDown]);
+
   return {
     handleArrowUp,
     handleArrowDown,
     handleEnter,
     handleEscape,
-    handleDelete
+    handleDelete,
+    handleTab
   };
 };

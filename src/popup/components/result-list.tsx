@@ -7,6 +7,8 @@ interface ResultListProps {
   selectedIndex: number;
   onSelect: (result: SearchResult) => void;
   onCloseTab?: (tabId: string) => void;
+  focusedElement?: 'search' | 'about' | 'settings' | 'results';
+  onFocusChange?: (element: 'search' | 'about' | 'settings' | 'results') => void;
 }
 
 export const ResultList: React.FC<ResultListProps> = ({
@@ -14,6 +16,8 @@ export const ResultList: React.FC<ResultListProps> = ({
   selectedIndex,
   onSelect,
   onCloseTab,
+  focusedElement,
+  onFocusChange,
 }) => {
   const listRef = useRef<HTMLDivElement>(null);
   const selectedRef = useRef<HTMLDivElement>(null);
@@ -79,6 +83,7 @@ export const ResultList: React.FC<ResultListProps> = ({
                       <ResultItem
                         result={result}
                         isSelected={index === selectedIndex}
+                        isFocused={focusedElement === 'results' && index === selectedIndex}
                         onClick={() => {
                           try {
                             onSelect(result);
@@ -91,6 +96,7 @@ export const ResultList: React.FC<ResultListProps> = ({
                             ? () => onCloseTab(result.id)
                             : undefined
                         }
+                        onFocus={() => onFocusChange?.('results')}
                       />
                     </div>
                   );
