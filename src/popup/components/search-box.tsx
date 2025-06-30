@@ -112,15 +112,16 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
           </button>
         )}
       </div>
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-gray-500 dark:text-gray-400">
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-gray-500 dark:text-gray-400">
         <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">↑↓</kbd>
-          <span>Navigate</span>
+          <span>Select</span>
         </div>
         
         <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Tab</kbd>
-          <span>Navigate</span>
+          <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">⇧Tab</kbd>
+          <span>Move</span>
         </div>
         
         <div className="flex items-center">
@@ -137,12 +138,12 @@ export const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(({
         
         <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Del</kbd>
-          <span>Close Tab</span>
+          <span>Close</span>
         </div>
         
         <div className="flex items-center">
           <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 mr-1">Esc</kbd>
-          <span>Close</span>
+          <span>Exit</span>
         </div>
       </div>
     </div>
