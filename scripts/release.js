@@ -246,11 +246,10 @@ async function main() {
     await generateStoreReleaseNotes(newVersion, releaseNotes);
     
     console.log('💾 Committing changes...');
-    exec('git add package.json CHANGELOG.md');
+    exec('git add package.json CHANGELOG.md docs/chrome-webstore-submission.md docs/firefox-addon-submission.md');
     exec(`git commit -m "chore: release v${newVersion}"`);
     
     console.log('🏷️  Creating git tag...');
-    const releaseNotes = await extractReleaseNotes(newVersion);
     const tagMessage = `Release v${newVersion}\n\n${releaseNotes}`;
     exec(`git tag -a v${newVersion} -m "${tagMessage}"`);
     
