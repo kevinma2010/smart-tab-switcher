@@ -12,8 +12,6 @@ Before creating a release, ensure you have:
    - Authenticate: `gh auth login`
 3. **pnpm** installed for building packages
 4. Push access to the repository
-5. Access to Chrome Web Store Developer Dashboard
-6. Access to Firefox Add-ons Developer Hub
 
 ## Release Workflow
 
@@ -72,26 +70,6 @@ The release script will:
 6. Build release packages
 7. Create GitHub release with zip files
 8. Ask if you want to push changes
-
-### 3. Publish to Stores
-
-After the GitHub release is created:
-
-#### Chrome Web Store
-1. Go to [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
-2. Select "Smart Tab Switcher"
-3. Click "Package" → "Upload new package"
-4. Upload `release/smart-tab-switcher-chrome-v{version}.zip`
-5. Update store listing if needed
-6. Submit for review
-
-#### Firefox Add-ons
-1. Go to [Firefox Add-ons Developer Hub](https://addons.mozilla.org/developers/)
-2. Select "Smart Tab Switcher"
-3. Click "Upload New Version"
-4. Upload `release/smart-tab-switcher-firefox-v{version}.zip`
-5. Update version notes
-6. Submit for review
 
 ## Version Numbering
 
