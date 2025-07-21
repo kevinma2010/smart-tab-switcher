@@ -4,7 +4,7 @@
 
 Browser extension for fast tab switching through real-time search and keyboard navigation.
 
-**Core Features**: Keyboard shortcuts (`Cmd+Shift+K` / `Alt+T`), fuzzy search, tab/bookmark search, URL recognition, Google search fallback.
+**Core Features**: Customizable shortcuts (`Cmd+Shift+K` / `Alt+T`), fuzzy search, tab/bookmark search with query modes (`b:`, `u:`, `g:`), Tab key navigation, close tab buttons, configurable Enter key behavior, URL recognition, Google search fallback.
 
 ## 3. Technology Stack
 
@@ -85,9 +85,15 @@ interface BookmarkInfo {
 
 ## 6. Key Workflows
 
-**Search**: Input → Debounce (300ms) → Parallel search → Score/sort → Display
+**Search**: Input → Query mode parsing → Debounce (300ms) → Parallel search → Score/sort → Display
 
 **Tab Switch**: Selection → Type check → Action (switch tab, open bookmark/URL, or Google search)
+
+**Query Modes**: 
+- `b:` - Search bookmarks only
+- `u:` - Search tabs/bookmarks with URL suggestions
+- `g:` - Direct Google search
+- No prefix - Search all (default)
 
 ## 7. Performance Optimizations
 

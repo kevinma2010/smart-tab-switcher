@@ -6,11 +6,12 @@ A browser extension for fast tab switching and management through real-time sear
 
 - 🚀 **Quick Launch**: `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
 - 🔍 **Real-time Search**: Fuzzy search across tabs and bookmarks
-- ⌨️ **Keyboard Navigation**: Arrow keys, Enter, Escape, Delete to close tabs
+- ⌨️ **Keyboard Navigation**: Arrow keys, Tab/Shift+Tab, Enter, Escape, Delete to close tabs
+- 🎯 **Query Modes**: Filter results with prefixes (`b:` bookmarks, `u:` URLs, `g:` Google)
 - 🧠 **Smart Sorting**: Combines relevance, frequency, and usage patterns
 - 🌐 **Universal Search**: Handles URLs and Google search when no matches found
 - 🎨 **Theme Support**: Auto dark/light mode
-- ⚙️ **Customizable**: Sorting preferences and display options
+- ⚙️ **Customizable**: Shortcuts, sorting preferences, enter key behavior
 
 ## User Guide
 
@@ -30,10 +31,16 @@ Or download from [GitHub Releases](https://github.com/kevinma2010/smart-tab-swit
 ### How to Use
 
 1. **Launch**: Press `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux), or click the extension icon
+   - Customize shortcuts in browser settings
 
-2. **Search**: Type to find tabs/bookmarks. Use arrow keys to navigate, Enter to open, Delete to close tabs, Esc to exit
+2. **Search**: Type to find tabs/bookmarks
+   - Use query modes: `b:` bookmarks only, `u:` include URLs, `g:` Google search only
+   - Navigation: Arrow keys or Tab/Shift+Tab
+   - Actions: Enter to open, Delete to close tabs, Esc to exit
 
 3. **Results**: Switches to tabs, opens bookmarks in new tabs, handles URLs directly, or searches Google when no matches found
+   - Click the × button to close tabs
+   - Configure Enter key behavior in settings (current tab vs new tab)
 
 ## Developer Guide
 
