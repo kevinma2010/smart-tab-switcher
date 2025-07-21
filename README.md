@@ -37,7 +37,7 @@ Or download from [GitHub Releases](https://github.com/kevinma2010/smart-tab-swit
 
 ## Developer Guide
 
-For comprehensive development documentation including setup, architecture, and deployment, see [DEVELOPER.md](./DEVELOPER.md). For release process, see [RELEASE.md](./RELEASE.md).
+For comprehensive development documentation including setup, architecture, and deployment, see [DEVELOPER.md](./DEVELOPER.md). For release process, see [RELEASE.md](./RELEASE.md). For contribution guidelines, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ### Quick Start
 
