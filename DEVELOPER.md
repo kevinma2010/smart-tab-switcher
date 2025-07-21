@@ -1,17 +1,10 @@
-# Smart Tab Switcher - Technical Design Document
+# Smart Tab Switcher - Technical Documentation
 
-## 1. Project Overview
+## Overview
 
-Smart Tab Switcher is a browser extension that provides fast tab switching and management capabilities. Users can quickly invoke a search interface using a keyboard shortcut (Command+Shift+K) to search and switch between open tabs or access bookmarks in real-time.
+Browser extension for fast tab switching through real-time search and keyboard navigation.
 
-## 2. Core Features
-
-- Keyboard shortcut activation (Command+Shift+K on Mac, Alt+T on Windows/Linux)
-- Real-time tab and bookmark search
-- Fuzzy search matching support
-- Keyboard navigation
-- Smart URL recognition
-- Google search integration
+**Core Features**: Keyboard shortcuts (`Cmd+Shift+K` / `Alt+T`), fuzzy search, tab/bookmark search, URL recognition, Google search fallback.
 
 ## 3. Technology Stack
 
@@ -65,7 +58,6 @@ quick-tab-switcher/
 
 ## 5. Data Structures
 
-### 5.1 Search Result Type
 ```typescript
 interface SearchResult {
   id: string;
@@ -75,20 +67,14 @@ interface SearchResult {
   favicon?: string;
   score?: number;
 }
-```
 
-### 5.2 Tab Information
-```typescript
 interface TabInfo {
   id: number;
   title: string;
   url: string;
   favicon?: string;
 }
-```
 
-### 5.3 Bookmark Information
-```typescript
 interface BookmarkInfo {
   id: string;
   title: string;
@@ -99,62 +85,21 @@ interface BookmarkInfo {
 
 ## 6. Key Workflows
 
-### 6.1 Search Process
-1. User input triggers search
-2. Debounce handling (300ms)
-3. Parallel search of tabs and bookmarks
-4. Result scoring and sorting
-5. UI update display
+**Search**: Input → Debounce (300ms) → Parallel search → Score/sort → Display
 
-### 6.2 Tab Switching Process
-1. User selects target
-2. Check target type
-3. Execute appropriate action based on type:
-   - Tab: Switch to target tab
-   - Bookmark: Open in new tab
-   - URL: Open in new tab
-   - Google: Open search results page
+**Tab Switch**: Selection → Type check → Action (switch tab, open bookmark/URL, or Google search)
 
 ## 7. Performance Optimizations
 
-### 7.1 Search Optimization
-- Use Fuse.js for fuzzy search
-- Cache search results
-- Input debouncing
+**Search**: Fuse.js fuzzy search, result caching, input debouncing
+**Rendering**: React.memo, virtual lists, lazy loading
+**Caching**: Tab/bookmark data, search results
+**Theme**: Auto dark/light mode with persistence
 
-### 7.2 Rendering Optimization
-- React.memo component caching
-- Virtual list rendering
-- Icon lazy loading
+## 8. Configuration
 
-### 7.3 Caching Strategy
-- Tab information caching
-- Bookmark data caching
-- Search result caching
-
-### 7.4 Theme Support
-- System theme detection
-- Dark mode support
-- Theme persistence
-
-## 8. Configuration Details
-
-### 8.1 Firefox Specific Configuration
-```json
-{
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "smart-tab-switcher@kevinma2010.com",
-      "strict_min_version": "109.0"
-    }
-  }
-}
-```
-
-### 8.2 Permission Configuration
-- tabs: Tab access
-- bookmarks: Bookmark access
-- scripting: Script execution
+**Firefox**: Requires `browser_specific_settings` with min version 109.0
+**Permissions**: `tabs`, `bookmarks`, `scripting`
 
 ## 9. Development Guidelines
 
@@ -224,142 +169,54 @@ Built files will be located in:
 pnpm type-check
 ```
 
-### 9.5 Debugging Methods
-1. Load using about:debugging page
-2. Check background page console
-3. Inspect popup page elements
+### 9.5 Debugging
+- Load via `about:debugging` (Firefox) or developer mode (Chrome)
+- Check background console and popup inspector
 
-### 9.6 Building for Release
-
-To create release packages for both Chrome and Firefox:
+### 9.6 Release Build
 
 ```bash
 pnpm build:release
 ```
 
-This will:
-1. Build the extension for both browsers
-2. Create zip files in the `release` directory
-3. Generate packages named:
-   - `smart-tab-switcher-chrome-v{version}.zip`
-   - `smart-tab-switcher-firefox-v{version}.zip`
-
-These packages are ready to be submitted to the Chrome Web Store and Firefox Add-ons.
+Generates release packages in `release/` directory for both browsers.
 
 ## 10. Future Improvements
 
-1. Search Algorithm Enhancement
-   - Add historical usage weighting
-   - Optimize matching rules
-
-2. UI Enhancements
-   - Add animation effects
-   - Improve keyboard navigation experience
-
-3. Performance Improvements
-   - Optimize caching strategy
-   - Reduce unnecessary re-renders
-
-4. Feature Extensions
-   - Support tab grouping
-   - Add quick command functionality
-
-5. Theme Enhancements
-   - Add custom theme support
-   - Improve theme switching animations
-   - Add more color schemes
+- **Search**: Historical usage weighting, improved matching
+- **UI/UX**: Animations, better keyboard navigation
+- **Performance**: Enhanced caching, reduced re-renders
+- **Features**: Tab grouping, command palette
+- **Themes**: Custom themes, more color schemes
 
 ## 11. Important Considerations
 
-1. Permission Usage
-   - Minimum permission principle
-   - Request permissions as needed
-
-2. Performance Considerations
-   - Avoid frequent DOM operations
-   - Use caching appropriately
-
-3. Compatibility
-   - Support Firefox 109.0+
-   - Follow MV3 specifications
+- **Permissions**: Follow minimum permission principle
+- **Performance**: Minimize DOM operations, use appropriate caching
+- **Compatibility**: Firefox 109.0+, MV3 compliant
 
 ## 12. Testing Strategy
 
-### 12.1 Unit Testing
-- Component testing with Jest
-- Hook testing
-- Utility function testing
+- **Unit**: Component, hook, and utility testing with Jest
+- **Integration**: Extension workflows, browser APIs, search functionality
+- **E2E**: Full workflows, cross-platform, performance
 
-### 12.2 Integration Testing
-- Extension workflow testing
-- Browser API interaction testing
-- Search functionality testing
+## 13. Deployment
 
-### 12.3 End-to-End Testing
-- Full workflow testing
-- Cross-platform testing
-- Performance testing
+1. Update version and changelog
+2. Build with `pnpm build`
+3. Submit for review and update docs
 
-## 13. Deployment Process
+## 14. Maintenance
 
-1. Version Update
-   - Update version in package.json
-   - Update changelog
+- **Code**: TypeScript best practices, consistent style, API documentation
+- **Monitoring**: Performance audits, user feedback, error tracking
+- **Security**: Regular reviews, dependency updates, code scanning
 
-2. Build Process
-   - Run `pnpm build`
-   - Generate distribution package
+## 15. Version Management
 
-3. Submission Process
-   - Code review
-   - Firefox Add-on review submission
-   - Documentation update
+**Branches**: `main` (stable), `develop`, `feature/*`, `hotfix/*`
 
-## 14. Maintenance Guidelines
+**Versioning**: Semantic (major.minor.patch)
 
-1. Code Standards
-   - Follow TypeScript best practices
-   - Maintain consistent coding style
-   - Document all public APIs
-
-2. Performance Monitoring
-   - Regular performance audits
-   - User feedback monitoring
-   - Error tracking
-
-3. Security Considerations
-   - Regular security reviews
-   - Dependency updates
-   - Code scanning
-
-## 15. Branch and Version Management
-
-### 15.1 Branch Strategy
-- `main`: Main branch, maintains stable release state
-- `develop`: Development branch for feature integration
-- `feature/*`: Feature branches, branched from develop
-- `hotfix/*`: Emergency fix branches, branched from main
-
-### 15.2 Version Convention
-Using Semantic Versioning: vmajor.minor.patch
-- v1.0.0: First stable release
-- v1.1.0: New feature update
-- v1.1.1: Bug fixes
-
-### 15.3 Release Process
-1. Complete development and testing on develop branch
-2. Update version number and CHANGELOG.md
-3. Merge to main branch and create tag
-4. Release new version
-
-### 15.4 Commit Convention
-```bash
-# New feature
-feat: add tab grouping feature
-
-# Bug fix
-fix: resolve search result sorting issue
-
-# Documentation
-docs: update technical documentation
-```
+**Commits**: `feat:`, `fix:`, `docs:`, `chore:`, etc.
