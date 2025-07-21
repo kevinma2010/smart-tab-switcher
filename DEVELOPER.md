@@ -6,7 +6,7 @@ Smart Tab Switcher is a browser extension that provides fast tab switching and m
 
 ## 2. Core Features
 
-- Keyboard shortcut activation (Command+Shift+K)
+- Keyboard shortcut activation (Command+Shift+K on Mac, Alt+T on Windows/Linux)
 - Real-time tab and bookmark search
 - Fuzzy search matching support
 - Keyboard navigation
@@ -158,24 +158,83 @@ interface BookmarkInfo {
 
 ## 9. Development Guidelines
 
-### 9.1 Local Development
+### 9.1 Prerequisites
+
+- Node.js (v18+)
+- pnpm (v8+)
+- Browser (Chrome v88+ / Firefox v109.0+ / Edge v88+)
+
+### 9.2 Local Development
+
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/kevinma2010/smart-tab-switcher.git
+   cd smart-tab-switcher
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Development Mode**
+   ```bash
+   # For Chrome development
+   pnpm dev:chrome
+   
+   # For Firefox development  
+   pnpm dev:firefox
+   ```
+
+4. **Load in Browser**
+   - For Chrome/Edge:
+     * Go to `chrome://extensions` or `edge://extensions`
+     * Enable "Developer mode"
+     * Click "Load unpacked"
+     * Select the `dist/chrome` directory
+   - For Firefox:
+     * Navigate to `about:debugging`
+     * Click "This Firefox"
+     * Click "Load Temporary Add-on"
+     * Select `manifest.json` from the `dist/firefox` directory
+
+### 9.3 Build Commands
+
 ```bash
-pnpm install        # Install dependencies
-pnpm dev           # Development mode
-pnpm build         # Production build
+# Build for both browsers
+pnpm build
+
+# Build for specific browser
+pnpm build:chrome
+pnpm build:firefox
+
+# Build release packages
+pnpm build:release
 ```
 
-### 9.2 Debugging Methods
+Built files will be located in:
+- `dist/chrome` - Chrome/Edge extension
+- `dist/firefox` - Firefox extension  
+- `release/` - Release packages (after running `build:release`)
+
+### 9.4 Type Checking
+
+```bash
+# Run TypeScript type checking
+pnpm type-check
+```
+
+### 9.5 Debugging Methods
 1. Load using about:debugging page
 2. Check background page console
 3. Inspect popup page elements
 
-### 9.3 Building for Release
+### 9.6 Building for Release
 
 To create release packages for both Chrome and Firefox:
 
 ```bash
-npm run build:release
+pnpm build:release
 ```
 
 This will:

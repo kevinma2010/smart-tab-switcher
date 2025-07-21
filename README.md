@@ -1,26 +1,22 @@
 # Smart Tab Switcher
 
-Smart Tab Switcher is a powerful browser extension that provides lightning-fast tab switching and management through real-time search, intelligent sorting, and comprehensive keyboard navigation. Designed for power users who work with multiple tabs daily.
+A browser extension for fast tab switching and management through real-time search and keyboard navigation. Perfect for users managing multiple tabs daily.
 
-## ✨ Key Features
+## Key Features
 
-- 🚀 **Quick Launch**: Trigger with `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
-- 🔍 **Real-time Search**: Instantly search through open tabs and bookmarks with fuzzy matching
-- ⌨️ **Keyboard-Centric**: Complete keyboard navigation with arrow keys, Enter, Escape
-- ✖️ **Smart Tab Closing**: Close tabs directly from search results with hover button or `Delete` key
-- 🧠 **Intelligent Sorting**: Smart algorithm combining relevance, frequency, and recency
-- ⭐ **Usage Tracking**: Visual indicators showing tab usage frequency and last access time
-- 🔖 **Bookmark Integration**: Search through bookmarks seamlessly alongside tabs
-- 🌐 **URL Recognition**: Smart URL detection and direct opening
-- 🔄 **Google Search**: Instant Google search when no local matches found
-- 🎨 **Theme Support**: Automatic dark/light mode based on system preferences
-- ⚙️ **Customizable Settings**: Personalize sorting methods and navigation behavior
+- 🚀 **Quick Launch**: `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux)
+- 🔍 **Real-time Search**: Fuzzy search across tabs and bookmarks
+- ⌨️ **Keyboard Navigation**: Arrow keys, Enter, Escape, Delete to close tabs
+- 🧠 **Smart Sorting**: Combines relevance, frequency, and usage patterns
+- 🌐 **Universal Search**: Handles URLs and Google search when no matches found
+- 🎨 **Theme Support**: Auto dark/light mode
+- ⚙️ **Customizable**: Sorting preferences and display options
 
-## 📖 User Guide
+## User Guide
 
 ### Installation
 
-You can install Smart Tab Switcher from your browser's extension store:
+Install from your browser's extension store:
 
 <div align="center">
 
@@ -30,128 +26,43 @@ You can install Smart Tab Switcher from your browser's extension store:
 
 </div>
 
-Or install manually:
-1. Download the latest release from [GitHub Releases](https://github.com/kevinma2010/smart-tab-switcher/releases)
-2. Follow the browser-specific installation steps below:
-   - Chrome/Edge:
-     * Go to Extensions page
-     * Enable Developer mode
-     * Click "Load unpacked"
-     * Select the extracted release folder
-   - Firefox:
-     * Go to `about:debugging`
-     * Click "This Firefox"
-     * Click "Load Temporary Add-on"
-     * Select `manifest.json` from the extracted folder
+Or download from [GitHub Releases](https://github.com/kevinma2010/smart-tab-switcher/releases) and load manually in your browser's developer mode.
 
 ### How to Use
 
-1. **Launch Search**
-   - Mac: Press `Command+Shift+K`
-   - Windows/Linux: Press `Alt+T`
-   - Or click the extension icon in the toolbar
+1. **Launch**: Press `Command+Shift+K` (Mac) or `Alt+T` (Windows/Linux), or click the extension icon
 
-2. **Search and Navigate**
-   - Type keywords to search tabs and bookmarks
-   - Use ↑↓ keys to navigate results
-   - Press Enter to open selected item
-   - Press Esc to close search interface
+2. **Search**: Type to find tabs/bookmarks. Use arrow keys to navigate, Enter to open, Delete to close tabs, Esc to exit
 
-3. **Tab Management**
-   - **Close tabs**: Hover over tab results to see close button (×) and click it
-   - **Keyboard shortcut**: Press `Delete` key to close selected tab
-   - **Multiple actions**: Switch to or close tabs without leaving the search interface
+3. **Results**: Switches to tabs, opens bookmarks in new tabs, handles URLs directly, or searches Google when no matches found
 
-4. **Search Result Types**
-   - 📑 **Tabs**: Switch directly to the corresponding tab or close it
-   - 🔖 **Bookmarks**: Open in a new tab
-   - 🌐 **URLs**: Direct opening when URL is detected
-   - 🔍 **Google**: Search when no matches found
+## Developer Guide
 
-5. **Customization**
-   - Access settings through the extension popup
-   - Customize sorting preferences (relevance, frequency, recency)
-   - Adjust navigation behavior and display options
+For comprehensive development documentation including setup, architecture, and deployment, see [DEVELOPER.md](./DEVELOPER.md).
 
-## 💻 Developer Guide
-
-### Prerequisites
-
-- Node.js (v18+)
-- pnpm (v8+)
-- Browser (Chrome v88+ / Firefox v109.0+ / Edge v88+)
-
-### Local Development
-
-1. **Clone Repository**
-   ```bash
-   git clone https://github.com/kevinma2010/smart-tab-switcher.git
-   cd smart-tab-switcher
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   pnpm install
-   ```
-
-3. **Development Mode**
-   ```bash
-   # For Chrome development
-   pnpm dev:chrome
-   
-   # For Firefox development  
-   pnpm dev:firefox
-   ```
-
-4. **Load in Browser**
-   - For Chrome/Edge:
-     * Go to `chrome://extensions` or `edge://extensions`
-     * Enable "Developer mode"
-     * Click "Load unpacked"
-     * Select the `dist/chrome` directory
-   - For Firefox:
-     * Navigate to `about:debugging`
-     * Click "This Firefox"
-     * Click "Load Temporary Add-on"
-     * Select `manifest.json` from the `dist/firefox` directory
-
-### Build for Production
+### Quick Start
 
 ```bash
-# Build for both browsers
-pnpm build
+# Clone and install
+git clone https://github.com/kevinma2010/smart-tab-switcher.git
+cd smart-tab-switcher
+pnpm install
 
-# Build for specific browser
-pnpm build:chrome
-pnpm build:firefox
-
-# Build release packages
-pnpm build:release
+# Start development
+pnpm dev:chrome  # For Chrome
+pnpm dev:firefox # For Firefox
 ```
 
-Built files will be located in:
-- `dist/chrome` - Chrome/Edge extension
-- `dist/firefox` - Firefox extension  
-- `release/` - Release packages (after running `build:release`)
+For detailed development instructions, architecture documentation, and deployment guides, please refer to [DEVELOPER.md](./DEVELOPER.md).
 
-## 📄 License
+## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](./LICENSE) file for details.
+Licensed under GNU General Public License v3.0. See [LICENSE](./LICENSE) for details.
 
-The GPLv3 License means:
-- ✅ You can view and modify the source code
-- ✅ You can redistribute the code
-- ✅ You must keep the same license for derivative works
-- ✅ You must disclose the source code of derivative works
-- ❌ You cannot use the code in proprietary/closed source projects
-- ❌ You cannot modify the license terms
-
-For more details, please see the full [license text](./LICENSE).
-
-## 📞 Support & Feedback
+## Support & Feedback
 
 - [GitHub Issues](https://github.com/kevinma2010/smart-tab-switcher/issues)
 
-## 🔄 Changelog
+## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md) for version history.
